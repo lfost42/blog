@@ -38,7 +38,6 @@ namespace BlogLibrary.Models
 
         [Required, StringLength(500, ErrorMessage = "The {0} must be atleast {2} and at most {1} characters.", MinimumLength = 2)]
         public string ModeratedComment { get; set; }
-        public ModeratedType Type { get; set; } = ModeratedType.None;
 
         //Navigation
         public virtual FileModel FileModel { get; set; }

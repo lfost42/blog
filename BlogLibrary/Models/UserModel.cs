@@ -24,13 +24,12 @@ namespace BlogLibrary.Models
         [Display(Name = "Photo")]
         public int PhotoId { get; set; }
 
-
-        [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
-        public string RedditUrl { get; set; }
-        [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
-        public string TwitterUrl { get; set; }
         [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
         public string GitHubUrl { get; set; }
+        [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
+        public string PortfolioUrl { get; set; }
+        [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
+        public string TwitterUrl { get; set; }
 
         public virtual FileModel Photo { get; set; }
         public virtual ICollection<PostModel> Posts { get; set; } = new HashSet<PostModel>();
