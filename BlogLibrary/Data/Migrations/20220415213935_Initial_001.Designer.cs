@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlogLibrary.Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20220415062658_Initial_001")]
+    [Migration("20220415213935_Initial_001")]
     partial class Initial_001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,9 +101,6 @@ namespace BlogLibrary.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("timestamp without time zone");
@@ -278,7 +275,7 @@ namespace BlogLibrary.Data.Migrations
                     b.Property<int>("PhotoId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("RedditUrl")
+                    b.Property<string>("PortfolioUrl")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 

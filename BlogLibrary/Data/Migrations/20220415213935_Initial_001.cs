@@ -67,9 +67,9 @@ namespace BlogLibrary.Data.Migrations
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
                     PhotoId = table.Column<int>(type: "integer", nullable: false),
-                    RedditUrl = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    TwitterUrl = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     GitHubUrl = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    PortfolioUrl = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    TwitterUrl = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -267,7 +267,6 @@ namespace BlogLibrary.Data.Migrations
                     PostId = table.Column<int>(type: "integer", nullable: false),
                     CreatorId = table.Column<int>(type: "integer", nullable: false),
                     ModeratedComment = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    Type = table.Column<int>(type: "integer", nullable: false),
                     CreatorId1 = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

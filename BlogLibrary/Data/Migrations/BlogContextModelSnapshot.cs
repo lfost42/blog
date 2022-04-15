@@ -100,9 +100,6 @@ namespace BlogLibrary.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("timestamp without time zone");
 
@@ -276,7 +273,7 @@ namespace BlogLibrary.Data.Migrations
                     b.Property<int>("PhotoId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("RedditUrl")
+                    b.Property<string>("PortfolioUrl")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
