@@ -25,4 +25,8 @@
     <ProjectReference Include="..\BlogLibrary\BlogLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>

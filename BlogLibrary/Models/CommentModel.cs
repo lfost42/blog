@@ -35,7 +35,7 @@ namespace BlogLibrary.Models
         public int PostId { get; set; }
         public int CreatorId { get; set; }
 
-        public bool IsModerated { get; set; } = false;
+
         [Required, StringLength(500, ErrorMessage = "The {0} must be atleast {2} and at most {1} characters.", MinimumLength = 2)]
         public string ModeratedComment { get; set; }
         public ModeratedType Type { get; set; } = ModeratedType.None;
