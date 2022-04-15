@@ -6,19 +6,25 @@ Summary Info
 ![My App](./app.png)
 
 ## WALKTHROUGH
-A blog that allows me to post article when authenticated. Allows visitors to add comments and email me when a comment is left. 
+A blog that allows the owner to post articles upon being authenticated via login. Users may leave comments after registering and being authenticated. 
 
 
 ## OPEN REQUIREMENTS
-A landing page will show the most recent blog posts and a summary of posts. A sidebar will navigate to older posts. 
 
+MVP:
+Blog will have role based access so that allows the owner create posts. Visitors may add comments after registering and logging in. 
+
+OTHER FEATURES:
+- Guest comments with CAPTCHA (does not appear until owner approves it). 
+- IP blocking of accounts that abuse the guest comments section.
+- Locate comments by guest
 
 ## USER INTERFACE
-Landing page with login option. Users must authenticate before leaving a comment. 
+Dashboard shows recent articles with a side-menu to older articles. Search function. Login for writing posts or comments. 
 
 
 ## LOGIC DESIGN
-Identity Access
+Identity Access, owner
 Role Based Security
 
 
