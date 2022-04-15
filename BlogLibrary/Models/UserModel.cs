@@ -1,0 +1,40 @@
+﻿using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BlogLibrary.Models
+{
+    public class UserModel : IdentityUser
+    {
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Name")]
+        public string FullName => $"{FirstName} {LastName}";
+
+        [Display(Name = "Photo")]
+        public int PhotoId { get; set; }
+
+
+        [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
+        public string RedditUrl { get; set; }
+        [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
+        public string TwitterUrl { get; set; }
+        [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
+        public string GitHubUrl { get; set; }
+
+        public virtual FileModel Photo { get; set; }
+        public virtual ICollection<PostModel> Posts { get; set; } = new HashSet<PostModel>();
+        public virtual ICollection<CommentModel> Comments { get; set; } = new HashSet<CommentModel>();
+
+    }
+}
