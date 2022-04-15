@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Databases\Interfaces\" />
+    <Folder Include="Models\Enum\" />
+  </ItemGroup>
+
 </Project>
