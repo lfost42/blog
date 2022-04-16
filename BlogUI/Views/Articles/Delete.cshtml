@@ -48,16 +48,28 @@
             @Html.DisplayFor(model => model.Updated)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image.Photo)
+            @Html.DisplayNameFor(model => model.Slug)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image.Photo)
+            @Html.DisplayFor(model => model.Slug)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Image.Id)
         </dd class>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.TopicModel)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TopicModel.Description)
+        </dd class>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Creator)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Creator.Id)
         </dd class>
     </dl>
     
