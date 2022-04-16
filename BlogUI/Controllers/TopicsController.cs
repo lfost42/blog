@@ -20,6 +20,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Topics
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var blogContext = _context.Topics.Include(t => t.Creator);
@@ -27,6 +28,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Topics/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,6 +48,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Topics/Create
+        [HttpGet]
         public IActionResult Create()
         {
             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id");
@@ -57,10 +60,11 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Created,Updated,PhotoId,CreatorId")] TopicModel topicModel)
+        public async Task<IActionResult> Create([Bind("Name,Description,Image")] TopicModel topicModel)
         {
             if (ModelState.IsValid)
             {
+                topicModel.Created = DateTime.Now;
                 _context.Add(topicModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -70,6 +74,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Topics/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,7 +87,6 @@ namespace BlogUI.Controllers
             {
                 return NotFound();
             }
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", topicModel.CreatorId);
             return View(topicModel);
         }
 
@@ -91,7 +95,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Created,Updated,PhotoId,CreatorId")] TopicModel topicModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Image.Image")] TopicModel topicModel)
         {
             if (id != topicModel.Id)
             {
@@ -123,6 +127,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Topics/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

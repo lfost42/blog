@@ -20,13 +20,15 @@ namespace BlogUI.Controllers
         }
 
         // GET: Articles
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Articles.Include(a => a.Creator).Include(a => a.PhotoModel).Include(a => a.TopicModel);
+            var blogContext = _context.Articles.Include(a => a.Creator).Include(a => a.TopicModel);
             return View(await blogContext.ToListAsync());
         }
 
         // GET: Articles/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,7 +38,6 @@ namespace BlogUI.Controllers
 
             var articleModel = await _context.Articles
                 .Include(a => a.Creator)
-                .Include(a => a.PhotoModel)
                 .Include(a => a.TopicModel)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (articleModel == null)
@@ -48,10 +49,10 @@ namespace BlogUI.Controllers
         }
 
         // GET: Articles/Create
+        [HttpGet]
         public IActionResult Create()
         {
             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["PhotoModelId"] = new SelectList(_context.Photos, "Id", "Id");
             ViewData["TopicModelId"] = new SelectList(_context.Topics, "Id", "Description");
             return View();
         }
@@ -61,21 +62,24 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Summary,Body,Status,Created,Updated,Slug,PhotoModelId,TopicModelId,CreatorId")] ArticleModel articleModel)
+        public async Task<IActionResult> Create([Bind("Title,Summary,Body,Status,Image.Image,TopicModelId")] ArticleModel articleModel)
         {
             if (ModelState.IsValid)
             {
+                articleModel.Created = DateTime.Now;
+
                 _context.Add(articleModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", articleModel.CreatorId);
-            ViewData["PhotoModelId"] = new SelectList(_context.Photos, "Id", "Id", articleModel.PhotoModelId);
+
             ViewData["TopicModelId"] = new SelectList(_context.Topics, "Id", "Description", articleModel.TopicModelId);
+
             return View(articleModel);
         }
 
         // GET: Articles/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,9 +92,8 @@ namespace BlogUI.Controllers
             {
                 return NotFound();
             }
+            ViewData["TopicId"] = new SelectList(_context.Topics, "Id", "Name", articleModel.TopicModel.Id);
             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", articleModel.CreatorId);
-            ViewData["PhotoModelId"] = new SelectList(_context.Photos, "Id", "Id", articleModel.PhotoModelId);
-            ViewData["TopicModelId"] = new SelectList(_context.Topics, "Id", "Description", articleModel.TopicModelId);
             return View(articleModel);
         }
 
@@ -99,7 +102,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Summary,Body,Status,Created,Updated,Slug,PhotoModelId,TopicModelId,CreatorId")] ArticleModel articleModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Summary,Body,Status,Created,Updated,Slug,Image.Image,TopicModelId,CreatorId")] ArticleModel articleModel)
         {
             if (id != articleModel.Id)
             {
@@ -127,12 +130,12 @@ namespace BlogUI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", articleModel.CreatorId);
-            ViewData["PhotoModelId"] = new SelectList(_context.Photos, "Id", "Id", articleModel.PhotoModelId);
             ViewData["TopicModelId"] = new SelectList(_context.Topics, "Id", "Description", articleModel.TopicModelId);
             return View(articleModel);
         }
 
         // GET: Articles/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,7 +145,6 @@ namespace BlogUI.Controllers
 
             var articleModel = await _context.Articles
                 .Include(a => a.Creator)
-                .Include(a => a.PhotoModel)
                 .Include(a => a.TopicModel)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (articleModel == null)

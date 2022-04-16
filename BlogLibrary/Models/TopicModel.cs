@@ -25,14 +25,14 @@ namespace BlogLibrary.Models
         public DateTime? Updated { get; set; }
 
         [Display(Name = "Image")]
-        public int PhotoId { get; set; }
+        public int ImageId { get; set; }
 
         [Display(Name = "Creator")]
         public string CreatorId { get; set; }
 
 
         //Navigation
-        public virtual PhotoModel PhotoModel { get; set; }
+        public virtual ImageModel Image { get; set; }
         public virtual UserModel Creator { get; set; }
         public virtual ICollection<ArticleModel> Articles { get; set; } = new HashSet<ArticleModel>();
 

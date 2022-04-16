@@ -25,10 +25,7 @@
                 @Html.DisplayNameFor(model => model.Updated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhotoId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Creator)
+                @Html.DisplayNameFor(model => model.Image.Image)
             </th>
             <th></th>
         </tr>
@@ -49,10 +46,7 @@
                 @Html.DisplayFor(modelItem => item.Updated)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PhotoId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Creator.Id)
+                @Html.DisplayFor(modelItem => item.Image.Image)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

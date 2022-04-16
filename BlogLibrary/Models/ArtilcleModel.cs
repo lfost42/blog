@@ -36,7 +36,7 @@ namespace BlogLibrary.Models
         public string Slug { get; set; }
 
         [Display(Name = "Image")]
-        public int PhotoModelId { get; set; }
+        public int ImageId { get; set; }
 
         
         [Display(Name = "Topic")]
@@ -48,7 +48,7 @@ namespace BlogLibrary.Models
 
         
         //Navigation
-        public virtual PhotoModel PhotoModel { get; set; }
+        public virtual ImageModel Image { get; set; }
         public virtual TopicModel TopicModel { get; set; }
         public virtual UserModel Creator { get; set; }
         public virtual ICollection<TagModel> Tags { get; set; } = new HashSet<TagModel>();

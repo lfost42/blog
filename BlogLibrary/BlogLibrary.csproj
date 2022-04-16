@@ -5,12 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\..\..\..\..\Data\Migrations\20220416025159_Identity_001.cs" Link="Data\Migrations\20220416025159_Identity_001.cs" />
-    <Compile Include="..\..\..\..\..\..\Data\Migrations\20220416025159_Identity_001.Designer.cs" Link="Data\Migrations\20220416025159_Identity_001.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Databases\Interfaces\" />
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,4 +21,7 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Data\Migrations\" />
+  </ItemGroup>
 </Project>

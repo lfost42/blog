@@ -20,6 +20,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Tags
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var blogContext = _context.Tags.Include(t => t.Article).Include(t => t.Creator);
@@ -27,6 +28,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Tags/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +49,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Tags/Create
+        [HttpGet]
         public IActionResult Create()
         {
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body");
@@ -73,6 +76,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Tags/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -128,6 +132,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Tags/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

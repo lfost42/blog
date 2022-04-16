@@ -20,13 +20,15 @@ namespace BlogUI.Controllers
         }
 
         // GET: Comments
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Comments.Include(c => c.Article).Include(c => c.Photo);
+            var blogContext = _context.Comments.Include(c => c.Article).Include(c => c.Image);
             return View(await blogContext.ToListAsync());
         }
 
         // GET: Comments/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,7 +38,7 @@ namespace BlogUI.Controllers
 
             var commentModel = await _context.Comments
                 .Include(c => c.Article)
-                .Include(c => c.Photo)
+                .Include(c => c.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (commentModel == null)
             {
@@ -47,10 +49,11 @@ namespace BlogUI.Controllers
         }
 
         // GET: Comments/Create
+        [HttpGet]
         public IActionResult Create()
         {
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body");
-            ViewData["PhotoId"] = new SelectList(_context.Photos, "Id", "Id");
+            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id");
             return View();
         }
 
@@ -59,7 +62,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Subject,Comment,Created,Updated,Moderated,Deleted,PhotoId,ArticleId,CreatorId,ModeratedComment")] CommentModel commentModel)
+        public async Task<IActionResult> Create([Bind("Id,Subject,Comment,Created,Updated,Moderated,Deleted,Image.Image,ArticleId,CreatorId,ModeratedComment")] CommentModel commentModel)
         {
             if (ModelState.IsValid)
             {
@@ -68,11 +71,12 @@ namespace BlogUI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body", commentModel.ArticleId);
-            ViewData["PhotoId"] = new SelectList(_context.Photos, "Id", "Id", commentModel.PhotoId);
+            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", commentModel.Image);
             return View(commentModel);
         }
 
         // GET: Comments/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,7 +90,7 @@ namespace BlogUI.Controllers
                 return NotFound();
             }
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body", commentModel.ArticleId);
-            ViewData["PhotoId"] = new SelectList(_context.Photos, "Id", "Id", commentModel.PhotoId);
+            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", commentModel.ImageId);
             return View(commentModel);
         }
 
@@ -95,7 +99,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Subject,Comment,Created,Updated,Moderated,Deleted,PhotoId,ArticleId,CreatorId,ModeratedComment")] CommentModel commentModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Subject,Comment,Created,Updated,Moderated,Deleted,Image.Image,ArticleId,CreatorId,ModeratedComment")] CommentModel commentModel)
         {
             if (id != commentModel.Id)
             {
@@ -123,11 +127,12 @@ namespace BlogUI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body", commentModel.ArticleId);
-            ViewData["PhotoId"] = new SelectList(_context.Photos, "Id", "Id", commentModel.PhotoId);
+            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", commentModel.ImageId);
             return View(commentModel);
         }
 
         // GET: Comments/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,7 +142,7 @@ namespace BlogUI.Controllers
 
             var commentModel = await _context.Comments
                 .Include(c => c.Article)
-                .Include(c => c.Photo)
+                .Include(c => c.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (commentModel == null)
             {

@@ -14,8 +14,9 @@ namespace BlogLibrary.Models
         [Required, StringLength(30, ErrorMessage = "The {0} must be atleast {2} and at most {1} characters.", MinimumLength = 2)]
         public string Tag { get; set; }
 
-
+        [Display(Name = "Article")]
         public int ArticleId { get; set; }
+        [Display(Name = "Creator")]
         public string CreatorId { get; set; }
 
 

@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace BlogLibrary.Models
 {
-    public class PhotoModel
+    public class ImageModel
     {
         public int Id { get; set; }
 
         [NotMapped, DataType(DataType.Upload)]
         public IFormFile Image { get; set; }
-        public string PhotoName { get; set; }
-        public string Photoxtension { get; set; }
-        public byte[] PhotoData { get; set; }
+        public string ImageName { get; set; }
+        public string ImageExtension { get; set; }
+        public byte[] ImageData { get; set; }
 
         [Required, Display(Name = "Uploaded")]
         public DateTimeOffset DateUploaded { get; set; }

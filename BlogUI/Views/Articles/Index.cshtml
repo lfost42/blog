@@ -19,28 +19,10 @@
                 @Html.DisplayNameFor(model => model.Summary)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Body)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Created)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Updated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slug)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhotoModel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TopicModel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Creator)
+                @Html.DisplayNameFor(model => model.Image.Image)
             </th>
             <th></th>
         </tr>
@@ -55,29 +37,12 @@
                 @Html.DisplayFor(modelItem => item.Summary)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Body)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Created)
+                @Html.DisplayFor(modelItem => item.Image.Image)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Updated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slug)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhotoModel.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TopicModel.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Creator.Id)
-            </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
