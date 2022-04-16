@@ -31,8 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Data\Migrations\20220416051046_Database_001.cs" />
-    <Compile Include="Data\Migrations\20220416051046_Database_001.Designer.cs" />
+    <Compile Include="Data\Migrations\20220416185745_BasicModels_001.cs" />
+    <Compile Include="Data\Migrations\20220416185745_BasicModels_001.Designer.cs" />
     <Compile Include="Data\Migrations\BlogContextModelSnapshot.cs" />
   </ItemGroup>
 </Project>

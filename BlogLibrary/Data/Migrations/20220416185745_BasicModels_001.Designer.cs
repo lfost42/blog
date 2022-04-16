@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlogLibrary.Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20220416051046_Database_001")]
-    partial class Database_001
+    [Migration("20220416185745_BasicModels_001")]
+    partial class BasicModels_001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,7 +38,7 @@ namespace BlogLibrary.Data.Migrations
                     b.Property<string>("CreatorId")
                         .HasColumnType("text");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Slug")
@@ -101,9 +101,6 @@ namespace BlogLibrary.Data.Migrations
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("ImageId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime?>("Moderated")
                         .HasColumnType("timestamp without time zone");
 
@@ -125,8 +122,6 @@ namespace BlogLibrary.Data.Migrations
                     b.HasIndex("ArticleId");
 
                     b.HasIndex("CreatorId1");
-
-                    b.HasIndex("ImageId");
 
                     b.ToTable("Comments");
                 });
@@ -165,9 +160,6 @@ namespace BlogLibrary.Data.Migrations
                     b.Property<int>("ArticleId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("CreatorId")
-                        .HasColumnType("text");
-
                     b.Property<string>("Tag")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -176,8 +168,6 @@ namespace BlogLibrary.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
-
-                    b.HasIndex("CreatorId");
 
                     b.ToTable("Tags");
                 });
@@ -200,7 +190,7 @@ namespace BlogLibrary.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -445,9 +435,7 @@ namespace BlogLibrary.Data.Migrations
 
                     b.HasOne("BlogLibrary.Models.ImageModel", "Image")
                         .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
                     b.HasOne("BlogLibrary.Models.TopicModel", "TopicModel")
                         .WithMany("Articles")
@@ -474,17 +462,9 @@ namespace BlogLibrary.Data.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("CreatorId1");
 
-                    b.HasOne("BlogLibrary.Models.ImageModel", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Article");
 
                     b.Navigation("Creator");
-
-                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("BlogLibrary.Models.TagModel", b =>
@@ -495,13 +475,7 @@ namespace BlogLibrary.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BlogLibrary.Models.UserModel", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
-
                     b.Navigation("Article");
-
-                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("BlogLibrary.Models.TopicModel", b =>
@@ -512,9 +486,7 @@ namespace BlogLibrary.Data.Migrations
 
                     b.HasOne("BlogLibrary.Models.ImageModel", "Image")
                         .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
                     b.Navigation("Creator");
 

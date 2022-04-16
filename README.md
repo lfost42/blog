@@ -50,8 +50,8 @@ Role Based Security, authenticated visitors may leave comments
 - Description
 - Date Created
 - Date Updated
-- Image
-- Creator
+- fk_Image
+- fk_Creator
 -Collection<Articles
 
 --Comment--
@@ -59,9 +59,7 @@ Role Based Security, authenticated visitors may leave comments
 - Comment
 - Date Created
 - Date Updated
-- Date Moderated
 - Date Deleted
-- fk_Image
 - fk_Article
 - fk_creator
 
@@ -89,6 +87,5 @@ Role Based Security, authenticated visitors may leave comments
 --Tag--
 - Tag
 - fk_post
-- fk_creator
 
 

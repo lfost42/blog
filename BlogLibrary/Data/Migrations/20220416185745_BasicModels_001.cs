@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace BlogLibrary.Data.Migrations
 {
-    public partial class Database_001 : Migration
+    public partial class BasicModels_001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -191,7 +191,7 @@ namespace BlogLibrary.Data.Migrations
                     Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Updated = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    ImageId = table.Column<int>(type: "integer", nullable: false),
+                    ImageId = table.Column<int>(type: "integer", nullable: true),
                     CreatorId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -208,7 +208,7 @@ namespace BlogLibrary.Data.Migrations
                         column: x => x.ImageId,
                         principalTable: "Images",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,7 +224,7 @@ namespace BlogLibrary.Data.Migrations
                     Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Updated = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     Slug = table.Column<string>(type: "text", nullable: true),
-                    ImageId = table.Column<int>(type: "integer", nullable: false),
+                    ImageId = table.Column<int>(type: "integer", nullable: true),
                     TopicModelId = table.Column<int>(type: "integer", nullable: false),
                     CreatorId = table.Column<string>(type: "text", nullable: true)
                 },
@@ -242,7 +242,7 @@ namespace BlogLibrary.Data.Migrations
                         column: x => x.ImageId,
                         principalTable: "Images",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Articles_Topics_TopicModelId",
                         column: x => x.TopicModelId,
@@ -263,7 +263,6 @@ namespace BlogLibrary.Data.Migrations
                     Updated = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     Moderated = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     Deleted = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    ImageId = table.Column<int>(type: "integer", nullable: false),
                     ArticleId = table.Column<int>(type: "integer", nullable: false),
                     CreatorId = table.Column<int>(type: "integer", nullable: false),
                     ModeratedComment = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
@@ -284,12 +283,6 @@ namespace BlogLibrary.Data.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Comments_Images_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Images",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -299,8 +292,7 @@ namespace BlogLibrary.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Tag = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    ArticleId = table.Column<int>(type: "integer", nullable: false),
-                    CreatorId = table.Column<string>(type: "text", nullable: true)
+                    ArticleId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -311,12 +303,6 @@ namespace BlogLibrary.Data.Migrations
                         principalTable: "Articles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Tags_AspNetUsers_CreatorId",
-                        column: x => x.CreatorId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -387,19 +373,9 @@ namespace BlogLibrary.Data.Migrations
                 column: "CreatorId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_ImageId",
-                table: "Comments",
-                column: "ImageId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Tags_ArticleId",
                 table: "Tags",
                 column: "ArticleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tags_CreatorId",
-                table: "Tags",
-                column: "CreatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Topics_CreatorId",

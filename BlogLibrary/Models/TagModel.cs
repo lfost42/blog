@@ -16,13 +16,10 @@ namespace BlogLibrary.Models
 
         [Display(Name = "Article")]
         public int ArticleId { get; set; }
-        [Display(Name = "Creator")]
-        public string CreatorId { get; set; }
 
 
         //Navigation
         public virtual ArticleModel Article { get; set; }
-        public UserModel Creator { get; set; }
 
     }
 }

@@ -65,6 +65,7 @@ namespace BlogUI.Controllers
         {
             if (ModelState.IsValid)
             {
+                articleModel.Created = DateTime.Now;
                 _context.Add(articleModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -110,6 +111,7 @@ namespace BlogUI.Controllers
             {
                 try
                 {
+                    articleModel.Updated = DateTime.Now;
                     _context.Update(articleModel);
                     await _context.SaveChangesAsync();
                 }

@@ -29,9 +29,6 @@ namespace BlogLibrary.Models
         [DataType(DataType.Date)]
         public DateTime? Deleted { get; set; }
 
-
-        [Display(Name = "Image")]
-        public int ImageId { get; set; }
         [Display(Name = "Article")]
         public int ArticleId { get; set; }
         [Display(Name = "Creator")]
@@ -42,7 +39,6 @@ namespace BlogLibrary.Models
         public string ModeratedComment { get; set; }
 
         //Navigation
-        public virtual ImageModel Image { get; set; }
         public virtual ArticleModel Article { get; set; }
         public virtual UserModel Creator { get; set; }
 

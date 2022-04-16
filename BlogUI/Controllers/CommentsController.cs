@@ -22,7 +22,7 @@ namespace BlogUI.Controllers
         // GET: Comments
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Comments.Include(c => c.Article).Include(c => c.Image);
+            var blogContext = _context.Comments.Include(c => c.Article);
             return View(await blogContext.ToListAsync());
         }
 
@@ -36,7 +36,6 @@ namespace BlogUI.Controllers
 
             var commentModel = await _context.Comments
                 .Include(c => c.Article)
-                .Include(c => c.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (commentModel == null)
             {
@@ -50,7 +49,6 @@ namespace BlogUI.Controllers
         public IActionResult Create()
         {
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body");
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id");
             return View();
         }
 
@@ -59,16 +57,16 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Subject,Comment,Created,Updated,Moderated,Deleted,ImageId,ArticleId,CreatorId,ModeratedComment")] CommentModel commentModel)
+        public async Task<IActionResult> Create([Bind("Id,Subject,Comment,Created,Updated,Moderated,Deleted,ArticleId,CreatorId,ModeratedComment")] CommentModel commentModel)
         {
             if (ModelState.IsValid)
             {
+                commentModel.Created = DateTime.Now;
                 _context.Add(commentModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body", commentModel.ArticleId);
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", commentModel.ImageId);
             return View(commentModel);
         }
 
@@ -86,7 +84,6 @@ namespace BlogUI.Controllers
                 return NotFound();
             }
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body", commentModel.ArticleId);
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", commentModel.ImageId);
             return View(commentModel);
         }
 
@@ -95,7 +92,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Subject,Comment,Created,Updated,Moderated,Deleted,ImageId,ArticleId,CreatorId,ModeratedComment")] CommentModel commentModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Subject,Comment,Created,Updated,Moderated,Deleted,ArticleId,CreatorId,ModeratedComment")] CommentModel commentModel)
         {
             if (id != commentModel.Id)
             {
@@ -106,6 +103,7 @@ namespace BlogUI.Controllers
             {
                 try
                 {
+                    commentModel.Updated = DateTime.Now;
                     _context.Update(commentModel);
                     await _context.SaveChangesAsync();
                 }
@@ -123,7 +121,6 @@ namespace BlogUI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body", commentModel.ArticleId);
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", commentModel.ImageId);
             return View(commentModel);
         }
 
@@ -137,7 +134,6 @@ namespace BlogUI.Controllers
 
             var commentModel = await _context.Comments
                 .Include(c => c.Article)
-                .Include(c => c.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (commentModel == null)
             {
@@ -152,6 +148,7 @@ namespace BlogUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            
             var commentModel = await _context.Comments.FindAsync(id);
             _context.Comments.Remove(commentModel);
             await _context.SaveChangesAsync();

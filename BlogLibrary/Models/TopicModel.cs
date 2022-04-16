@@ -25,7 +25,7 @@ namespace BlogLibrary.Models
         public DateTime? Updated { get; set; }
 
         [Display(Name = "Image")]
-        public int ImageId { get; set; }
+        public int? ImageId { get; set; }
 
         [Display(Name = "Creator")]
         public string CreatorId { get; set; }

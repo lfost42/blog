@@ -22,7 +22,7 @@ namespace BlogUI.Controllers
         // GET: Tags
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Tags.Include(t => t.Article).Include(t => t.Creator);
+            var blogContext = _context.Tags.Include(t => t.Article);
             return View(await blogContext.ToListAsync());
         }
 
@@ -36,7 +36,6 @@ namespace BlogUI.Controllers
 
             var tagModel = await _context.Tags
                 .Include(t => t.Article)
-                .Include(t => t.Creator)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tagModel == null)
             {
@@ -50,7 +49,6 @@ namespace BlogUI.Controllers
         public IActionResult Create()
         {
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body");
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -59,7 +57,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Tag,ArticleId,CreatorId")] TagModel tagModel)
+        public async Task<IActionResult> Create([Bind("Id,Tag,ArticleId")] TagModel tagModel)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +66,6 @@ namespace BlogUI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body", tagModel.ArticleId);
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", tagModel.CreatorId);
             return View(tagModel);
         }
 
@@ -86,7 +83,6 @@ namespace BlogUI.Controllers
                 return NotFound();
             }
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body", tagModel.ArticleId);
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", tagModel.CreatorId);
             return View(tagModel);
         }
 
@@ -95,7 +91,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Tag,ArticleId,CreatorId")] TagModel tagModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Tag,ArticleId")] TagModel tagModel)
         {
             if (id != tagModel.Id)
             {
@@ -123,7 +119,6 @@ namespace BlogUI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body", tagModel.ArticleId);
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", tagModel.CreatorId);
             return View(tagModel);
         }
 
@@ -137,7 +132,6 @@ namespace BlogUI.Controllers
 
             var tagModel = await _context.Tags
                 .Include(t => t.Article)
-                .Include(t => t.Creator)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tagModel == null)
             {

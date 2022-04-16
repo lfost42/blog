@@ -36,7 +36,7 @@ namespace BlogLibrary.Models
         public string Slug { get; set; }
 
         [Display(Name = "Image")]
-        public int ImageId { get; set; }
+        public int? ImageId { get; set; }
 
         
         [Display(Name = "Topic")]
