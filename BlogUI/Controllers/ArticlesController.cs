@@ -53,7 +53,7 @@ namespace BlogUI.Controllers
         public IActionResult Create()
         {
             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["TopicModelId"] = new SelectList(_context.Topics, "Id", "Description");
+            ViewData["TopicModelId"] = new SelectList(_context.Topics, "Id", "Name");
             return View();
         }
 
