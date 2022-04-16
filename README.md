@@ -8,15 +8,15 @@ Summary Info
 ## WALKTHROUGH
 A blog that allows the owner to post articles upon being authenticated via login. Users may leave comments after registering and being authenticated. Tags help filter posts by topic. 
 
-- Blog
-- Posts
+- Topics
+- Articles
 - Comments
 - Tags
 
 ## OPEN REQUIREMENTS
 
 MVP:
-Blog will have role based access so that allows the owner create posts. Visitors may add comments after registering and logging in. 
+Role based access; only owner creates articles. Visitors may add comments after registering and logging in. 
 
 OTHER FEATURES:
 - DEMO login (will not update database)
@@ -25,7 +25,7 @@ OTHER FEATURES:
 - Locate comments by guest
 
 ## USER INTERFACE
-Dashboard shows recent articles with a side-menu to older articles. Search function. Login for writing posts or comments. 
+Dashboard shows topics and recent articles. Side-menu to older articles. Search function. Login for writing articles or comments. 
 
 ## LOGIC DESIGN
 Identity Access, owner creates posts
@@ -33,15 +33,16 @@ Role Based Security, authenticated visitors may leave comments
 
 
 ## DATA DESIGN
-- Blog Post
+- Blog Topic
+- Blog Article
 - Blog Tag
 - Blog Comment
-- File (Photos)
+- Photos
 
 -- Users--
 - Photo
 - Contact Links
-- Collection<Posts
+- Collection<Articles
 - Collection<Comments
 
 --Blog--
@@ -51,7 +52,7 @@ Role Based Security, authenticated visitors may leave comments
 - Date Updated
 - Image
 - Creator
--Collection<Posts
+-Collection<Articles
 
 --Comment--
 - Subject
@@ -61,26 +62,26 @@ Role Based Security, authenticated visitors may leave comments
 - Date Moderated
 - Date Deleted
 - fk_Image
-- fk_Post
+- fk_Article
 - fk_creator
 
 --File--
-- IFormFile
-- FileName
-- FileExtension
-- FileData
+- IFormFile (Image)
+- PhotoName
+- PhotoExtension
+- PhotoData
 - DateUploaded
 
---Post--
+--Article--
 - Title
 - Summary
-- Post
+- Body
 - Status
 - Date Created
 - Date Updated
 - Slug
 - Photo
-- fk_blo
+- fk_topic
 - fk_creator
 - Collection<Tags
 - Collection<Comments
