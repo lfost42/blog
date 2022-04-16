@@ -62,7 +62,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Summary,Body,Status,Image.Image,TopicModelId")] ArticleModel articleModel)
+        public async Task<IActionResult> Create([Bind("Title,Summary,Body,Status,Image.Photo,TopicModelId")] ArticleModel articleModel)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Summary,Body,Status,Created,Updated,Slug,Image.Image,TopicModelId,CreatorId")] ArticleModel articleModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Summary,Body,Status,Created,Updated,Slug,Image.Photo,TopicModelId,CreatorId")] ArticleModel articleModel)
         {
             if (id != articleModel.Id)
             {

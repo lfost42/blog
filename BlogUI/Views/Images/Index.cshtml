@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BlogLibrary.Models.ArticleModel>
+﻿@model IEnumerable<BlogLibrary.Models.ImageModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,16 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.ImageName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Summary)
+                @Html.DisplayNameFor(model => model.ImageExtension)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.DisplayNameFor(model => model.ImageData)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Image.Photo)
+                @Html.DisplayNameFor(model => model.DateUploaded)
             </th>
             <th></th>
         </tr>
@@ -31,18 +31,17 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => item.ImageName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Summary)
+                @Html.DisplayFor(modelItem => item.ImageExtension)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @Html.DisplayFor(modelItem => item.ImageData)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Image.Photo)
+                @Html.DisplayFor(modelItem => item.DateUploaded)
             </td>
-
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

@@ -12,9 +12,10 @@ namespace BlogLibrary.Models
     public class ImageModel
     {
         public int Id { get; set; }
-
-        [NotMapped, DataType(DataType.Upload)]
-        public IFormFile Image { get; set; }
+        
+        [DataType(DataType.Upload)]
+        [NotMapped]
+        public IFormFile Photo { get; set; }
         public string ImageName { get; set; }
         public string ImageExtension { get; set; }
         public byte[] ImageData { get; set; }

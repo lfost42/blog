@@ -10,25 +10,22 @@ using BlogLibrary.Models;
 
 namespace BlogUI.Controllers
 {
-    public class TopicsController : Controller
+    public class ImagesController : Controller
     {
         private readonly BlogContext _context;
 
-        public TopicsController(BlogContext context)
+        public ImagesController(BlogContext context)
         {
             _context = context;
         }
 
-        // GET: Topics
-        [HttpGet]
+        // GET: Images
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Topics.Include(t => t.Creator);
-            return View(await blogContext.ToListAsync());
+            return View(await _context.Images.ToListAsync());
         }
 
-        // GET: Topics/Details/5
-        [HttpGet]
+        // GET: Images/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,45 +33,39 @@ namespace BlogUI.Controllers
                 return NotFound();
             }
 
-            var topicModel = await _context.Topics
-                .Include(t => t.Creator)
+            var imageModel = await _context.Images
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (topicModel == null)
+            if (imageModel == null)
             {
                 return NotFound();
             }
 
-            return View(topicModel);
+            return View(imageModel);
         }
 
-        // GET: Topics/Create
-        [HttpGet]
+        // GET: Images/Create
         public IActionResult Create()
         {
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: Topics/Create
+        // POST: Images/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description,Image")] TopicModel topicModel)
+        public async Task<IActionResult> Create([Bind("Id,ImageName,ImageExtension,ImageData,DateUploaded")] ImageModel imageModel)
         {
             if (ModelState.IsValid)
             {
-                topicModel.Created = DateTime.Now;
-                _context.Add(topicModel);
+                _context.Add(imageModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", topicModel.CreatorId);
-            return View(topicModel);
+            return View(imageModel);
         }
 
-        // GET: Topics/Edit/5
-        [HttpGet]
+        // GET: Images/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,22 +73,22 @@ namespace BlogUI.Controllers
                 return NotFound();
             }
 
-            var topicModel = await _context.Topics.FindAsync(id);
-            if (topicModel == null)
+            var imageModel = await _context.Images.FindAsync(id);
+            if (imageModel == null)
             {
                 return NotFound();
             }
-            return View(topicModel);
+            return View(imageModel);
         }
 
-        // POST: Topics/Edit/5
+        // POST: Images/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Image.Photo")] TopicModel topicModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageName,ImageExtension,ImageData,DateUploaded")] ImageModel imageModel)
         {
-            if (id != topicModel.Id)
+            if (id != imageModel.Id)
             {
                 return NotFound();
             }
@@ -106,12 +97,12 @@ namespace BlogUI.Controllers
             {
                 try
                 {
-                    _context.Update(topicModel);
+                    _context.Update(imageModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TopicModelExists(topicModel.Id))
+                    if (!ImageModelExists(imageModel.Id))
                     {
                         return NotFound();
                     }
@@ -122,12 +113,10 @@ namespace BlogUI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", topicModel.CreatorId);
-            return View(topicModel);
+            return View(imageModel);
         }
 
-        // GET: Topics/Delete/5
-        [HttpGet]
+        // GET: Images/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,31 +124,30 @@ namespace BlogUI.Controllers
                 return NotFound();
             }
 
-            var topicModel = await _context.Topics
-                .Include(t => t.Creator)
+            var imageModel = await _context.Images
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (topicModel == null)
+            if (imageModel == null)
             {
                 return NotFound();
             }
 
-            return View(topicModel);
+            return View(imageModel);
         }
 
-        // POST: Topics/Delete/5
+        // POST: Images/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var topicModel = await _context.Topics.FindAsync(id);
-            _context.Topics.Remove(topicModel);
+            var imageModel = await _context.Images.FindAsync(id);
+            _context.Images.Remove(imageModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TopicModelExists(int id)
+        private bool ImageModelExists(int id)
         {
-            return _context.Topics.Any(e => e.Id == id);
+            return _context.Images.Any(e => e.Id == id);
         }
     }
 }

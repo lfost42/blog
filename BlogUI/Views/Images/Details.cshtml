@@ -1,4 +1,4 @@
-﻿@model BlogLibrary.Models.TopicModel
+﻿@model BlogLibrary.Models.ImageModel
 
 @{
     ViewData["Title"] = "Details";
@@ -7,34 +7,33 @@
 <h1>Details</h1>
 
 <div>
-    <h4>TopicModel</h4>
+    <h4>ImageModel</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.ImageName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.ImageName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.ImageExtension)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.ImageExtension)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Created)
+            @Html.DisplayNameFor(model => model.ImageData)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Created)
+            @Html.DisplayFor(model => model.ImageData)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image.Photo)
+            @Html.DisplayNameFor(model => model.DateUploaded)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image.Photo)
+            @Html.DisplayFor(model => model.DateUploaded)
         </dd>
-
     </dl>
 </div>
 <div>
