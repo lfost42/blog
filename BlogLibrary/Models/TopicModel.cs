@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlogLibrary.Models
 {
-    public class BlogModel
+    public class TopicModel
     {
         public int Id { get; set; }
 
@@ -25,16 +25,16 @@ namespace BlogLibrary.Models
         public DateTime? Updated { get; set; }
 
         [Display(Name = "Image")]
-        public int FileModelId { get; set; }
+        public int PhotoId { get; set; }
 
         [Display(Name = "Creator")]
         public string CreatorId { get; set; }
 
 
         //Navigation
-        public virtual FileModel FileModel { get; set; }
+        public virtual PhotoModel PhotoModel { get; set; }
         public virtual UserModel Creator { get; set; }
-        public virtual ICollection<PostModel> Posts { get; set; } = new HashSet<PostModel>();
+        public virtual ICollection<ArticleModel> Articles { get; set; } = new HashSet<ArticleModel>();
 
 
     }

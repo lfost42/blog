@@ -15,10 +15,10 @@ namespace BlogLibrary.Data
         public BlogContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<BlogModel> Blogs { get; set; }
+        public DbSet<TopicModel> Topics { get; set; }
         public DbSet<CommentModel> Comments { get; set; }
-        public DbSet<FileModel> Files { get; set; }
-        public DbSet<PostModel> Posts { get; set; }
+        public DbSet<PhotoModel> Photos { get; set; }
+        public DbSet<ArticleModel> Articles { get; set; }
         public DbSet<TagModel> Tags { get; set; }
         public DbSet<UserModel> Users { get; set; }
 

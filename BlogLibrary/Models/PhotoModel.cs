@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace BlogLibrary.Models
 {
-    public class FileModel
+    public class PhotoModel
     {
         public int Id { get; set; }
 
         [NotMapped, DataType(DataType.Upload)]
-        public IFormFile FormFile { get; set; }
-        public string FileName { get; set; }
-        public string FileExtension { get; set; }
-        public byte[] FileData { get; set; }
+        public IFormFile Image { get; set; }
+        public string PhotoName { get; set; }
+        public string Photoxtension { get; set; }
+        public byte[] PhotoData { get; set; }
 
-        [Required, Display(Name = "Uploaded Date")]
+        [Required, Display(Name = "Uploaded")]
         public DateTimeOffset DateUploaded { get; set; }
     }
 }

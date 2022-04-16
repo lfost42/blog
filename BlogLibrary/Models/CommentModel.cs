@@ -31,8 +31,8 @@ namespace BlogLibrary.Models
 
 
         [Display(Name = "Image")]
-        public int FileModelId { get; set; }
-        public int PostId { get; set; }
+        public int PhotoId { get; set; }
+        public int ArticleId { get; set; }
         public int CreatorId { get; set; }
 
 
@@ -40,8 +40,8 @@ namespace BlogLibrary.Models
         public string ModeratedComment { get; set; }
 
         //Navigation
-        public virtual FileModel FileModel { get; set; }
-        public virtual PostModel Post { get; set; }
+        public virtual PhotoModel Photo { get; set; }
+        public virtual ArticleModel Article { get; set; }
         public virtual UserModel Creator { get; set; }
 
     }

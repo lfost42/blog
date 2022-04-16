@@ -31,8 +31,8 @@ namespace BlogLibrary.Models
         [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
         public string TwitterUrl { get; set; }
 
-        public virtual FileModel Photo { get; set; }
-        public virtual ICollection<PostModel> Posts { get; set; } = new HashSet<PostModel>();
+        public virtual PhotoModel Photo { get; set; }
+        public virtual ICollection<ArticleModel> Articles { get; set; } = new HashSet<ArticleModel>();
         public virtual ICollection<CommentModel> Comments { get; set; } = new HashSet<CommentModel>();
 
     }

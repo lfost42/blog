@@ -15,12 +15,12 @@ namespace BlogLibrary.Models
         public string Tag { get; set; }
 
 
-        public int PostId { get; set; }
+        public int ArticleId { get; set; }
         public string CreatorId { get; set; }
 
 
         //Navigation
-        public virtual PostModel Post { get; set; }
+        public virtual ArticleModel Article { get; set; }
         public UserModel Creator { get; set; }
 
     }

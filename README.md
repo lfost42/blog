@@ -63,8 +63,6 @@ Role Based Security, authenticated visitors may leave comments
 - fk_Image
 - fk_Post
 - fk_creator
-- ModeratedComment
-- ModeratedType
 
 --File--
 - IFormFile

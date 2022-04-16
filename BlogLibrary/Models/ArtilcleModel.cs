@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BlogLibrary.Models
 {
-    public class PostModel
+    public class ArticleModel
     {
         public int Id { get; set; }
 
@@ -22,7 +22,7 @@ namespace BlogLibrary.Models
 
         
         [Required]
-        public string PostBody { get; set; }
+        public string Body { get; set; }
         public Status Status { get; set; } = Status.New;
 
 
@@ -36,11 +36,11 @@ namespace BlogLibrary.Models
         public string Slug { get; set; }
 
         [Display(Name = "Image")]
-        public int FileModelId { get; set; }
+        public int PhotoModelId { get; set; }
 
         
-        [Display(Name = "Blog")]
-        public int BlogModelId { get; set; }
+        [Display(Name = "Topic")]
+        public int TopicModelId { get; set; }
 
         
         [Display(Name = "Creator")]
@@ -48,8 +48,8 @@ namespace BlogLibrary.Models
 
         
         //Navigation
-        public virtual FileModel FileModel { get; set; }
-        public virtual BlogModel BlogModel { get; set; }
+        public virtual PhotoModel PhotoModel { get; set; }
+        public virtual TopicModel TopicModel { get; set; }
         public virtual UserModel Creator { get; set; }
         public virtual ICollection<TagModel> Tags { get; set; } = new HashSet<TagModel>();
         public virtual ICollection<CommentModel> Comments { get; set; } = new HashSet<CommentModel>();
