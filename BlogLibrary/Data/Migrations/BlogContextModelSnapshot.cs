@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace BlogLibrary.Data.Migrations
+namespace BlogLibrary.Data.Migrtions
 {
     [DbContext(typeof(BlogContext))]
     partial class BlogContextModelSnapshot : ModelSnapshot
@@ -191,7 +191,7 @@ namespace BlogLibrary.Data.Migrations
                     b.Property<int?>("ImageId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");

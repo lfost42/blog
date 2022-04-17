@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Migrations\**" />
-    <EmbeddedResource Remove="Data\Migrations\**" />
-    <None Remove="Data\Migrations\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Databases\Interfaces\" />
   </ItemGroup>
 
@@ -28,11 +22,5 @@
 
   <ItemGroup>
     <None Remove="Data\Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Data\Migrations\20220416185745_BasicModels_001.cs" />
-    <Compile Include="Data\Migrations\20220416185745_BasicModels_001.Designer.cs" />
-    <Compile Include="Data\Migrations\BlogContextModelSnapshot.cs" />
   </ItemGroup>
 </Project>

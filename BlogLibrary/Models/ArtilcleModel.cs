@@ -13,7 +13,7 @@ namespace BlogLibrary.Models
         public int Id { get; set; }
 
         
-        [Required, StringLength(50, ErrorMessage = "The {0} must be atleast {2} and at most {1} characters.", MinimumLength = 2)]
+        [Required, Display(Name = "Article"), StringLength(50, ErrorMessage = "The {0} must be atleast {2} and at most {1} characters.", MinimumLength = 2)]
         public string Title { get; set; }
 
         
@@ -23,7 +23,7 @@ namespace BlogLibrary.Models
         
         [Required]
         public string Body { get; set; }
-        public Status Status { get; set; } = Status.New;
+        public Status Status { get; set; } = Status.Draft;
 
 
         [Required, DataType(DataType.Date)]

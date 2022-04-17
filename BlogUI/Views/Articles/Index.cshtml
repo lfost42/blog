@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BlogLibrary.Models.ArticleModel>
+﻿@using BlogLibrary.Models.Enum
+@model IEnumerable<BlogLibrary.Models.ArticleModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,34 +14,22 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.TopicModelId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Summary)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Body)
+                @Html.DisplayNameFor(model => model.Created)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Created)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Updated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slug)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TopicModel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Creator)
             </th>
             <th></th>
         </tr>
@@ -49,34 +38,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.TopicModel.Title)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Summary)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Body)
+                @Html.DisplayFor(modelItem => item.Created)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Updated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slug)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Image.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TopicModel.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Creator.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

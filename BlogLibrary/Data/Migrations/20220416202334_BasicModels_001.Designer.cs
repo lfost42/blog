@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace BlogLibrary.Data.Migrations
+namespace BlogLibrary.Data.Migrtions
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20220416185745_BasicModels_001")]
+    [Migration("20220416202334_BasicModels_001")]
     partial class BasicModels_001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -193,7 +193,7 @@ namespace BlogLibrary.Data.Migrations
                     b.Property<int?>("ImageId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");

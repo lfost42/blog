@@ -8,7 +8,7 @@ namespace BlogLibrary.Models.Enum
 {
     public enum Status
     {
-        New,
+        Draft,
         Pending,
         Preview,
         Published
