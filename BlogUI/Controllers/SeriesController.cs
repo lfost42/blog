@@ -20,6 +20,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Series
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var blogContext = _context.Series.Include(t => t.Creator).Include(t => t.Image);
@@ -27,6 +28,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Series/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,6 +48,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Series/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -70,6 +73,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Series/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -122,6 +126,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Series/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

@@ -48,6 +48,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Articles/Create
+        [HttpGet]
         public IActionResult Create()
         {
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title");
