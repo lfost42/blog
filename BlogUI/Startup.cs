@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BlogLibrary.Models;
 using BlogLibrary.Data;
+using BlogLibrary.Databases;
 
 namespace BlogUI
 {
@@ -41,6 +42,8 @@ namespace BlogUI
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<SeedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace BlogLibrary.Data.Migrations
 {
-    public partial class Initial_001 : Migration
+    public partial class BaseSetup_001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,7 +66,7 @@ namespace BlogLibrary.Data.Migrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
-                    ImageId = table.Column<int>(type: "integer", nullable: false),
+                    ImageId = table.Column<int>(type: "integer", nullable: true),
                     GitHubUrl = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     PortfolioUrl = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     TwitterUrl = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
@@ -93,7 +93,7 @@ namespace BlogLibrary.Data.Migrations
                         column: x => x.ImageId,
                         principalTable: "Images",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

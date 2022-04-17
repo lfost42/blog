@@ -234,7 +234,7 @@ namespace BlogLibrary.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("integer");
 
                     b.Property<string>("LastName")
@@ -495,9 +495,7 @@ namespace BlogLibrary.Data.Migrations
                 {
                     b.HasOne("BlogLibrary.Models.ImageModel", "Image")
                         .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
                 });

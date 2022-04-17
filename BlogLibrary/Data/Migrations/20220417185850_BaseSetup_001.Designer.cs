@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlogLibrary.Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20220417163259_Initial_001")]
-    partial class Initial_001
+    [Migration("20220417185850_BaseSetup_001")]
+    partial class BaseSetup_001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -236,7 +236,7 @@ namespace BlogLibrary.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("integer");
 
                     b.Property<string>("LastName")
@@ -497,9 +497,7 @@ namespace BlogLibrary.Data.Migrations
                 {
                     b.HasOne("BlogLibrary.Models.ImageModel", "Image")
                         .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
                 });
