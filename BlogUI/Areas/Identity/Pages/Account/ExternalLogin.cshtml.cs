@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using BlogLibrary.Databases.Interfaces;
 
 namespace BlogUI.Areas.Identity.Pages.Account
 {
@@ -22,14 +23,14 @@ namespace BlogUI.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<UserModel> _signInManager;
         private readonly UserManager<UserModel> _userManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IBlogEmailService _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
             SignInManager<UserModel> signInManager,
             UserManager<UserModel> userManager,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IBlogEmailService emailSender)
         {
             _signInManager = signInManager;
             _userManager = userManager;

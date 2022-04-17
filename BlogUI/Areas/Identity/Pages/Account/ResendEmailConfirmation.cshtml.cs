@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using BlogLibrary.Databases.Interfaces;
 
 namespace BlogUI.Areas.Identity.Pages.Account
 {
@@ -18,9 +19,9 @@ namespace BlogUI.Areas.Identity.Pages.Account
     public class ResendEmailConfirmationModel : PageModel
     {
         private readonly UserManager<UserModel> _userManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IBlogEmailService _emailSender;
 
-        public ResendEmailConfirmationModel(UserManager<UserModel> userManager, IEmailSender emailSender)
+        public ResendEmailConfirmationModel(UserManager<UserModel> userManager, IBlogEmailService emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;

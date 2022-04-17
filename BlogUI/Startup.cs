@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using BlogLibrary.Models;
 using BlogLibrary.Data;
 using BlogLibrary.Databases;
+using BlogLibrary.Databases.Interfaces;
 
 namespace BlogUI
 {
@@ -34,7 +35,7 @@ namespace BlogUI
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddIdentity<UserModel, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddIdentity<UserModel, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<BlogContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
@@ -44,6 +45,8 @@ namespace BlogUI
             services.AddRazorPages();
 
             services.AddScoped<SeedService>();
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.AddScoped<IBlogEmailService, BlogEmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

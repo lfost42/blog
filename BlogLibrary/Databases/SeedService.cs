@@ -59,11 +59,7 @@ namespace BlogLibrary.Databases
 
             var adminUser = new UserModel()
             {
-                Email = "demoadmin@myblog.com",
-                UserName = "demoadmin@myblog.com",
-                FirstName = "Mod",
-                LastName = "Demoadmin",
-                EmailConfirmed = true
+
             };
 
             await _userManager.CreateAsync(adminUser, "Abc1234!");
