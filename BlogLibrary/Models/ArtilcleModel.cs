@@ -39,8 +39,8 @@ namespace BlogLibrary.Models
         public int? ImageId { get; set; }
 
         
-        [Display(Name = "Topic")]
-        public int TopicModelId { get; set; }
+        [Display(Name = "Series")]
+        public int SeriesModelId { get; set; }
 
         
         [Display(Name = "Creator")]
@@ -49,7 +49,7 @@ namespace BlogLibrary.Models
         
         //Navigation
         public virtual ImageModel Image { get; set; }
-        public virtual TopicModel TopicModel { get; set; }
+        public virtual SeriesModel SeriesModel { get; set; }
         public virtual UserModel Creator { get; set; }
         public virtual ICollection<TagModel> Tags { get; set; } = new HashSet<TagModel>();
         public virtual ICollection<CommentModel> Comments { get; set; } = new HashSet<CommentModel>();

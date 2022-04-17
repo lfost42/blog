@@ -15,7 +15,7 @@ namespace BlogLibrary.Data
         public BlogContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<TopicModel> Topics { get; set; }
+        public DbSet<SeriesModel> Series { get; set; }
         public DbSet<CommentModel> Comments { get; set; }
         public DbSet<ImageModel> Images { get; set; }
         public DbSet<ArticleModel> Articles { get; set; }

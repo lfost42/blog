@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace BlogLibrary.Data.Migrtions
+namespace BlogLibrary.Data.Migrations
 {
-    public partial class BasicModels_001 : Migration
+    public partial class Initial_001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -182,7 +182,7 @@ namespace BlogLibrary.Data.Migrtions
                 });
 
             migrationBuilder.CreateTable(
-                name: "Topics",
+                name: "Series",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -196,15 +196,15 @@ namespace BlogLibrary.Data.Migrtions
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Topics", x => x.Id);
+                    table.PrimaryKey("PK_Series", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Topics_AspNetUsers_CreatorId",
+                        name: "FK_Series_AspNetUsers_CreatorId",
                         column: x => x.CreatorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Topics_Images_ImageId",
+                        name: "FK_Series_Images_ImageId",
                         column: x => x.ImageId,
                         principalTable: "Images",
                         principalColumn: "Id",
@@ -225,7 +225,7 @@ namespace BlogLibrary.Data.Migrtions
                     Updated = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     Slug = table.Column<string>(type: "text", nullable: true),
                     ImageId = table.Column<int>(type: "integer", nullable: true),
-                    TopicModelId = table.Column<int>(type: "integer", nullable: false),
+                    SeriesModelId = table.Column<int>(type: "integer", nullable: false),
                     CreatorId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -244,9 +244,9 @@ namespace BlogLibrary.Data.Migrtions
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Articles_Topics_TopicModelId",
-                        column: x => x.TopicModelId,
-                        principalTable: "Topics",
+                        name: "FK_Articles_Series_SeriesModelId",
+                        column: x => x.SeriesModelId,
+                        principalTable: "Series",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -316,9 +316,9 @@ namespace BlogLibrary.Data.Migrtions
                 column: "ImageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Articles_TopicModelId",
+                name: "IX_Articles_SeriesModelId",
                 table: "Articles",
-                column: "TopicModelId");
+                column: "SeriesModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -373,19 +373,19 @@ namespace BlogLibrary.Data.Migrtions
                 column: "CreatorId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tags_ArticleId",
-                table: "Tags",
-                column: "ArticleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Topics_CreatorId",
-                table: "Topics",
+                name: "IX_Series_CreatorId",
+                table: "Series",
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Topics_ImageId",
-                table: "Topics",
+                name: "IX_Series_ImageId",
+                table: "Series",
                 column: "ImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tags_ArticleId",
+                table: "Tags",
+                column: "ArticleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -418,7 +418,7 @@ namespace BlogLibrary.Data.Migrtions
                 name: "Articles");
 
             migrationBuilder.DropTable(
-                name: "Topics");
+                name: "Series");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

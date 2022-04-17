@@ -10,23 +10,23 @@ using BlogLibrary.Models;
 
 namespace BlogUI.Controllers
 {
-    public class TopicsController : Controller
+    public class SeriesController : Controller
     {
         private readonly BlogContext _context;
 
-        public TopicsController(BlogContext context)
+        public SeriesController(BlogContext context)
         {
             _context = context;
         }
 
-        // GET: Topics
+        // GET: Series
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Topics.Include(t => t.Creator).Include(t => t.Image);
+            var blogContext = _context.Series.Include(t => t.Creator).Include(t => t.Image);
             return View(await blogContext.ToListAsync());
         }
 
-        // GET: Topics/Details/5
+        // GET: Series/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +34,42 @@ namespace BlogUI.Controllers
                 return NotFound();
             }
 
-            var topicModel = await _context.Topics
+            var seriesModel = await _context.Series
                 .Include(t => t.Creator)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (topicModel == null)
+            if (seriesModel == null)
             {
                 return NotFound();
             }
 
-            return View(topicModel);
+            return View(seriesModel);
         }
 
-        // GET: Topics/Create
+        // GET: Series/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Topics/Create
+        // POST: Series/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Description,Image")] TopicModel topicModel)
+        public async Task<IActionResult> Create([Bind("Title,Description,Image")] SeriesModel seriesModel)
         {
             if (ModelState.IsValid)
             {
-                topicModel.Created = DateTime.Now;
-                _context.Add(topicModel);
+                seriesModel.Created = DateTime.Now;
+                _context.Add(seriesModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", topicModel.CreatorId);
-            return View(topicModel);
+            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", seriesModel.CreatorId);
+            return View(seriesModel);
         }
 
-        // GET: Topics/Edit/5
+        // GET: Series/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +77,22 @@ namespace BlogUI.Controllers
                 return NotFound();
             }
 
-            var topicModel = await _context.Topics.FindAsync(id);
-            if (topicModel == null)
+            var seriesModel = await _context.Series.FindAsync(id);
+            if (seriesModel == null)
             {
                 return NotFound();
             }
-            return View(topicModel);
+            return View(seriesModel);
         }
 
-        // POST: Topics/Edit/5
+        // POST: Series/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description, Image")] TopicModel topicModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description, Image")] SeriesModel seriesModel)
         {
-            if (id != topicModel.Id)
+            if (id != seriesModel.Id)
             {
                 return NotFound();
             }
@@ -101,13 +101,13 @@ namespace BlogUI.Controllers
             {
                 try
                 {
-                    topicModel.Updated = DateTime.Now;
-                    _context.Update(topicModel);
+                    seriesModel.Updated = DateTime.Now;
+                    _context.Update(seriesModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TopicModelExists(topicModel.Id))
+                    if (!SeriesModelExists(seriesModel.Id))
                     {
                         return NotFound();
                     }
@@ -118,10 +118,10 @@ namespace BlogUI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(topicModel);
+            return View(seriesModel);
         }
 
-        // GET: Topics/Delete/5
+        // GET: Series/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,32 +129,32 @@ namespace BlogUI.Controllers
                 return NotFound();
             }
 
-            var topicModel = await _context.Topics
+            var seriesModel = await _context.Series
                 .Include(t => t.Creator)
                 .Include(t => t.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (topicModel == null)
+            if (seriesModel == null)
             {
                 return NotFound();
             }
 
-            return View(topicModel);
+            return View(seriesModel);
         }
 
-        // POST: Topics/Delete/5
+        // POST: Series/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var topicModel = await _context.Topics.FindAsync(id);
-            _context.Topics.Remove(topicModel);
+            var seriesModel = await _context.Series.FindAsync(id);
+            _context.Series.Remove(seriesModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TopicModelExists(int id)
+        private bool SeriesModelExists(int id)
         {
-            return _context.Topics.Any(e => e.Id == id);
+            return _context.Series.Any(e => e.Id == id);
         }
     }
 }

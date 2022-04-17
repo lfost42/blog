@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace BlogLibrary.Data.Migrtions
+namespace BlogLibrary.Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
     partial class BlogContextModelSnapshot : ModelSnapshot
@@ -39,6 +39,9 @@ namespace BlogLibrary.Data.Migrtions
                     b.Property<int?>("ImageId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("SeriesModelId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Slug")
                         .HasColumnType("text");
 
@@ -55,9 +58,6 @@ namespace BlogLibrary.Data.Migrtions
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<int>("TopicModelId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("timestamp without time zone");
 
@@ -67,7 +67,7 @@ namespace BlogLibrary.Data.Migrtions
 
                     b.HasIndex("ImageId");
 
-                    b.HasIndex("TopicModelId");
+                    b.HasIndex("SeriesModelId");
 
                     b.ToTable("Articles");
                 });
@@ -148,29 +148,7 @@ namespace BlogLibrary.Data.Migrtions
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("BlogLibrary.Models.TagModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Tag")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.ToTable("Tags");
-                });
-
-            modelBuilder.Entity("BlogLibrary.Models.TopicModel", b =>
+            modelBuilder.Entity("BlogLibrary.Models.SeriesModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -205,7 +183,29 @@ namespace BlogLibrary.Data.Migrtions
 
                     b.HasIndex("ImageId");
 
-                    b.ToTable("Topics");
+                    b.ToTable("Series");
+                });
+
+            modelBuilder.Entity("BlogLibrary.Models.TagModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Tag")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("BlogLibrary.Models.UserModel", b =>
@@ -435,9 +435,9 @@ namespace BlogLibrary.Data.Migrtions
                         .WithMany()
                         .HasForeignKey("ImageId");
 
-                    b.HasOne("BlogLibrary.Models.TopicModel", "TopicModel")
+                    b.HasOne("BlogLibrary.Models.SeriesModel", "SeriesModel")
                         .WithMany("Articles")
-                        .HasForeignKey("TopicModelId")
+                        .HasForeignKey("SeriesModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -445,7 +445,7 @@ namespace BlogLibrary.Data.Migrtions
 
                     b.Navigation("Image");
 
-                    b.Navigation("TopicModel");
+                    b.Navigation("SeriesModel");
                 });
 
             modelBuilder.Entity("BlogLibrary.Models.CommentModel", b =>
@@ -465,18 +465,7 @@ namespace BlogLibrary.Data.Migrtions
                     b.Navigation("Creator");
                 });
 
-            modelBuilder.Entity("BlogLibrary.Models.TagModel", b =>
-                {
-                    b.HasOne("BlogLibrary.Models.ArticleModel", "Article")
-                        .WithMany("Tags")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
-                });
-
-            modelBuilder.Entity("BlogLibrary.Models.TopicModel", b =>
+            modelBuilder.Entity("BlogLibrary.Models.SeriesModel", b =>
                 {
                     b.HasOne("BlogLibrary.Models.UserModel", "Creator")
                         .WithMany()
@@ -489,6 +478,17 @@ namespace BlogLibrary.Data.Migrtions
                     b.Navigation("Creator");
 
                     b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("BlogLibrary.Models.TagModel", b =>
+                {
+                    b.HasOne("BlogLibrary.Models.ArticleModel", "Article")
+                        .WithMany("Tags")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
                 });
 
             modelBuilder.Entity("BlogLibrary.Models.UserModel", b =>
@@ -560,7 +560,7 @@ namespace BlogLibrary.Data.Migrtions
                     b.Navigation("Tags");
                 });
 
-            modelBuilder.Entity("BlogLibrary.Models.TopicModel", b =>
+            modelBuilder.Entity("BlogLibrary.Models.SeriesModel", b =>
                 {
                     b.Navigation("Articles");
                 });

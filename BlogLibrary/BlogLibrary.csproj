@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Databases\Interfaces\" />
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

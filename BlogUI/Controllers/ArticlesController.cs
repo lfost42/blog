@@ -23,7 +23,7 @@ namespace BlogUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Articles.Include(a => a.TopicModel);
+            var blogContext = _context.Articles.Include(a => a.SeriesModel);
             return View(await blogContext.ToListAsync());
         }
 
@@ -37,7 +37,7 @@ namespace BlogUI.Controllers
             }
 
             var articleModel = await _context.Articles
-                .Include(a => a.TopicModel)
+                .Include(a => a.SeriesModel)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (articleModel == null)
             {
@@ -50,7 +50,7 @@ namespace BlogUI.Controllers
         // GET: Articles/Create
         public IActionResult Create()
         {
-            ViewData["TopicModelId"] = new SelectList(_context.Topics, "Id", "Title");
+            ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Summary,Body,Status,Image,TopicModelId")] ArticleModel articleModel)
+        public async Task<IActionResult> Create([Bind("Title,Summary,Body,Status,Image,SeriesModelId")] ArticleModel articleModel)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace BlogUI.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TopicModelId"] = new SelectList(_context.Topics, "Id", "Title", articleModel.TopicModelId);
+            ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
             return View(articleModel);
         }
 
@@ -86,7 +86,7 @@ namespace BlogUI.Controllers
             {
                 return NotFound();
             }
-            ViewData["TopicModelId"] = new SelectList(_context.Topics, "Id", "Title", articleModel.TopicModelId);
+            ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
             return View(articleModel);
         }
 
@@ -95,7 +95,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Summary,Body,Status,Image,TopicModelId")] ArticleModel articleModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Summary,Body,Status,Image,SeriesModelId")] ArticleModel articleModel)
         {
             if (id != articleModel.Id)
             {
@@ -123,7 +123,7 @@ namespace BlogUI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TopicModelId"] = new SelectList(_context.Topics, "Id", "Title", articleModel.TopicModelId);
+            ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
             return View(articleModel);
         }
 
@@ -137,7 +137,7 @@ namespace BlogUI.Controllers
             }
 
             var articleModel = await _context.Articles
-                .Include(a => a.TopicModel)
+                .Include(a => a.SeriesModel)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (articleModel == null)
             {
