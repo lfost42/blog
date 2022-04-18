@@ -73,6 +73,7 @@ namespace BlogUI.Controllers
             {
                 seriesModel.Created = DateTime.Now;
                 seriesModel.CreatorId = _userManager.GetUserId(User);
+
                 seriesModel.Image.ImageData = await _imageService.EncodeImageAsync(seriesModel.Image.Photo);
                 seriesModel.Image.ImageExtension = _imageService.ContentType(seriesModel.Image.Photo);
 

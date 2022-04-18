@@ -18,19 +18,26 @@ namespace BlogLibrary.Databases
 
         public string DecodeImage(byte[] data, string type)
         {
-            if (data is null || type is null) return null;
-            return $"data:image/{type};base64,{Convert.ToBase64String(data)}";
+            if (data is null || type is null)
+            {
+                return string.Empty;
+            } 
+            else
+            {
+                return $"data:image/{type};base64,{Convert.ToBase64String(data)}";
+            } 
         }
 
         public async Task<byte[]> EncodeImageAsync(IFormFile file)
         {
-            if (file is null) return null;
+            if (file == null) return null;
+
             using var ms = new MemoryStream();
             await file.CopyToAsync(ms);
             return ms.ToArray();
         }
 
-        public async Task<byte[]> EnconeImageAsync(string fileName)
+        public async Task<byte[]> EncodeImageAsync(string fileName)
         {
             var file = $"{Directory.GetCurrentDirectory()}/wwwroot/images/{fileName}";
             return await File.ReadAllBytesAsync(file);

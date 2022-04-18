@@ -48,7 +48,11 @@
                 @Html.DisplayFor(modelItem => item.Updated)
             </td>
             <td>
-                <img src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" />
+                @if (item.Image != null)
+                {
+                    <img src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" />
+                }
+
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
