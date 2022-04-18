@@ -134,7 +134,8 @@ namespace BlogUI.Controllers
             {
                 try
                 {
-                    var newSeries = await _context.Series.FindAsync(seriesModel.Id);
+                    var newSeries = await _context.Series.Include(s => s.Image)
+                                                         .FirstOrDefaultAsync(m => m.Id == id);
 
                     newSeries.Updated = DateTime.Now;
                     newSeries.Title = seriesModel.Title;
@@ -161,7 +162,7 @@ namespace BlogUI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Image"] = new SelectList(_context.Users, "Image", "Image", seriesModel.Image.Photo);
+            ViewData["Image"] = new SelectList(_context.Images, "Image", "Image", seriesModel.Image.Photo);
             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", seriesModel.CreatorId);
             return View(seriesModel);
         }
