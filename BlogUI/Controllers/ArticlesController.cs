@@ -10,6 +10,7 @@ using BlogLibrary.Models;
 using Microsoft.AspNetCore.Identity;
 using BlogLibrary.Databases.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace BlogUI.Controllers
 {
@@ -45,6 +46,7 @@ namespace BlogUI.Controllers
 
             var articleModel = await _context.Articles
                 .Include(a => a.SeriesModel)
+                .Include(a => a.Creator)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (articleModel == null)
             {
@@ -60,6 +62,7 @@ namespace BlogUI.Controllers
         public IActionResult Create()
         {
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title");
+            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -73,10 +76,14 @@ namespace BlogUI.Controllers
             if (ModelState.IsValid)
             {
                 articleModel.Created = DateTime.Now;
-                articleModel.CreatorId = _userManager.GetUserId(User);
+                //var creatorId = _userManager.GetUserId(User);
+                //articleModel.CreatorId = creatorId;
 
-                articleModel.Image.ImageData = await _imageService.EncodeImageAsync(articleModel.Image.Photo);
-                articleModel.Image.ImageExtension = _imageService.ContentType(articleModel.Image.Photo);
+                if (articleModel.Image != null)
+                {
+                    articleModel.Image.ImageData = await _imageService.EncodeImageAsync(articleModel.Image.Photo);
+                    articleModel.Image.ImageExtension = _imageService.ContentType(articleModel.Image.Photo);
+                }
 
                 var slug = _slugService.UrlRoute(articleModel.Title);
                 
@@ -97,6 +104,7 @@ namespace BlogUI.Controllers
 
         // GET: Articles/Edit/5
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -110,6 +118,7 @@ namespace BlogUI.Controllers
                 return NotFound();
             }
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
+            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", articleModel.CreatorId);
             return View(articleModel);
         }
 
@@ -118,7 +127,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Summary,Body,Status,Image,SeriesModelId")] ArticleModel articleModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Summary,Body,Status")] ArticleModel articleModel, IFormFile newImage)
         {
             if (id != articleModel.Id)
             {
@@ -129,9 +138,41 @@ namespace BlogUI.Controllers
             {
                 try
                 {
-                    articleModel.Updated = DateTime.Now;
-                    _context.Update(articleModel);
+                    var newArticle = await _context.Articles.FindAsync(articleModel.Id);
+
+                    newArticle.Updated = DateTime.Now;
+                    
+                    newArticle.Title = articleModel.Title;
+                    newArticle.Summary = articleModel.Summary;
+                    newArticle.Body = articleModel.Body;
+                    newArticle.Status = articleModel.Status;
+                    if (newImage is not null)
+                    {
+                        newArticle.Image.ImageData = await _imageService.EncodeImageAsync(newImage);
+                        newArticle.Image.ImageExtension = _imageService.ContentType(newImage);
+                    }
+
                     await _context.SaveChangesAsync();
+
+                    var newSlug = _slugService.UrlRoute(articleModel.Title);
+                    if (newSlug != newArticle.Slug)
+                    {
+                        if (_slugService.IsUnique(newSlug))
+                        {
+                            newArticle.Title = articleModel.Title;
+                            newArticle.Slug = newSlug;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Title", "This title cannot be used as it results in a duplicate slug.");
+                            ViewData["SeriesModelId"] = new SelectList(_context.Articles, "Id", "Name", newArticle.SeriesModelId);
+                            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", newArticle.CreatorId);
+                            //ViewData["TagValues"] = string.Join(",", newArticle.Tags.Select(t => t.Text));
+                            return View(articleModel);
+                        }
+                    }
+
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {

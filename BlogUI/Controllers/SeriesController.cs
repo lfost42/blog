@@ -10,6 +10,7 @@ using BlogLibrary.Models;
 using BlogLibrary.Databases.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace BlogUI.Controllers
 {
@@ -74,11 +75,16 @@ namespace BlogUI.Controllers
                 seriesModel.Created = DateTime.Now;
                 seriesModel.CreatorId = _userManager.GetUserId(User);
 
-                seriesModel.Image.ImageData = await _imageService.EncodeImageAsync(seriesModel.Image.Photo);
-                seriesModel.Image.ImageExtension = _imageService.ContentType(seriesModel.Image.Photo);
+                if (seriesModel.Image != null)
+                {
+                    seriesModel.Image.ImageData = await _imageService.EncodeImageAsync(seriesModel.Image.Photo);
+                    seriesModel.Image.ImageExtension = _imageService.ContentType(seriesModel.Image.Photo);
+                }
+                
 
                 _context.Add(seriesModel);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", seriesModel.CreatorId);
@@ -87,6 +93,7 @@ namespace BlogUI.Controllers
 
         // GET: Series/Edit/5
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -107,7 +114,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description, Image")] SeriesModel seriesModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] SeriesModel seriesModel, IFormFile newImage)
         {
             if (id != seriesModel.Id)
             {
@@ -118,8 +125,18 @@ namespace BlogUI.Controllers
             {
                 try
                 {
-                    seriesModel.Updated = DateTime.Now;
-                    _context.Update(seriesModel);
+                    var newSeries = await _context.Series.FindAsync(seriesModel.Id);
+                    
+                    newSeries.Updated = DateTime.Now;
+                    newSeries.Title = seriesModel.Title;
+                    newSeries.Description = seriesModel.Description;
+
+                    if (newImage is not null)
+                    {
+                        newSeries.Image.ImageData = await _imageService.EncodeImageAsync(newImage);
+                        newSeries.Image.ImageExtension = _imageService.ContentType(newImage);
+                    }
+                    
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
