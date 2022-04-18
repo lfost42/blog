@@ -46,6 +46,7 @@ namespace BlogUI.Controllers
 
             var seriesModel = await _context.Series
                 .Include(t => t.Creator)
+                .Include(t => t.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (seriesModel == null)
             {
@@ -60,6 +61,7 @@ namespace BlogUI.Controllers
         [Authorize]
         public IActionResult Create()
         {
+            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -102,6 +104,7 @@ namespace BlogUI.Controllers
             }
 
             var seriesModel = await _context.Series.FindAsync(id);
+
             if (seriesModel == null)
             {
                 return NotFound();
@@ -126,7 +129,7 @@ namespace BlogUI.Controllers
                 try
                 {
                     var newSeries = await _context.Series.FindAsync(seriesModel.Id);
-                    
+
                     newSeries.Updated = DateTime.Now;
                     newSeries.Title = seriesModel.Title;
                     newSeries.Description = seriesModel.Description;
@@ -152,6 +155,7 @@ namespace BlogUI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", seriesModel.CreatorId);
             return View(seriesModel);
         }
 

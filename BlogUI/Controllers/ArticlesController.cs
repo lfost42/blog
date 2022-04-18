@@ -21,17 +21,19 @@ namespace BlogUI.Controllers
         private readonly UserManager<UserModel> _userManager;
         private readonly ISlugService _slugService;
 
-        public ArticlesController(BlogContext context, ISlugService slugService)
+        public ArticlesController(BlogContext context, ISlugService slugService, IImageService imageService, UserManager<UserModel> userManager)
         {
             _context = context;
             _slugService = slugService;
+            _imageService = imageService;
+            _userManager = userManager;
         }
 
         // GET: Articles
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Articles.Include(a => a.SeriesModel);
+            var blogContext = _context.Articles.Include(a => a.SeriesModel).Include(a => a.Image); ;
             return View(await blogContext.ToListAsync());
         }
 
@@ -47,6 +49,7 @@ namespace BlogUI.Controllers
             var articleModel = await _context.Articles
                 .Include(a => a.SeriesModel)
                 .Include(a => a.Creator)
+                .Include(a => a.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (articleModel == null)
             {
@@ -76,8 +79,8 @@ namespace BlogUI.Controllers
             if (ModelState.IsValid)
             {
                 articleModel.Created = DateTime.Now;
-                //var creatorId = _userManager.GetUserId(User);
-                //articleModel.CreatorId = creatorId;
+                var creatorId = _userManager.GetUserId(User);
+                articleModel.CreatorId = creatorId;
 
                 if (articleModel.Image != null)
                 {
@@ -141,11 +144,11 @@ namespace BlogUI.Controllers
                     var newArticle = await _context.Articles.FindAsync(articleModel.Id);
 
                     newArticle.Updated = DateTime.Now;
-                    
                     newArticle.Title = articleModel.Title;
                     newArticle.Summary = articleModel.Summary;
                     newArticle.Body = articleModel.Body;
                     newArticle.Status = articleModel.Status;
+
                     if (newImage is not null)
                     {
                         newArticle.Image.ImageData = await _imageService.EncodeImageAsync(newImage);
@@ -202,6 +205,7 @@ namespace BlogUI.Controllers
 
             var articleModel = await _context.Articles
                 .Include(a => a.SeriesModel)
+                .Include(a => a.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (articleModel == null)
             {
