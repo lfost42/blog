@@ -47,6 +47,9 @@ namespace BlogUI
             services.AddScoped<SeedService>();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddScoped<IBlogEmailService, BlogEmailService>();
+            services.AddScoped<IImageService, ImageService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

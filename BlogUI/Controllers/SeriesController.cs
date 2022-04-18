@@ -7,16 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BlogLibrary.Data;
 using BlogLibrary.Models;
+using BlogLibrary.Databases.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogUI.Controllers
 {
     public class SeriesController : Controller
     {
         private readonly BlogContext _context;
+        private readonly IImageService _imageService;
+        private readonly UserManager<UserModel> _userManager;
 
-        public SeriesController(BlogContext context)
+        public SeriesController(BlogContext context, IImageService imageService, UserManager<UserModel> userManager)
         {
             _context = context;
+            _imageService = imageService;
+            _userManager = userManager;
         }
 
         // GET: Series
@@ -49,6 +56,7 @@ namespace BlogUI.Controllers
 
         // GET: Series/Create
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -64,6 +72,10 @@ namespace BlogUI.Controllers
             if (ModelState.IsValid)
             {
                 seriesModel.Created = DateTime.Now;
+                seriesModel.CreatorId = _userManager.GetUserId(User);
+                seriesModel.Image.ImageData = await _imageService.EncodeImageAsync(seriesModel.Image.Photo);
+                seriesModel.Image.ImageExtension = _imageService.ContentType(seriesModel.Image.Photo);
+
                 _context.Add(seriesModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

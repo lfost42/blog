@@ -1,4 +1,6 @@
-﻿@model IEnumerable<BlogLibrary.Models.SeriesModel>
+﻿@using BlogLibrary.Databases.Interfaces
+@inject IImageService imageService 
+@model IEnumerable<BlogLibrary.Models.SeriesModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -46,7 +48,7 @@
                 @Html.DisplayFor(modelItem => item.Updated)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Image.Photo)
+                <img src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" />
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

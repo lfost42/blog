@@ -7,12 +7,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BlogLibrary.Data;
 using BlogLibrary.Models;
+using Microsoft.AspNetCore.Identity;
+using BlogLibrary.Databases.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogUI.Controllers
 {
     public class ArticlesController : Controller
     {
         private readonly BlogContext _context;
+        private readonly IImageService _imageService;
+        private readonly UserManager<UserModel> _userManager;
 
         public ArticlesController(BlogContext context)
         {
@@ -49,6 +54,7 @@ namespace BlogUI.Controllers
 
         // GET: Articles/Create
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title");
@@ -65,6 +71,10 @@ namespace BlogUI.Controllers
             if (ModelState.IsValid)
             {
                 articleModel.Created = DateTime.Now;
+                articleModel.CreatorId = _userManager.GetUserId(User);
+                articleModel.Image.ImageData = await _imageService.EncodeImageAsync(articleModel.Image.Photo);
+                articleModel.Image.ImageExtension = _imageService.ContentType(articleModel.Image.Photo);
+
                 _context.Add(articleModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
