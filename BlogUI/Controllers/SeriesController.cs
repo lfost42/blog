@@ -62,6 +62,7 @@ namespace BlogUI.Controllers
         public IActionResult Create()
         {
             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["Image"] = new SelectList(_context.Images, "Image.Photo", "Image.Photo");
             return View();
         }
 
@@ -90,6 +91,7 @@ namespace BlogUI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", seriesModel.CreatorId);
+            ViewData["Image"] = new SelectList(_context.Images, "Image.Photo", "Image.Photo", seriesModel.Image.Photo);
             return View(seriesModel);
         }
 
@@ -103,7 +105,11 @@ namespace BlogUI.Controllers
                 return NotFound();
             }
 
-            var seriesModel = await _context.Series.FindAsync(id);
+            //var seriesModel = await _context.Series.FindAsync(id);
+            var seriesModel = await _context.Series
+            .Include(t => t.Creator)
+            .Include(t => t.Image)
+            .FirstOrDefaultAsync(m => m.Id == id);
 
             if (seriesModel == null)
             {
@@ -155,6 +161,7 @@ namespace BlogUI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Image"] = new SelectList(_context.Users, "Image", "Image", seriesModel.Image.Photo);
             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", seriesModel.CreatorId);
             return View(seriesModel);
         }
