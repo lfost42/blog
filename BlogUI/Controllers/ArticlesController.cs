@@ -18,10 +18,12 @@ namespace BlogUI.Controllers
         private readonly BlogContext _context;
         private readonly IImageService _imageService;
         private readonly UserManager<UserModel> _userManager;
+        private readonly ISlugService _slugService;
 
-        public ArticlesController(BlogContext context)
+        public ArticlesController(BlogContext context, ISlugService slugService)
         {
             _context = context;
+            _slugService = slugService;
         }
 
         // GET: Articles
@@ -75,6 +77,15 @@ namespace BlogUI.Controllers
 
                 articleModel.Image.ImageData = await _imageService.EncodeImageAsync(articleModel.Image.Photo);
                 articleModel.Image.ImageExtension = _imageService.ContentType(articleModel.Image.Photo);
+
+                var slug = _slugService.UrlRoute(articleModel.Title);
+                
+                if(!_slugService.IsUnique(slug))
+                {
+                    string next = "_nx";
+                    articleModel.Slug = slug + next;
+                }
+                articleModel.Slug = slug;
 
                 _context.Add(articleModel);
                 await _context.SaveChangesAsync();

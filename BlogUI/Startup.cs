@@ -48,6 +48,7 @@ namespace BlogUI
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddScoped<IBlogEmailService, BlogEmailService>();
             services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<ISlugService, SlugService>();
 
 
         }
