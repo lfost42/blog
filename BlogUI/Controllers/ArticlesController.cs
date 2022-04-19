@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using BlogLibrary.Databases.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace BlogUI.Controllers
 {
@@ -20,13 +22,15 @@ namespace BlogUI.Controllers
         private readonly IImageService _imageService;
         private readonly UserManager<UserModel> _userManager;
         private readonly ISlugService _slugService;
+        private readonly IConfiguration _config;
 
-        public ArticlesController(BlogContext context, ISlugService slugService, IImageService imageService, UserManager<UserModel> userManager)
+        public ArticlesController(BlogContext context, ISlugService slugService, IImageService imageService, UserManager<UserModel> userManager, IConfiguration config)
         {
             _context = context;
             _slugService = slugService;
             _imageService = imageService;
             _userManager = userManager;
+            _config = config;
         }
 
         // GET: Articles
@@ -83,11 +87,17 @@ namespace BlogUI.Controllers
                 var creatorId = _userManager.GetUserId(User);
                 articleModel.CreatorId = creatorId;
 
-                if (articleModel.Image != null)
+                if (articleModel.Image is not null)
                 {
                     articleModel.Image.ImageData = await _imageService.EncodeImageAsync(articleModel.Image.Photo);
                     articleModel.Image.ImageExtension = _imageService.ContentType(articleModel.Image.Photo);
                 }
+                //else
+                //{
+                //    articleModel.Image.ImageData = await _imageService.EncodeImageAsync(_config["DefaultImage"]);
+                //    articleModel.Image.ImageExtension = Path.GetExtension(_config["DefaultImage"]);
+
+                //}
 
                 var slug = _slugService.UrlRoute(articleModel.Title);
                 

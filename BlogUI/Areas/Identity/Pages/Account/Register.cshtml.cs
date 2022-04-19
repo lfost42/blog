@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using BlogLibrary.Databases.Interfaces;
 using BlogLibrary.Databases;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace BlogUI.Areas.Identity.Pages.Account
 {
@@ -26,20 +28,25 @@ namespace BlogUI.Areas.Identity.Pages.Account
         private readonly UserManager<UserModel> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IBlogEmailService _emailSender;
+        private readonly IImageService _imageService;
+        private readonly IConfiguration _config;
 
 
         public RegisterModel(
             UserManager<UserModel> userManager,
             SignInManager<UserModel> signInManager,
             ILogger<RegisterModel> logger,
-            IBlogEmailService emailSender
-            )
-            
+            IBlogEmailService emailSender,
+            IImageService imageService, 
+            IConfiguration config)
+
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _imageService = imageService;
+            _config = config;
         }
 
         [BindProperty]
@@ -66,6 +73,11 @@ namespace BlogUI.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Avatar")]
+            public int? ImageId { get; set; }
+
+            public virtual ImageModel Image { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -80,7 +92,20 @@ namespace BlogUI.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new UserModel { UserName = Input.Email, Email = Input.Email };
+                var user = new UserModel
+                { UserName = Input.Email,
+                    Email = Input.Email,
+                    Image =
+                    {
+                        ImageData = await _imageService.EncodeImageAsync(Input.Image.Photo) ??
+                            await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
+                        ImageExtension = Input.Image.Photo is null ?
+                            Path.GetExtension(_config["DefaultUserImage"]) :
+                            _imageService.ContentType(Input.Image.Photo)
+                    }
+                    
+                };
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

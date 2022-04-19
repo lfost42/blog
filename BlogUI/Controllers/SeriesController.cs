@@ -11,6 +11,8 @@ using BlogLibrary.Databases.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace BlogUI.Controllers
 {
@@ -19,12 +21,14 @@ namespace BlogUI.Controllers
         private readonly BlogContext _context;
         private readonly IImageService _imageService;
         private readonly UserManager<UserModel> _userManager;
+        private readonly IConfiguration _config;
 
-        public SeriesController(BlogContext context, IImageService imageService, UserManager<UserModel> userManager)
+        public SeriesController(BlogContext context, IImageService imageService, UserManager<UserModel> userManager, IConfiguration config)
         {
             _context = context;
             _imageService = imageService;
             _userManager = userManager;
+            _config = config;
         }
 
         // GET: Series
@@ -48,6 +52,7 @@ namespace BlogUI.Controllers
                 .Include(t => t.Creator)
                 .Include(t => t.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (seriesModel == null)
             {
                 return NotFound();
@@ -75,17 +80,21 @@ namespace BlogUI.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 seriesModel.Created = DateTime.Now;
                 seriesModel.CreatorId = _userManager.GetUserId(User);
+                
 
-                if (seriesModel.Image != null)
+                if (seriesModel.Image is not null)
                 {
                     seriesModel.Image.ImageData = await _imageService.EncodeImageAsync(seriesModel.Image.Photo);
                     seriesModel.Image.ImageExtension = _imageService.ContentType(seriesModel.Image.Photo);
-                }
-
-                //else upload default 'blank' image
-                
+                } 
+                //else
+                //{
+                //    seriesModel.Image.ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]);
+                //    seriesModel.Image.ImageExtension = Path.GetExtension(_config["DefaultUserImage"]);
+                //}
 
                 _context.Add(seriesModel);
                 await _context.SaveChangesAsync();

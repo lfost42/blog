@@ -34,6 +34,5 @@ namespace BlogLibrary.Models
         public virtual ImageModel Image { get; set; }
         public virtual ICollection<ArticleModel> Articles { get; set; } = new HashSet<ArticleModel>();
         public virtual ICollection<CommentModel> Comments { get; set; } = new HashSet<CommentModel>();
-
     }
 }

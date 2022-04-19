@@ -1,7 +1,10 @@
-﻿using BlogLibrary.Models.Enum;
+﻿using BlogLibrary.Databases.Interfaces;
+using BlogLibrary.Models.Enum;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,7 +49,7 @@ namespace BlogLibrary.Models
         [Display(Name = "Creator")]
         public string CreatorId { get; set; }
 
-        
+
         //Navigation
         public virtual ImageModel Image { get; set; }
         public virtual SeriesModel SeriesModel { get; set; }
