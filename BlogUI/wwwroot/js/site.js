@@ -5,7 +5,7 @@
 
 let index = 0;
 
-const AddTag = () => {
+function AddTag() {
     let tagItems = document.getElementById("TagItems");
     let tagList = document.getElementById("TagList");
     let newOption = new Option(tagItems.value, tagItems.value);
@@ -29,3 +29,8 @@ const DeleteTag = () => {
         
     }
 }
+
+
+$("form").on("submit", function() {
+    $("#TagList option").prop("selected", "selected");
+})

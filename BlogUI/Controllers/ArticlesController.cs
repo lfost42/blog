@@ -53,6 +53,7 @@ namespace BlogUI.Controllers
             var articleModel = await _context.Articles
                 .Include(a => a.Creator)
                 .Include(a => a.Image)
+                .Include(a => a.Tags)
                 .Include(a => a.SeriesModel)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (articleModel == null)
@@ -143,6 +144,7 @@ namespace BlogUI.Controllers
             var articleModel = await _context.Articles
                 .Include(a => a.Creator)
                 .Include(a => a.Image)
+                .Include(a => a.Tags)
                 .Include(a => a.SeriesModel)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -175,6 +177,7 @@ namespace BlogUI.Controllers
                     var newArticle = await _context.Articles
                                     .Include(a => a.Creator)
                                     .Include(a => a.Image)
+                                    .Include(a => a.Tags)
                                     .Include(a => a.SeriesModel)
                                     .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -244,6 +247,7 @@ namespace BlogUI.Controllers
             var articleModel = await _context.Articles
                 .Include(a => a.SeriesModel)
                 .Include(a => a.Image)
+                .Include(a => a.Tags)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (articleModel == null)
             {
