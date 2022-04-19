@@ -32,6 +32,38 @@
                 <textarea asp-for="Body" class="form-control"></textarea>
                 <span asp-validation-for="Body" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <label class="control-label">Manage Tags</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control" id="TagItems" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <button name="Add" type="button" class="btn-block">Add</button>
+                            </div>
+                            <div class="col">
+                                <button name="Delete" type="button" class="btn-block">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <select class="btn-block" name="TagValues" id="TagValues" multiple></select>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
                 <select asp-for="Status" asp-items="@Html.GetEnumSelectList<Status>()" class="form-control"></select>
@@ -39,7 +71,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
-                <input type="file" asp-for="Image.Photo" class="form-control" asp-items="ViewBag.Image" accept=".jpg,.jpeg,.png,.ico,.gif,.svg"></input>
+                <input type="file" asp-for="Image.Photo" class="form-control" asp-items="ViewBag.Image" accept=".jpg,.jpeg,.png,.ico,.gif,.svg" />
             </div>
 
             <div class="form-group">

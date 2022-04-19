@@ -105,10 +105,13 @@ namespace BlogUI.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            if(Input.Image is not null)
+            {
+                user.ImageData = await _imageService.EncodeImageAsync(Input.Image);
+                user.ContentType = _imageService.ContentType(Input.Image);
+                await _userManager.UpdateAsync(user);
 
-            user.ImageData = await _imageService.EncodeImageAsync(Input.Image);
-            user.ContentType = _imageService.ContentType(Input.Image);
-            await _userManager.UpdateAsync(user);
+            }
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

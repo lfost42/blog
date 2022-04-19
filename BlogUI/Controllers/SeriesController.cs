@@ -154,7 +154,7 @@ namespace BlogUI.Controllers
                     newSeries.Title = seriesModel.Title;
                     newSeries.Description = seriesModel.Description;
 
-                    if (newImage is not null && seriesModel.Image is not null)
+                    if (newImage is not null)
                     {
                         newSeries.Image.ImageData = await _imageService.EncodeImageAsync(newImage);
                         newSeries.Image.ImageExtension = _imageService.ContentType(newImage);

@@ -173,7 +173,7 @@ namespace BlogUI.Controllers
                     newArticle.Body = articleModel.Body;
                     newArticle.Status = articleModel.Status;
 
-                    if (newImage is not null && newArticle.Image is not null)
+                    if (newImage is not null)
                     {
                         newArticle.Image.ImageData = await _imageService.EncodeImageAsync(newImage);
                         newArticle.Image.ImageExtension = _imageService.ContentType(newImage);
