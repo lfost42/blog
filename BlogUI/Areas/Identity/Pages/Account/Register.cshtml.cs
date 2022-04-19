@@ -95,15 +95,11 @@ namespace BlogUI.Areas.Identity.Pages.Account
                 var user = new UserModel
                 { UserName = Input.Email,
                     Email = Input.Email,
-                    Image =
-                    {
-                        ImageData = await _imageService.EncodeImageAsync(Input.Image.Photo) ??
+                    ImageData = await _imageService.EncodeImageAsync(Input.Image.Photo) ??
                             await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
-                        ImageExtension = Input.Image.Photo is null ?
+                    ContentType = Input.Image.Photo is null ?
                             Path.GetExtension(_config["DefaultUserImage"]) :
                             _imageService.ContentType(Input.Image.Photo)
-                    }
-                    
                 };
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);

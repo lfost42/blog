@@ -20,7 +20,7 @@ namespace BlogLibrary.Data
         public DbSet<ImageModel> Images { get; set; }
         public DbSet<ArticleModel> Articles { get; set; }
         public DbSet<TagModel> Tags { get; set; }
-        public DbSet<UserModel> Users { get; set; }
+        public DbSet<UserModel> AppUsers { get; set; }
 
 
     }

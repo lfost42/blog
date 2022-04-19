@@ -51,7 +51,7 @@ namespace BlogLibrary.Databases
 
         private async Task SeedUsersAsync()
         {
-            if (_dbContext.Users.Any()) return;
+            if (_dbContext.AppUsers.Any()) return;
             
             var ownerUser = new UserModel()
             {
@@ -60,11 +60,8 @@ namespace BlogLibrary.Databases
                 FirstName = "Owner",
                 LastName = "Demobarista",
                 EmailConfirmed = true,
-                Image =
-                {
-                    ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
-                    ImageExtension = Path.GetExtension(_config["DefaultUserImage"])
-                }
+                ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
+                ContentType = Path.GetExtension(_config["DefaultUserImage"])
             };
 
             await _userManager.CreateAsync(ownerUser, "Abc1234!");
@@ -77,11 +74,8 @@ namespace BlogLibrary.Databases
                 FirstName = "Mod",
                 LastName = "Demomod",
                 EmailConfirmed = true,
-                Image =
-                {
-                    ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
-                    ImageExtension = Path.GetExtension(_config["DefaultUserImage"])
-                }
+                ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
+                ContentType = Path.GetExtension(_config["DefaultUserImage"])
             };
 
             await _userManager.CreateAsync(adminUser, "Abc1234!");
@@ -94,11 +88,8 @@ namespace BlogLibrary.Databases
                 FirstName = "Guest",
                 LastName = "Demovisitor",
                 EmailConfirmed = true,
-                Image =
-                {
-                    ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
-                    ImageExtension = Path.GetExtension(_config["DefaultUserImage"])
-                }
+                ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
+                ContentType = Path.GetExtension(_config["DefaultUserImage"])
             };
 
             await _userManager.CreateAsync(visitorUser, "Abc1234!");

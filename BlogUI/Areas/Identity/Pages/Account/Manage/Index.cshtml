@@ -1,4 +1,7 @@
 ﻿@page
+@using BlogLibrary.Databases.Interfaces
+@inject IImageService imageService
+
 @model IndexModel
 @{
     ViewData["Title"] = "Profile";
@@ -18,18 +21,15 @@
             <div class="form-group">
                 <label>Select Avatar</label>
                 <div class="custom-file">
-                    <input type="file" asp-for="Input.Image.Photo" class="form-control-file" accept=".jpg,.jpeg,.png,.ico,.gif,.svg" />
-                    <span asp-validation-for="Input.Image.Photo" class="text-danger"></span>
+                    <input type="file" asp-for="Input.Image" class="form-control-file" accept=".jpg,.jpeg,.png,.ico,.gif,.svg" />
+                    <span asp-validation-for="Input.Image" class="text-danger"></span>
                 </div>
             </div>
             <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
     <div class="col-md-6">
-        @if (Model.CurrentImage != null)
-        {
         <img src="@Model.CurrentImage" class="img-fluid rounded-circle img-thumbnail">
-        }   
     </div>
 </div>
 

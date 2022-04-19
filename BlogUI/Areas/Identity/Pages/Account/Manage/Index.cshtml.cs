@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogLibrary.Data;
 using BlogLibrary.Databases;
 using BlogLibrary.Databases.Interfaces;
 using BlogLibrary.Models;
@@ -20,12 +21,12 @@ namespace BlogUI.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<UserModel> _userManager;
         private readonly SignInManager<UserModel> _signInManager;
         private readonly IImageService _imageService;
-        private readonly IConfiguration _config;
 
         public IndexModel(
             UserManager<UserModel> userManager,
-            SignInManager<UserModel> signInManager, 
-            IImageService imageService)
+            SignInManager<UserModel> signInManager,
+            IImageService imageService
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -46,8 +47,8 @@ namespace BlogUI.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            public IFormFile Image { get; set; } 
 
-            public ImageModel Image { get; set; }
         }
 
         private async Task LoadAsync(UserModel user)
@@ -57,12 +58,8 @@ namespace BlogUI.Areas.Identity.Pages.Account.Manage
 
 
             Username = userName;
-
-            if (CurrentImage is not null)
-            {
-                CurrentImage = _imageService.DecodeImage(user.Image.ImageData, user.Image.ImageExtension);
-            }
-
+            CurrentImage = _imageService.DecodeImage(user.ImageData, user.ContentType);
+            
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
@@ -72,9 +69,6 @@ namespace BlogUI.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
-
-            //user.Image.ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]);
-            //user.Image.ImageExtension = Path.GetExtension(_config["DefaultUserImage"]);
 
             if (user == null)
             {
@@ -111,12 +105,10 @@ namespace BlogUI.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (Input.Image.Photo is not null)
-            {
-                user.Image.ImageData = await _imageService.EncodeImageAsync(Input.Image.Photo);
-                user.Image.ImageExtension = _imageService.ContentType(Input.Image.Photo);
-                await _userManager.UpdateAsync(user);
-            }
+
+            user.ImageData = await _imageService.EncodeImageAsync(Input.Image);
+            user.ContentType = _imageService.ContentType(Input.Image);
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

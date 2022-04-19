@@ -70,7 +70,7 @@ namespace BlogUI.Controllers
         {
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title");
             ViewData["Image"] = new SelectList(_context.Images, "Image.Photo", "Image.Photo");
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id");
             return View();
         }
 
@@ -112,7 +112,7 @@ namespace BlogUI.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", articleModel.CreatorId);
+            ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", articleModel.CreatorId);
             ViewData["Image"] = new SelectList(_context.Images, "Image.Photo", "Image.Photo", articleModel.Image.Photo);
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
             return View(articleModel);
@@ -140,7 +140,7 @@ namespace BlogUI.Controllers
             }
             ViewData["NewImage"] = new SelectList(_context.Images, "NewImage", "NewImage", articleModel.Image.Photo);
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", articleModel.CreatorId);
+            ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", articleModel.CreatorId);
             return View(articleModel);
         }
 
@@ -191,7 +191,7 @@ namespace BlogUI.Controllers
                         else
                         {
                             ModelState.AddModelError("Title", "This title cannot be used as it results in a duplicate slug.");
-                            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", articleModel.CreatorId);
+                            ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", articleModel.CreatorId);
                             ViewData["Image"] = new SelectList(_context.Images, "Image.Photo", "Image.Photo", articleModel.Image.Photo);
                             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
                             //ViewData["TagValues"] = string.Join(",", newArticle.Tags.Select(t => t.Text));
@@ -214,7 +214,7 @@ namespace BlogUI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", articleModel.CreatorId);
+            ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", articleModel.CreatorId);
             ViewData["Image"] = new SelectList(_context.Series, "Image.Photo", "Image.Photo", articleModel.Image.Id);
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
             return View(articleModel);

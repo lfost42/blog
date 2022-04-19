@@ -66,7 +66,7 @@ namespace BlogUI.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id");
             ViewData["Image"] = new SelectList(_context.Images, "Image.Photo", "Image.Photo");
             return View();
         }
@@ -101,7 +101,7 @@ namespace BlogUI.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", seriesModel.CreatorId);
+            ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", seriesModel.CreatorId);
             ViewData["Image"] = new SelectList(_context.Images, "Image.Photo", "Image.Photo", seriesModel.Image.Photo);
             return View(seriesModel);
         }
@@ -176,7 +176,7 @@ namespace BlogUI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["NewImage"] = new SelectList(_context.Images, "NewImage", "NewImage", seriesModel.Image.Photo);
-            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", seriesModel.CreatorId);
+            ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", seriesModel.CreatorId);
             return View(seriesModel);
         }
 
