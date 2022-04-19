@@ -94,6 +94,7 @@ namespace BlogUI.Controllers
                 }
                 else
                 {
+                    articleModel.Image = new ImageModel();
                     articleModel.Image.ImageData = await _imageService.EncodeImageAsync(_config["DefaultImage"]);
                     articleModel.Image.ImageExtension = Path.GetExtension(_config["DefaultImage"]);
 

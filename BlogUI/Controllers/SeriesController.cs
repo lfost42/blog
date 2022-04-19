@@ -83,7 +83,6 @@ namespace BlogUI.Controllers
                 
                 seriesModel.Created = DateTime.Now;
                 seriesModel.CreatorId = _userManager.GetUserId(User);
-                
 
                 if (seriesModel.Image is not null)
                 {
@@ -92,8 +91,9 @@ namespace BlogUI.Controllers
                 }
                 else
                 {
-                    seriesModel.Image.ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]);
-                    seriesModel.Image.ImageExtension = Path.GetExtension(_config["DefaultUserImage"]);
+                    seriesModel.Image = new ImageModel();
+                    seriesModel.Image.ImageData = await _imageService.EncodeImageAsync(_config["DefaultImage"]);
+                    seriesModel.Image.ImageExtension = Path.GetExtension(_config["DefaultImage"]);
                 }
 
                 _context.Add(seriesModel);
