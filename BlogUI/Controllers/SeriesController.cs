@@ -83,6 +83,8 @@ namespace BlogUI.Controllers
                     seriesModel.Image.ImageData = await _imageService.EncodeImageAsync(seriesModel.Image.Photo);
                     seriesModel.Image.ImageExtension = _imageService.ContentType(seriesModel.Image.Photo);
                 }
+
+                //else upload default 'blank' image
                 
 
                 _context.Add(seriesModel);
@@ -134,14 +136,16 @@ namespace BlogUI.Controllers
             {
                 try
                 {
-                    var newSeries = await _context.Series.Include(s => s.Image)
-                                                         .FirstOrDefaultAsync(m => m.Id == id);
+                    var newSeries = await _context.Series
+                                        .Include(t => t.Creator)
+                                        .Include(t => t.Image)
+                                        .FirstOrDefaultAsync(m => m.Id == id);
 
                     newSeries.Updated = DateTime.Now;
                     newSeries.Title = seriesModel.Title;
                     newSeries.Description = seriesModel.Description;
 
-                    if (newImage is not null)
+                    if (newImage is not null && seriesModel.Image is not null)
                     {
                         newSeries.Image.ImageData = await _imageService.EncodeImageAsync(newImage);
                         newSeries.Image.ImageExtension = _imageService.ContentType(newImage);
@@ -162,7 +166,7 @@ namespace BlogUI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Image"] = new SelectList(_context.Images, "Image", "Image", seriesModel.Image.Photo);
+            ViewData["NewImage"] = new SelectList(_context.Images, "NewImage", "NewImage", seriesModel.Image.Photo);
             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", seriesModel.CreatorId);
             return View(seriesModel);
         }

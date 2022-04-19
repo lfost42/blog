@@ -104,7 +104,7 @@ namespace BlogUI.Controllers
             }
             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", articleModel.CreatorId);
             ViewData["Image"] = new SelectList(_context.Images, "Image.Photo", "Image.Photo", articleModel.Image.Photo);
-            ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Description", articleModel.SeriesModelId);
+            ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
             return View(articleModel);
         }
 
@@ -118,12 +118,11 @@ namespace BlogUI.Controllers
                 return NotFound();
             }
 
-            var articleModel = await _context.Articles.FindAsync(id);
-            //var articleModel = await _context.Articles
-            //.Include(a => a.SeriesModel)
-            //.Include(a => a.Creator)
-            //.Include(a => a.Image)
-            //.FirstOrDefaultAsync(m => m.Id == id);
+            var articleModel = await _context.Articles
+                .Include(a => a.Creator)
+                .Include(a => a.Image)
+                .Include(a => a.SeriesModel)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (articleModel == null)
             {
@@ -151,7 +150,11 @@ namespace BlogUI.Controllers
             {
                 try
                 {
-                    var newArticle = await _context.Articles.FindAsync(articleModel.Id);
+                    var newArticle = await _context.Articles
+                                    .Include(a => a.Creator)
+                                    .Include(a => a.Image)
+                                    .Include(a => a.SeriesModel)
+                                    .FirstOrDefaultAsync(m => m.Id == id);
 
                     newArticle.Updated = DateTime.Now;
                     newArticle.Title = articleModel.Title;
@@ -159,7 +162,7 @@ namespace BlogUI.Controllers
                     newArticle.Body = articleModel.Body;
                     newArticle.Status = articleModel.Status;
 
-                    if (newImage is not null)
+                    if (newImage is not null && newArticle.Image is not null)
                     {
                         newArticle.Image.ImageData = await _imageService.EncodeImageAsync(newImage);
                         newArticle.Image.ImageExtension = _imageService.ContentType(newImage);
@@ -180,7 +183,7 @@ namespace BlogUI.Controllers
                             ModelState.AddModelError("Title", "This title cannot be used as it results in a duplicate slug.");
                             ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id", articleModel.CreatorId);
                             ViewData["Image"] = new SelectList(_context.Images, "Image.Photo", "Image.Photo", articleModel.Image.Photo);
-                            ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Description", articleModel.SeriesModelId);
+                            ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
                             //ViewData["TagValues"] = string.Join(",", newArticle.Tags.Select(t => t.Text));
                             return View(articleModel);
                         }
