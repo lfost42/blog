@@ -51,7 +51,7 @@ namespace BlogLibrary.Models
 
 
         //Navigation
-        public virtual ImageModel Image { get; set; }
+        public virtual ImageModel Image { get; set; } = new ImageModel();
         public virtual SeriesModel SeriesModel { get; set; }
         public virtual UserModel Creator { get; set; }
         public virtual ICollection<TagModel> Tags { get; set; } = new HashSet<TagModel>();

@@ -92,12 +92,12 @@ namespace BlogUI.Controllers
                     articleModel.Image.ImageData = await _imageService.EncodeImageAsync(articleModel.Image.Photo);
                     articleModel.Image.ImageExtension = _imageService.ContentType(articleModel.Image.Photo);
                 }
-                //else
-                //{
-                //    articleModel.Image.ImageData = await _imageService.EncodeImageAsync(_config["DefaultImage"]);
-                //    articleModel.Image.ImageExtension = Path.GetExtension(_config["DefaultImage"]);
+                else
+                {
+                    articleModel.Image.ImageData = await _imageService.EncodeImageAsync(_config["DefaultImage"]);
+                    articleModel.Image.ImageExtension = Path.GetExtension(_config["DefaultImage"]);
 
-                //}
+                }
 
                 var slug = _slugService.UrlRoute(articleModel.Title);
                 

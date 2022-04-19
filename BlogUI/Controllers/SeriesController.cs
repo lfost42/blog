@@ -89,12 +89,12 @@ namespace BlogUI.Controllers
                 {
                     seriesModel.Image.ImageData = await _imageService.EncodeImageAsync(seriesModel.Image.Photo);
                     seriesModel.Image.ImageExtension = _imageService.ContentType(seriesModel.Image.Photo);
-                } 
-                //else
-                //{
-                //    seriesModel.Image.ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]);
-                //    seriesModel.Image.ImageExtension = Path.GetExtension(_config["DefaultUserImage"]);
-                //}
+                }
+                else
+                {
+                    seriesModel.Image.ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]);
+                    seriesModel.Image.ImageExtension = Path.GetExtension(_config["DefaultUserImage"]);
+                }
 
                 _context.Add(seriesModel);
                 await _context.SaveChangesAsync();

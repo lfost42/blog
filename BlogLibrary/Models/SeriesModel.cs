@@ -32,7 +32,7 @@ namespace BlogLibrary.Models
 
 
         //Navigation
-        public virtual ImageModel Image { get; set; }
+        public virtual ImageModel Image { get; set; } = new ImageModel();
         public virtual UserModel Creator { get; set; }
         public virtual ICollection<ArticleModel> Articles { get; set; } = new HashSet<ArticleModel>();
 
