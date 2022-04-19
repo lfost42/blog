@@ -79,7 +79,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Summary,Body,Status,Image,SeriesModelId")] ArticleModel articleModel)
+        public async Task<IActionResult> Create([Bind("Title,Summary,Body,Status,Image,SeriesModelId")] ArticleModel articleModel, List<string> tagValues)
         {
             if (ModelState.IsValid)
             {
@@ -110,6 +110,17 @@ namespace BlogUI.Controllers
                 articleModel.Slug = slug;
 
                 _context.Add(articleModel);
+                await _context.SaveChangesAsync();
+
+                foreach (var tag in tagValues)
+                {
+                    _context.Add(new TagModel()
+                    {
+                        ArticleId = articleModel.Id,
+                        Tag = tag
+                    });
+                }
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

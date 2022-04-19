@@ -42,7 +42,7 @@
 
                 <div class="row">
                     <div class="col">
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col">
                                 <input type="text" class="form-control" id="TagItems" />
                             </div>
@@ -50,15 +50,15 @@
 
                         <div class="row">
                             <div class="col">
-                                <button name="Add" type="button" class="btn-block">Add</button>
+                                <button onclick="AddTag()" name="Add" type="button" class="btn-block">Add</button>
                             </div>
                             <div class="col">
-                                <button name="Delete" type="button" class="btn-block">Delete</button>
+                                <button onclick="DeleteTag()" name="Delete" type="button" class="btn-block">Delete</button>
                             </div>
                         </div>
                     </div>
                     <div class="col">
-                        <select class="btn-block" name="TagValues" id="TagValues" multiple></select>
+                        <select class="btn-block" name="TagValues" id="TagList" multiple></select>
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <button type="submit" value="Create" class="btn btn-primary btn-block">Create</button>
             </div>
         </form>
     </div>
