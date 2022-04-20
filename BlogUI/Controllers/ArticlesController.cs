@@ -41,6 +41,21 @@ namespace BlogUI.Controllers
             return View(await blogContext.ToListAsync());
         }
 
+        public IActionResult ArticleIndex(int? id)
+        {
+            if(id is null)
+            {
+                return NotFound();
+            }
+            var articles = _context.Articles
+                .Where(a => a.SeriesModelId == id)
+                .Include(s => s.Creator)
+                .Include(s => s.Image)
+                .ToList();
+
+            return View("Index", articles);
+        }
+
         // GET: Articles/Details/5
         [HttpGet]
         public async Task<IActionResult> Details(string slug)
@@ -56,6 +71,7 @@ namespace BlogUI.Controllers
                 .Include(a => a.Tags)
                 .Include(a => a.SeriesModel)
                 .FirstOrDefaultAsync(m => m.Slug == slug);
+
             if (articleModel == null)
             {
                 return NotFound();

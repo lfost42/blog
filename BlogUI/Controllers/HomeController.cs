@@ -8,6 +8,10 @@ using Microsoft.Extensions.Logging;
 using BlogUI.Models;
 using BlogLibrary.Databases.Interfaces;
 using BlogLibrary.Databases;
+using BlogLibrary.Data;
+using Microsoft.EntityFrameworkCore;
+using BlogLibrary.Models.Enum;
+using X.PagedList;
 
 namespace BlogUI.Controllers
 {
@@ -15,16 +19,29 @@ namespace BlogUI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IBlogEmailService _emailSender;
-        public HomeController(ILogger<HomeController> logger, IBlogEmailService emailSender)
+        private readonly BlogContext _context;
+
+        public HomeController(ILogger<HomeController> logger, IBlogEmailService emailSender, BlogContext context)
         {
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View();
+            var pageNumber = page ?? 1;
+            var pageSize = 4;
+
+            var series = _context.Series.Where(
+                s => s.Articles.Any(a => a.Status == Status.Published))
+                .Include(s => s.Creator)
+                .Include(s => s.Image)
+                .OrderByDescending(s => s.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
+
+            return View(await series);
         }
 
         [HttpGet]

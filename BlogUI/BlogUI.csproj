@@ -11,6 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="X.PagedList" />
+    <None Remove="X.PagedList.Mvc.Core" />
+    <None Remove="X.PagedList.Web.Common" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="appsettings.json" />
   </ItemGroup>
 
@@ -26,6 +31,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Npgsql" Version="5.0.12" />
+    <PackageReference Include="X.PagedList" Version="8.1.0" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.1.0" />
+    <PackageReference Include="X.PagedList.Web.Common" Version="8.0.7" />
   </ItemGroup>
 
   <ItemGroup>
