@@ -49,6 +49,7 @@ namespace BlogUI
             services.AddScoped<IBlogEmailService, BlogEmailService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ISlugService, SlugService>();
+            services.AddScoped<ISearchService, SearchService>();
 
 
         }

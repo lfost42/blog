@@ -35,12 +35,23 @@
                 </div>
             </div>
         </nav>
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <div class="mb-3 mt-5">
+                <form asp-action="SearchIndex" asp-controller="Articles">
+                    <div class="input-group mt-5 btn-group-sm">
+                        <input type="text" name="SearchTerm" class="form-control" placeholder="Search Posts">
+                        <button class="btn btn-warning rounded-end px-2 px-md-5" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+
             @RenderBody()
         </main>
     </div>
+
 
     <footer class="border-top footer text-muted">
         <div class="container">

@@ -25,14 +25,28 @@ namespace BlogUI.Controllers
         private readonly UserManager<UserModel> _userManager;
         private readonly ISlugService _slugService;
         private readonly IConfiguration _config;
+        private readonly ISearchService _searchService;
 
-        public ArticlesController(BlogContext context, ISlugService slugService, IImageService imageService, UserManager<UserModel> userManager, IConfiguration config)
+        public ArticlesController(BlogContext context, ISlugService slugService, IImageService imageService, UserManager<UserModel> userManager, IConfiguration config, ISearchService searchService)
         {
             _context = context;
             _slugService = slugService;
             _imageService = imageService;
             _userManager = userManager;
             _config = config;
+            _searchService = searchService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchIndex(int? page, string searchTerm)
+        {
+            ViewData["SearchTerm"] = searchTerm;
+
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+
+            var articles = _searchService.Search(searchTerm);
+            return View(await articles.ToPagedListAsync(pageNumber, pageSize));
         }
 
         // GET: Articles
