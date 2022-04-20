@@ -1,35 +1,8 @@
-﻿@using BlogLibrary.Models
-@model IEnumerable<SeriesModel>
-
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container">
-    <div class="col-lg-8 col-md-10 mx-auto">
-        @foreach (var series in Model)
-        {
-            <div class="post-preview">
-                <a asp-controller="Articles" asp-action="Details" asp-reoute-id="@series.Id">
-                    <h2 class="post-title">
-                        @series.Title
-                    </h2>
-                    <h3 class="post-subtitle">
-                        @series.Description
-                    </h3>
-                </a>
-                <p class="post-meta">
-                    Posted by
-                    <a href="#">@series.Creator.FullName</a>
-                    on @series.Created.ToString("MMM dd, yyyy")
-                </p>
-            </div>
-            <hr />
-        }
-
-        <!-- Pager -->
-        <div class="clearfix">
-            <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-        </div>
-    </div>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
