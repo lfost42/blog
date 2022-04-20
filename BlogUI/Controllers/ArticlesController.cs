@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.Extensions.Configuration;
+using BlogLibrary.Models.Enum;
+using X.PagedList;
 
 namespace BlogUI.Controllers
 {
@@ -41,19 +43,24 @@ namespace BlogUI.Controllers
             return View(await blogContext.ToListAsync());
         }
 
-        public IActionResult ArticleIndex(int? id)
+        public async Task<IActionResult> ArticleIndex(int? id, int? page)
         {
             if(id is null)
             {
                 return NotFound();
             }
-            var articles = _context.Articles
-                .Where(a => a.SeriesModelId == id)
+
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+
+            var articles = await _context.Articles
+                .Where(a => a.SeriesModelId == id && a.Status == Status.Published)
                 .Include(s => s.Creator)
                 .Include(s => s.Image)
-                .ToList();
+                .OrderByDescending(s => s.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
 
-            return View("Index", articles);
+            return View(articles);
         }
 
         // GET: Articles/Details/5

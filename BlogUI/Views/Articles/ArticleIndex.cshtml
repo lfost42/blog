@@ -1,67 +1,39 @@
 ﻿@using BlogLibrary.Databases.Interfaces
+@using BlogLibrary.Models
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
 
 @inject IImageService imageService
-@model IPagedList<BlogLibrary.Models.ArticleModel>
+
+@model IPagedList<ArticleModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ArticleIndex";
 }
 
-<h1>Index</h1>
+<h3>Article Index</h3>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                Series
-            </th>
-            <th>
-                Title
-            </th>
-            <th>
-                Summary
-            </th>
-            <th>
-                Created
-            </th>
-            <th>
-                Status
-            </th>
-            <th>
-                
-            </th>
-            <th></th>
-        </tr>
-    </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SeriesModel.Title)
+                    Title: @Html.DisplayFor(modelItem => item.Title) <br />
+                    Summary: @Html.DisplayFor(modelItem => item.Summary)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Summary)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Created)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
+                    Created: @Html.DisplayFor(modelItem => item.Created)<br />
+                    Status: @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
                     @if (item.Image != null)
                     {
-                        <img class="img-fluid" src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" />
+                        <img height="70px" src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" />
                     }
                 </td>
                 <td>
