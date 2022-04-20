@@ -154,9 +154,9 @@ namespace BlogUI.Controllers
         // GET: Articles/Edit/5
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string slug)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(slug))
             {
                 return NotFound();
             }
@@ -166,7 +166,7 @@ namespace BlogUI.Controllers
                 .Include(a => a.Image)
                 .Include(a => a.Tags)
                 .Include(a => a.SeriesModel)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Slug == slug);
 
             if (articleModel == null)
             {
@@ -176,6 +176,7 @@ namespace BlogUI.Controllers
             ViewData["NewImage"] = new SelectList(_context.Images, "NewImage", "NewImage", articleModel.Image.Photo);
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
             ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", articleModel.CreatorId);
+            ViewData["TagValues"] = string.Join(",", articleModel.Tags.Select(t => t.Tag));
             return View(articleModel);
         }
 
@@ -214,9 +215,8 @@ namespace BlogUI.Controllers
                         newArticle.Image.ImageExtension = _imageService.ContentType(newImage);
                     }
 
-                    await _context.SaveChangesAsync();
-
                     var newSlug = _slugService.UrlRoute(articleModel.Title);
+
                     if (newSlug != newArticle.Slug)
                     {
                         if (_slugService.IsUnique(newSlug))
@@ -230,7 +230,9 @@ namespace BlogUI.Controllers
                         }
                     }
 
+                    await _context.SaveChangesAsync();
                 }
+
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ArticleModelExists(articleModel.Id))
@@ -242,6 +244,7 @@ namespace BlogUI.Controllers
                         throw;
                     }
                 }
+                var slug = _slugService.UrlRoute(articleModel.Title);
                 return RedirectToAction(nameof(Index));
             }
 
