@@ -41,11 +41,34 @@ namespace BlogUI.Controllers
             return View(await blogContext.ToListAsync());
         }
 
+        //// GET: Articles/Details/5
+        //[HttpGet]
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var articleModel = await _context.Articles
+        //        .Include(a => a.Creator)
+        //        .Include(a => a.Image)
+        //        .Include(a => a.Tags)
+        //        .Include(a => a.SeriesModel)
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (articleModel == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(articleModel);
+        //}
+
         // GET: Articles/Details/5
         [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string slug)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(slug))
             {
                 return NotFound();
             }
@@ -55,7 +78,7 @@ namespace BlogUI.Controllers
                 .Include(a => a.Image)
                 .Include(a => a.Tags)
                 .Include(a => a.SeriesModel)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Slug == slug);
             if (articleModel == null)
             {
                 return NotFound();
@@ -102,16 +125,11 @@ namespace BlogUI.Controllers
                 }
 
                 var slug = _slugService.UrlRoute(articleModel.Title);
-                
-                if(!_slugService.IsUnique(slug))
-                {
-                    string next = "_nx";
-                    articleModel.Slug = slug + next;
-                }
-                articleModel.Slug = slug;
 
-                _context.Add(articleModel);
-                await _context.SaveChangesAsync();
+                if (!_slugService.IsUnique(slug))
+                {
+                    articleModel.Slug = slug + "_1";
+                }
 
                 foreach (var tag in tagValues)
                 {
@@ -122,11 +140,13 @@ namespace BlogUI.Controllers
                     });
                 }
 
+                articleModel.Slug = slug;
+                _context.Add(articleModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TagValues"] = string.Join(",", tagValues);
             ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", articleModel.CreatorId);
-            ViewData["Image"] = new SelectList(_context.Images, "Image.Photo", "Image.Photo", articleModel.Image.Photo);
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
             return View(articleModel);
         }
@@ -152,6 +172,7 @@ namespace BlogUI.Controllers
             {
                 return NotFound();
             }
+
             ViewData["NewImage"] = new SelectList(_context.Images, "NewImage", "NewImage", articleModel.Image.Photo);
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
             ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", articleModel.CreatorId);
@@ -205,15 +226,9 @@ namespace BlogUI.Controllers
                         }
                         else
                         {
-                            ModelState.AddModelError("Title", "This title cannot be used as it results in a duplicate slug.");
-                            ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", articleModel.CreatorId);
-                            ViewData["Image"] = new SelectList(_context.Images, "Image.Photo", "Image.Photo", articleModel.Image.Photo);
-                            ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);
-                            //ViewData["TagValues"] = string.Join(",", newArticle.Tags.Select(t => t.Text));
-                            return View(articleModel);
+                            articleModel.Slug = newSlug + "_1";
                         }
                     }
-
 
                 }
                 catch (DbUpdateConcurrencyException)
@@ -229,6 +244,7 @@ namespace BlogUI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", articleModel.CreatorId);
             ViewData["Image"] = new SelectList(_context.Series, "Image.Photo", "Image.Photo", articleModel.Image.Id);
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title", articleModel.SeriesModelId);

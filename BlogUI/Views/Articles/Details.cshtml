@@ -6,9 +6,10 @@
     ViewData["Title"] = "Details";
 }
 
-<div>
-    <h4>@Model.SeriesModel.Title - @Model.Title</h4>
-    Created: @Model.Created.ToShortDateString() Status: @Model.Status <br />
+<h4>@Model.SeriesModel.Title - @Model.Title</h4>
+
+    Created: @Model.Created.ToShortDateString() | Status: @Model.Status
+    <br />
     <hr />
     <p>
         @Model.Summary
@@ -16,26 +17,26 @@
     <div class="row">
         @if (Model.Image != null)
         {
-            <img src="@imageService.DecodeImage(Model.Image.ImageData, Model.Image.ImageExtension)" />
+            <img height="300px" src="@imageService.DecodeImage(Model.Image.ImageData, Model.Image.ImageExtension)" />
         }
-        <div class="col-lg-8 col-md-10">
-            <p>
-                @Html.Raw(Model.Body)
-            </p>
-        </div>
+    </div>
+    <div class="col-lg-8 col-md-10">
+        <p>
+            @Html.Raw(Model.Body)
+        </p>
     </div>
     <hr />
 
     <hr />
     <article>
-       <div class="row">
-           <div class="col text-center font-weight-bold h3">
-               Custom Post Tags
-           </div>
-       </div>
+        <div class="row">
+            <div class="col text-center font-weight-bold h3">
+                Article Tags
+            </div>
+        </div>
         <div class="row">
             <div class="col text-center">
-                @foreach(var tag in Model.Tags)
+                @foreach (var tag in Model.Tags)
                 {
                     <a class="btn btn-outline-dark" asp-action="TagIndex" asp-route-tag="@tag.Tag.ToLower()">#@tag.Tag</a>
                 }

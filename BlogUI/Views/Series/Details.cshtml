@@ -12,12 +12,12 @@
     <h4>@Html.DisplayFor(model => model.Description)</h4>
     <hr />
     @Html.DisplayFor(model => model.Created) | @Html.DisplayFor(model => model.Updated)
-    <dl class="row">
+    <div class="row">
         @if (Model.Image != null)
         {
-            <img src="@imageService.DecodeImage(Model.Image.ImageData, Model.Image.ImageExtension)" />
+            <img width="500px" src="@imageService.DecodeImage(Model.Image.ImageData, Model.Image.ImageExtension)" />
         }
-    </dl>
+    </div>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
