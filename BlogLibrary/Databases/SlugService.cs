@@ -25,13 +25,14 @@ namespace BlogLibrary.Databases
         public string UrlRoute(string title)
         {
             if (title == null) return "";
+
             bool prevdash = false;
             var sb = new StringBuilder(title.Length);
 
             char c;
             for (int i = 0; i < title.Length; i++)
             {
-                c = title[1];
+                c = title[i];
                 if ("abcdefghijklmnopqrstuvqxyz0123456789".Contains(c))
                 {
                     sb.Append(c);
@@ -42,14 +43,25 @@ namespace BlogLibrary.Databases
                     sb.Append(char.ToLower(c));
                     prevdash = false;
                 }
-                else if (c == ' ' || @",./\-_=".Contains(c))
+                else if (c == ' ')
+                {
+                    if (!prevdash && sb.Length > 0)
+                    {
+                        sb.Append('-');
+                        prevdash = false;
+                    }
+                }
+
+                else if (@",./\-_=".Contains(c))
                 {
                     if (!prevdash && sb.Length > 0)
                     {
                         sb.Append('-');
                         prevdash = true;
+                        continue;
                     }
                 }
+
                 else if (c == '#')
                 {
                     if (i > 0)

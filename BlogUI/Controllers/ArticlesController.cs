@@ -41,29 +41,6 @@ namespace BlogUI.Controllers
             return View(await blogContext.ToListAsync());
         }
 
-        //// GET: Articles/Details/5
-        //[HttpGet]
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var articleModel = await _context.Articles
-        //        .Include(a => a.Creator)
-        //        .Include(a => a.Image)
-        //        .Include(a => a.Tags)
-        //        .Include(a => a.SeriesModel)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (articleModel == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(articleModel);
-        //}
-
         // GET: Articles/Details/5
         [HttpGet]
         public async Task<IActionResult> Details(string slug)
@@ -185,7 +162,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Summary,Body,Status")] ArticleModel articleModel, IFormFile newImage)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Summary,Body,Status")] ArticleModel articleModel, IFormFile newImage, List<string> tagValues)
         {
             if (id != articleModel.Id)
             {
@@ -226,13 +203,22 @@ namespace BlogUI.Controllers
                         }
                         else
                         {
-                            articleModel.Slug = newSlug + "_1";
+                            newArticle.Slug = newSlug + "_1";
                         }
+                    }
+
+                    _context.Tags.RemoveRange(newArticle.Tags);
+                    foreach (var tag in tagValues)
+                    {
+                        _context.Add(new TagModel()
+                        {
+                            ArticleId = articleModel.Id,
+                            Tag = tag
+                        });
                     }
 
                     await _context.SaveChangesAsync();
                 }
-
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ArticleModelExists(articleModel.Id))
