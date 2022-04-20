@@ -1,0 +1,93 @@
+﻿@using BlogLibrary.Databases.Interfaces
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@inject IImageService imageService
+@model IPagedList<BlogLibrary.Models.ArticleModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Series
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Summary
+            </th>
+            <th>
+                Created
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SeriesModel.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Summary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @if (item.Image != null)
+                    {
+                        <img class="img-fluid" src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-slug="@item.Slug">Edit</a> |
+                    <a asp-action="Details" asp-route-slug="@item.Slug">Details</a> |
+                    <a asp-action="Delete" asp-route-slug="@item.Slug">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+<div class="row">
+    <div class="col h3">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        @Html.PagedListPager(Model, page => Url.Action("ArticleIndex", new { id = Model.FirstOrDefault().SeriesModelId }),
+    new PagedListRenderOptions
+    {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }
+    })
+    </div>
+</div>
