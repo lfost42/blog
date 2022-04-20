@@ -38,8 +38,21 @@ namespace BlogUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Articles.Include(a => a.SeriesModel).Include(a => a.Image);
+            var blogContext = _context.Articles.Include(a => a.SeriesModel).Include(a => a.Image).Include(a => a.Tags);
             return View(await blogContext.ToListAsync());
+        }
+
+        public IActionResult SeriesArticleIndex(int? id)
+        {
+            if (id is null)
+            {
+                return NotFound();
+            }
+
+            var articles = _context.Articles.Where(p => p.SeriesModelId == id).ToList();
+
+            return View("Index", articles);
+
         }
 
         // GET: Articles/Details/5
@@ -205,6 +218,7 @@ namespace BlogUI.Controllers
                     newArticle.Summary = articleModel.Summary;
                     newArticle.Body = articleModel.Body;
                     newArticle.Status = articleModel.Status;
+                    newArticle.Tags = articleModel.Tags;
 
                     var newSlug = _slugService.UrlRoute(articleModel.Title);
                     if(newSlug != newArticle.Slug)

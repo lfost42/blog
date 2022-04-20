@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using BlogUI.Models;
 using BlogLibrary.Databases.Interfaces;
 using BlogLibrary.Databases;
+using BlogLibrary.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogUI.Controllers
 {
@@ -15,16 +17,23 @@ namespace BlogUI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IBlogEmailService _emailSender;
-        public HomeController(ILogger<HomeController> logger, IBlogEmailService emailSender)
+        private readonly BlogContext _context;
+
+        public HomeController(ILogger<HomeController> logger, IBlogEmailService emailSender, BlogContext context)
         {
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var series = await _context.Series
+                .Include(b => b.Creator)
+                .ToListAsync();
+
+            return View(series);
         }
 
         [HttpGet]

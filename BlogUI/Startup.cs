@@ -80,7 +80,7 @@ namespace BlogUI
                 endpoints.MapControllerRoute(
                     name: "SlugRoute",
                     pattern: "BlogPosts/UrlFriendly/{slug}",
-                    defaults: new { controller = "Posts", action = "Details"});
+                    defaults: new { controller = "Articles", action = "Details" });
 
                 endpoints.MapControllerRoute(
                     name: "default",
