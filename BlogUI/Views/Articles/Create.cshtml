@@ -44,7 +44,7 @@
                     <div class="col">
                         <div class="row mb-2">
                             <div class="col">
-                                <input type="text" class="form-control" id="TagItems" />
+                                <input type="text" class="form-control" id="TagEntry" />
                             </div>
                         </div>
 
@@ -86,8 +86,11 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
     <script>
+
+        let tagValues = '@ViewData["TagValues"]';
+
         $('#Body').summernote({
             placeholder: 'Message',
             tabsize: 2,

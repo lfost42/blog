@@ -17,7 +17,7 @@ namespace BlogLibrary.Databases
     public class SeedService
     {
         //DEMO PURPOSES ONLY
-        
+
         private readonly BlogContext _dbContext;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<UserModel> _userManager;
@@ -52,7 +52,9 @@ namespace BlogLibrary.Databases
         private async Task SeedUsersAsync()
         {
             if (_dbContext.AppUsers.Any()) return;
-            
+
+            string defaultPassword = _config["DefaultPassword"];
+
             var ownerUser = new UserModel()
             {
                 Email = "owner@myblog.com",
@@ -64,7 +66,7 @@ namespace BlogLibrary.Databases
                 ContentType = Path.GetExtension(_config["DefaultUserImage"])
             };
 
-            await _userManager.CreateAsync(ownerUser, "Abc1234!");
+            await _userManager.CreateAsync(ownerUser, defaultPassword);
             await _userManager.AddToRoleAsync(ownerUser, Role.Owner.ToString());
 
             var adminUser = new UserModel()
@@ -78,7 +80,7 @@ namespace BlogLibrary.Databases
                 ContentType = Path.GetExtension(_config["DefaultUserImage"])
             };
 
-            await _userManager.CreateAsync(adminUser, "Abc1234!");
+            await _userManager.CreateAsync(adminUser, defaultPassword);
             await _userManager.AddToRoleAsync(adminUser, Role.Admin.ToString());
 
             var visitorUser = new UserModel()
@@ -92,13 +94,10 @@ namespace BlogLibrary.Databases
                 ContentType = Path.GetExtension(_config["DefaultUserImage"])
             };
 
-            await _userManager.CreateAsync(visitorUser, "Abc1234!");
+            await _userManager.CreateAsync(visitorUser, defaultPassword);
             await _userManager.AddToRoleAsync(visitorUser, Role.Visitor.ToString());
 
         }
-
-
-
 
     }
 }
