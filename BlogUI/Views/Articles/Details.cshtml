@@ -77,14 +77,14 @@
     </div>
 
     <div id="commentSection" class="d-flex justify-content-center p-3"><span class="btn btn-sm btn-light border border-2 w-50">@Model.Comments.Count Comment(s)</span></div>
+    <div class="row d-flex justify-content-center gy-2 mb-3">
 
 
 
-
-    <div>
-        @if (User.IsInRole("Owner"))
-        {
-            <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-slug="@Model.Slug">Edit</a><br />
-        }
-        <a asp-action="Index">Back to List</a>
-    </div>
+        <div>
+            @if (User.IsInRole("Owner"))
+            {
+                <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-slug="@Model.Slug">Edit</a><br />
+            }
+            <a asp-action="Index">Back to List</a>
+        </div>

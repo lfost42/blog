@@ -258,9 +258,8 @@ namespace BlogLibrary.Data.Migrations
                     Moderated = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     Deleted = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     ArticleId = table.Column<int>(type: "integer", nullable: false),
-                    CreatorId = table.Column<int>(type: "integer", nullable: false),
-                    ModeratedComment = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    CreatorId1 = table.Column<string>(type: "text", nullable: true)
+                    CreatorId = table.Column<string>(type: "text", nullable: true),
+                    ModeratedComment = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -272,8 +271,8 @@ namespace BlogLibrary.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Comments_AspNetUsers_CreatorId1",
-                        column: x => x.CreatorId1,
+                        name: "FK_Comments_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -364,9 +363,9 @@ namespace BlogLibrary.Data.Migrations
                 column: "ArticleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_CreatorId1",
+                name: "IX_Comments_CreatorId",
                 table: "Comments",
-                column: "CreatorId1");
+                column: "CreatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Series_CreatorId",

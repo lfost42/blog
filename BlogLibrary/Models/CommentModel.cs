@@ -18,6 +18,7 @@ namespace BlogLibrary.Models
         
         [Required, DataType(DataType.Date)]
         public DateTime Created { get; set; }
+
         
         [DataType(DataType.Date)]
         public DateTime? Updated { get; set; }
@@ -26,10 +27,11 @@ namespace BlogLibrary.Models
         [DataType(DataType.Date)]
         public DateTime? Deleted { get; set; }
 
+
         [Display(Name = "Article")]
         public int ArticleId { get; set; }
         [Display(Name = "Creator")]
-        public int CreatorId { get; set; }
+        public string CreatorId { get; set; }
 
 
         [StringLength(500, ErrorMessage = "The {0} must be atleast {2} and at most {1} characters.", MinimumLength = 2)]

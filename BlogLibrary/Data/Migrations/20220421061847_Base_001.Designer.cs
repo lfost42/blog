@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlogLibrary.Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20220421054548_Base_001")]
+    [Migration("20220421061847_Base_001")]
     partial class Base_001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,10 +92,7 @@ namespace BlogLibrary.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("CreatorId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("CreatorId1")
+                    b.Property<string>("CreatorId")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("Deleted")
@@ -115,7 +112,7 @@ namespace BlogLibrary.Data.Migrations
 
                     b.HasIndex("ArticleId");
 
-                    b.HasIndex("CreatorId1");
+                    b.HasIndex("CreatorId");
 
                     b.ToTable("Comments");
                 });
@@ -460,7 +457,7 @@ namespace BlogLibrary.Data.Migrations
 
                     b.HasOne("BlogLibrary.Models.UserModel", "Creator")
                         .WithMany("Comments")
-                        .HasForeignKey("CreatorId1");
+                        .HasForeignKey("CreatorId");
 
                     b.Navigation("Article");
 
