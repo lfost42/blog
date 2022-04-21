@@ -252,7 +252,6 @@ namespace BlogLibrary.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Subject = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     Comment = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Updated = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),

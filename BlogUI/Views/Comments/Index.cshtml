@@ -13,9 +13,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Subject)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Comment)
             </th>
             <th>
@@ -45,9 +42,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subject)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comment)
             </td>

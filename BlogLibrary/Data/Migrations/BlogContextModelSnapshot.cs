@@ -106,11 +106,6 @@ namespace BlogLibrary.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("timestamp without time zone");
 
