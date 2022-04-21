@@ -30,15 +30,18 @@
     <hr />
     <article>
         <div class="row">
-            <div class="col text-center font-weight-bold h3">
-                Article Tags
+            <div class="col text-center fw-bold h3">
+                Browse Tags
             </div>
         </div>
         <div class="row">
-            <div class="col text-center">
+            <div class="col d-flex justify-content-center">
                 @foreach (var tag in Model.Tags)
                 {
-                    <a class="btn btn-outline-dark" asp-action="TagIndex" asp-route-tag="@tag.Tag.ToLower()">#@tag.Tag</a>
+                    <form asp-action="TagIndex" asp-route-tag="@tag.Tag.ToLower()" method="post">
+                        @Html.Hidden("id", Model.Id)
+                        <button class="btn btn-outline-dark mx-1" type="submit">#@tag.Tag</button>
+                    </form>
                 }
             </div>
         </div>
@@ -52,7 +55,7 @@
         {
             <form class="w-100 p-4" asp-action="Create" asp-controller="Comments" method="post">
                 @Html.Hidden("ArticleId", Model.Id)
-                @*@Html.Hidden("ArticleSlug", Model.Slug)*@
+                @Html.Hidden("ArticleSlug", Model.Slug)
 
                 <div class="form-group p-2">
                     <label class="h2 form-label fw-bold">Add Comment</label>

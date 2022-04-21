@@ -71,7 +71,7 @@ namespace BlogUI.Controllers
                 .OrderByDescending(p => p.Created)
                 .ToPagedListAsync(pageNumber, pageSize);
 
-            return View("ArtilceIndex", articleModels);
+            return View("ArticleIndex", articleModels);
         }
 
         public async Task<IActionResult> ArticleIndex(int? id, int? page)
@@ -140,8 +140,7 @@ namespace BlogUI.Controllers
             if (ModelState.IsValid)
             {
                 articleModel.Created = DateTime.Now;
-                var creatorId = _userManager.GetUserId(User);
-                articleModel.CreatorId = creatorId;
+                articleModel.CreatorId = _userManager.GetUserId(User);
 
                 if (articleModel.Image is not null)
                 {
@@ -163,17 +162,21 @@ namespace BlogUI.Controllers
                     articleModel.Slug = slug + "_1";
                 }
 
+                articleModel.Slug = slug;
+
+                _context.Add(articleModel);
+                await _context.SaveChangesAsync();
+
                 foreach (var tag in tagValues)
                 {
                     _context.Add(new TagModel()
                     {
                         ArticleModelId = articleModel.Id,
+                        CreatorId = articleModel.CreatorId,
                         Tag = tag
                     });
                 }
 
-                articleModel.Slug = slug;
-                _context.Add(articleModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -268,6 +271,7 @@ namespace BlogUI.Controllers
                         _context.Add(new TagModel()
                         {
                             ArticleModelId = articleModel.Id,
+                            CreatorId = articleModel.CreatorId,
                             Tag = tag
                         });
                     }
