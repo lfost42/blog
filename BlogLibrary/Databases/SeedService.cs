@@ -54,6 +54,7 @@ namespace BlogLibrary.Databases
             if (_dbContext.AppUsers.Any()) return;
 
             string defaultPassword = _config["DefaultPassword"];
+            string ownerPassword = _config["OwnerPassword"];
 
             var ownerUser = new UserModel()
             {
@@ -80,7 +81,7 @@ namespace BlogLibrary.Databases
                 ContentType = Path.GetExtension(_config["DefaultUserImage"])
             };
 
-            await _userManager.CreateAsync(adminUser, defaultPassword);
+            await _userManager.CreateAsync(adminUser, ownerPassword);
             await _userManager.AddToRoleAsync(adminUser, Role.Admin.ToString());
 
             var visitorUser = new UserModel()

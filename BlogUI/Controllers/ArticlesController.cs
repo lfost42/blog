@@ -57,6 +57,23 @@ namespace BlogUI.Controllers
             return View(await blogContext.ToListAsync());
         }
 
+        public async Task<IActionResult> TagIndex(int? id, int? page, string tag)
+        {
+            if (id is null)
+            {
+                return NotFound();
+            }
+
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+
+            var articleModels = await _context.Articles.Where(p => p.Tags.Any(t => t.Tag.ToLower() == tag) && p.Status == Status.Published)
+                .OrderByDescending(p => p.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
+
+            return View("ArtilceIndex", articleModels);
+        }
+
         public async Task<IActionResult> ArticleIndex(int? id, int? page)
         {
             if(id is null)
@@ -107,6 +124,7 @@ namespace BlogUI.Controllers
         public IActionResult Create()
         {
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title");
+            ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Title");
             ViewData["Image"] = new SelectList(_context.Images, "Image.Photo", "Image.Photo");
             ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id");
             return View();
@@ -149,7 +167,7 @@ namespace BlogUI.Controllers
                 {
                     _context.Add(new TagModel()
                     {
-                        ArticleId = articleModel.Id,
+                        ArticleModelId = articleModel.Id,
                         Tag = tag
                     });
                 }
@@ -249,7 +267,7 @@ namespace BlogUI.Controllers
                     {
                         _context.Add(new TagModel()
                         {
-                            ArticleId = articleModel.Id,
+                            ArticleModelId = articleModel.Id,
                             Tag = tag
                         });
                     }
