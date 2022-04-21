@@ -67,7 +67,7 @@ namespace BlogLibrary.Databases
                 ContentType = Path.GetExtension(_config["DefaultUserImage"])
             };
 
-            await _userManager.CreateAsync(ownerUser, defaultPassword);
+            await _userManager.CreateAsync(ownerUser, ownerPassword);
             await _userManager.AddToRoleAsync(ownerUser, Role.Owner.ToString());
 
             var adminUser = new UserModel()
@@ -81,7 +81,7 @@ namespace BlogLibrary.Databases
                 ContentType = Path.GetExtension(_config["DefaultUserImage"])
             };
 
-            await _userManager.CreateAsync(adminUser, ownerPassword);
+            await _userManager.CreateAsync(adminUser, defaultPassword);
             await _userManager.AddToRoleAsync(adminUser, Role.Admin.ToString());
 
             var visitorUser = new UserModel()

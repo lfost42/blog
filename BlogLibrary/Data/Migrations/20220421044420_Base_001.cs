@@ -260,7 +260,7 @@ namespace BlogLibrary.Data.Migrations
                     Deleted = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     ArticleId = table.Column<int>(type: "integer", nullable: false),
                     CreatorId = table.Column<int>(type: "integer", nullable: false),
-                    ModeratedComment = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    ModeratedComment = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     CreatorId1 = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -286,18 +286,25 @@ namespace BlogLibrary.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Tag = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    ArticleId = table.Column<int>(type: "integer", nullable: false)
+                    ArticleModelId = table.Column<int>(type: "integer", nullable: false),
+                    CreatorId = table.Column<string>(type: "text", nullable: true),
+                    Tag = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tags_Articles_ArticleId",
-                        column: x => x.ArticleId,
+                        name: "FK_Tags_Articles_ArticleModelId",
+                        column: x => x.ArticleModelId,
                         principalTable: "Articles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tags_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -373,9 +380,14 @@ namespace BlogLibrary.Data.Migrations
                 column: "ImageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tags_ArticleId",
+                name: "IX_Tags_ArticleModelId",
                 table: "Tags",
-                column: "ArticleId");
+                column: "ArticleModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tags_CreatorId",
+                table: "Tags",
+                column: "CreatorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

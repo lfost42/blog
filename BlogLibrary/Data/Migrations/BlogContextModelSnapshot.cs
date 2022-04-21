@@ -103,7 +103,6 @@ namespace BlogLibrary.Data.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ModeratedComment")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
@@ -193,8 +192,11 @@ namespace BlogLibrary.Data.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("ArticleId")
+                    b.Property<int>("ArticleModelId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("text");
 
                     b.Property<string>("Tag")
                         .IsRequired()
@@ -203,7 +205,9 @@ namespace BlogLibrary.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArticleId");
+                    b.HasIndex("ArticleModelId");
+
+                    b.HasIndex("CreatorId");
 
                     b.ToTable("Tags");
                 });
@@ -483,13 +487,19 @@ namespace BlogLibrary.Data.Migrations
 
             modelBuilder.Entity("BlogLibrary.Models.TagModel", b =>
                 {
-                    b.HasOne("BlogLibrary.Models.ArticleModel", "Article")
+                    b.HasOne("BlogLibrary.Models.ArticleModel", "ArticleModel")
                         .WithMany("Tags")
-                        .HasForeignKey("ArticleId")
+                        .HasForeignKey("ArticleModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Article");
+                    b.HasOne("BlogLibrary.Models.UserModel", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.Navigation("ArticleModel");
+
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
