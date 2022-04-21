@@ -1,6 +1,12 @@
 ﻿@using BlogLibrary.Databases.Interfaces
+@using Microsoft.AspNetCore.Identity
+
+@using BlogLibrary.Models.Enum
+@using BlogLibrary.Models
+@model ArticleModel
+
+@inject UserManager<UserModel> userManager
 @inject IImageService imageService
-@model BlogLibrary.Models.ArticleModel
 
 @{
     ViewData["Title"] = "Details";
@@ -81,6 +87,102 @@
 
 
 
+        @foreach (var comment in Model.Comments)
+        {
+
+            <div class="container d-flex align-content-center ps-5 pe-5 bg-light shadow-sm p-2 w-75 h-100 gy-3 border rounded-2" style="height: 20vh;">
+                <div class="row w-100">
+                    <div class=" col-3 ">
+                        <img class="img-thumbnail rounded-3" src="@imageService.DecodeImage(comment.Creator.ImageData, comment.Creator.ContentType)" />
+                    </div>
+                    <!--Render the editbutton-->
+                    <div class=" col col-12 col-lg-9 ">
+                        <div class="row  h-100">
+                            <div class="col-9 ">
+                                <h4>@comment.Creator.FullName</h4>
+                                <small>
+                                    <i>
+                                        @if (comment.Moderated is not null)
+                                        {
+                                            <span class="small">
+                                                <span class="fw-bolder">
+                                                    Moderated
+                                                </span>
+                                                : @comment.Moderated?.ToString("MMM, dd, yyyy")
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="small fst-italic">Posted : @comment.Created.ToString("MMM, dd yyyy")</span>
+                                        }
+                                    </i>
+                                </small>
+
+                                <small><i>Posted on @comment.Created.ToString("MMM dd, yyyy")</i></small>
+
+                                @if (comment.Moderated is not null)
+                                {
+                                    <div class="row">
+                                        <span class="text-danger fw-bolder">@comment.ModeratedComment</span>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <span>@comment.Comment</span>
+                                    </div>
+
+                                }
+
+
+
+                            </div>
+                            <div class="col col-12 col-lg-3 my-1">
+                                <div class="row">
+                                    @if (comment.Moderated is null && comment.Deleted is null && comment.CreatorId == userManager.GetUserId(User))
+                                    {
+
+                                        <div class="col-12">
+                                            <button data-bs-toggle="modal" data-bs-target="#editModal_@comment.Id" class="btn btn-sm btn-dark fw-bold w-100">Edit</button>
+                                        </div>
+
+                                    }
+                                    <!--render the moderate and delete buttons-->
+
+                                    @if (User.IsInRole("Owner") && comment.Deleted is null)
+                                    {
+
+
+                                        <div class="col-12 my-1">
+                                            <button class="btn btn-sm btn-dark fw-bold w-100" data-bs-toggle="modal" data-bs-target="#modModal_@comment.Id">Moderate</button>
+                                        </div>
+                                        <div class="col-12">
+                                            <form asp-action="Delete" asp-controller="Comments">
+                                                @Html.Hidden("Id", comment.Id)
+                                                @Html.Hidden("ArticleSlug", comment.Article.Slug)
+                                                <button class="btn btn-sm btn-danger fw-bold w-100">Delete</button>
+                                            </form>
+                                        </div>
+
+
+                                    }
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        }
+
         <div>
             @if (User.IsInRole("Owner"))
             {
@@ -88,3 +190,5 @@
             }
             <a asp-action="Index">Back to List</a>
         </div>
+
+    </div>

@@ -51,7 +51,9 @@ namespace BlogUI.Controllers
             if (ModelState.IsValid)
             {
                 commentModel.CreatorId = _userManager.GetUserId(User);
+                commentModel.ArticleId = commentModel.ArticleId;
                 commentModel.Created = DateTime.Now;
+                
                 _context.Add(commentModel);
                 await _context.SaveChangesAsync();
 

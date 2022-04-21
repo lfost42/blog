@@ -108,6 +108,7 @@ namespace BlogUI.Controllers
                 .Include(a => a.Image)
                 .Include(a => a.Tags)
                 .Include(a => a.SeriesModel)
+                .Include(a => a.Comments)
                 .FirstOrDefaultAsync(m => m.Slug == slug);
 
             if (articleModel == null)
