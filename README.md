@@ -37,23 +37,41 @@ FUTURE UPDATES:
 - Implement Series as a nav bar in shared _layout
 - Hover series to display carousel of articles within that series
 - Article cards for landing page
-	--featured article with photo, series, title, and summary (links to article)
+
+	-- featured article with photo, series, title, and summary (links to article)
+
 	-- 2nd and 3rd most recent articles below featured article
+
 	-- search bar
+
 	-- footer
+
 - Series index
-	--featured article with photo series, title, and summary (links to article)
+
+	-- featured article with photo series, title, and summary (links to article)
+
 	-- 2nd and 3rd most recent article within that series
+
 	-- search bar
+
 	-- footer
+
 - Article page
+
 	-- Series
+
 	-- Title
+
 	-- Summary
+
 	-- AuthorImage Author
+
 	-- Article Image
+
 	-- Article Body
+
 	-- Show/Hide comments
+
 	-- Footer
 
 - DEMO login (will not update database)
