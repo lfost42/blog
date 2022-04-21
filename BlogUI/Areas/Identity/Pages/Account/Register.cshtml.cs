@@ -58,6 +58,14 @@ namespace BlogUI.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            public string FullName => $"{FirstName} {LastName}";
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -93,7 +101,7 @@ namespace BlogUI.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new UserModel
-                { UserName = Input.Email,
+                { UserName = Input.FirstName is null || Input.LastName is null ? Input.Email : Input.FullName,
                     Email = Input.Email,
                     ImageData = await _imageService.EncodeImageAsync(Input.Image.Photo) ??
                             await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),

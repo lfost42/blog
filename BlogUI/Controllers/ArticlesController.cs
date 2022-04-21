@@ -266,7 +266,7 @@ namespace BlogUI.Controllers
                         }
                     }
 
-                    _context.Tags.RemoveRange(newArticle.Tags);
+                    newArticle.Tags = articleModel.Tags;
                     foreach (var tag in tagValues)
                     {
                         _context.Add(new TagModel()

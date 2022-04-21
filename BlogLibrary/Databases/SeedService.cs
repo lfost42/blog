@@ -60,8 +60,8 @@ namespace BlogLibrary.Databases
             {
                 Email = "owner@myblog.com",
                 UserName = "owner@myblog.com",
-                FirstName = "Owner",
-                LastName = "Demobarista",
+                FirstName = "Lynda",
+                LastName = "Foster",
                 EmailConfirmed = true,
                 ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
                 ContentType = Path.GetExtension(_config["DefaultUserImage"])
@@ -72,10 +72,10 @@ namespace BlogLibrary.Databases
 
             var adminUser = new UserModel()
             {
-                Email = "demoadmin@myblog.com",
-                UserName = "demoadmin@myblog.com",
+                Email = "admin@myblog.com",
+                UserName = "admin@myblog.com",
                 FirstName = "Mod",
-                LastName = "Demomod",
+                LastName = "Admin",
                 EmailConfirmed = true,
                 ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
                 ContentType = Path.GetExtension(_config["DefaultUserImage"])
@@ -86,10 +86,10 @@ namespace BlogLibrary.Databases
 
             var visitorUser = new UserModel()
             {
-                Email = "demovisitor@myblog.com",
-                UserName = "demovisitor@myblog.com",
+                Email = "visitor@myblog.com",
+                UserName = "visitor@myblog.com",
                 FirstName = "Guest",
-                LastName = "Demovisitor",
+                LastName = "User",
                 EmailConfirmed = true,
                 ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
                 ContentType = Path.GetExtension(_config["DefaultUserImage"])

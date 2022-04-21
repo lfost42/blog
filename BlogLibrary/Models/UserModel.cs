@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 namespace BlogLibrary.Models
 {
     public class UserModel : IdentityUser
-    {
-        [Display(Name = "First Name")]
+    { 
+        [Display(Name = "First Name"), StringLength(50, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
         public string FirstName { get; set; }
 
-        [Display(Name = "Last Name")]
+        [Display(Name = "Last Name"), StringLength(50, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
         public string LastName { get; set; }
 
         [NotMapped]

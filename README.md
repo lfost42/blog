@@ -18,18 +18,47 @@ A blog that allows the owner to post articles upon being authenticated via login
 MVP:
 Owner can create series and write articles under a series.
 
-OTHER FEATURES:
+Completed:
+
+BASIC
 - Add role-based access
 - add image service
-- Add role-based views
-- Add email service for registration
-- Implement tags
+- Add email service for registration and contact me form
+- Implement tags 
 - Slug service (alternate routes for accessing articles instead of primary keys)
 - Visitors may add comments after registering and logging in. 
+- Locate comments by guest
+- Add role-based views
+
+USER INTERFACE
+- user can click tags to find other articles with that tag
+
+FUTURE UPDATES:
+- Implement Series as a nav bar in shared _layout
+- Hover series to display carousel of articles within that series
+- Article cards for landing page
+	--featured article with photo, series, title, and summary (links to article)
+	-- 2nd and 3rd most recent articles below featured article
+	-- search bar
+	-- footer
+- Series index
+	--featured article with photo series, title, and summary (links to article)
+	-- 2nd and 3rd most recent article within that series
+	-- search bar
+	-- footer
+- Article page
+	-- Series
+	-- Title
+	-- Summary
+	-- AuthorImage Author
+	-- Article Image
+	-- Article Body
+	-- Show/Hide comments
+	-- Footer
+
 - DEMO login (will not update database)
 - Guest comments with CAPTCHA (does not appear until owner approves it). 
 - IP blocking of accounts that abuse the guest comments section.
-- Locate comments by guest
 
 ## USER INTERFACE
 Dashboard shows series and recent articles. Side-menu to older articles. Search function. Login for writing articles or comments. 
