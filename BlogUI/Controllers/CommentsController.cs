@@ -20,15 +20,32 @@ namespace BlogUI.Controllers
         }
 
         // GET: Comments
-        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var blogContext = _context.Comments.Include(c => c.Article);
             return View(await blogContext.ToListAsync());
         }
 
-        //GET: Comments/Create
-        [HttpGet]
+        // GET: Comments/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var commentModel = await _context.Comments
+                .Include(c => c.Article)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (commentModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(commentModel);
+        }
+
+        // GET: Comments/Create
         public IActionResult Create()
         {
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body");
@@ -44,17 +61,15 @@ namespace BlogUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                commentModel.Created = DateTime.Now;
                 _context.Add(commentModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
+            ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Body", commentModel.ArticleId);
             return View(commentModel);
         }
 
         // GET: Comments/Edit/5
-        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,7 +102,6 @@ namespace BlogUI.Controllers
             {
                 try
                 {
-                    commentModel.Updated = DateTime.Now;
                     _context.Update(commentModel);
                     await _context.SaveChangesAsync();
                 }
@@ -109,7 +123,6 @@ namespace BlogUI.Controllers
         }
 
         // GET: Comments/Delete/5
-        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,7 +146,6 @@ namespace BlogUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            
             var commentModel = await _context.Comments.FindAsync(id);
             _context.Comments.Remove(commentModel);
             await _context.SaveChangesAsync();

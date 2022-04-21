@@ -34,6 +34,9 @@
                 @Html.DisplayNameFor(model => model.CreatorId)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ModeratedComment)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Article)
             </th>
             <th></th>
@@ -64,7 +67,10 @@
                 @Html.DisplayFor(modelItem => item.CreatorId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Article.Title)
+                @Html.DisplayFor(modelItem => item.ModeratedComment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Article.Body)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
