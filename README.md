@@ -18,9 +18,7 @@ A blog that allows the owner to post articles upon being authenticated via login
 MVP:
 Owner can create series and write articles under a series.
 
-Completed:
-
-BASIC
+COMPLETED FEATURES:
 - Add role-based access
 - add image service
 - Add email service for registration and contact me form
@@ -32,6 +30,7 @@ BASIC
 
 USER INTERFACE
 - user can click tags to find other articles with that tag
+
 
 FUTURE UPDATES:
 - Implement Series as a nav bar in shared _layout
