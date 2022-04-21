@@ -103,7 +103,7 @@ namespace BlogUI.Controllers
 
         // GET: Articles/Create
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Owner")]
         public IActionResult Create()
         {
             ViewData["SeriesModelId"] = new SelectList(_context.Series, "Id", "Title");
@@ -167,7 +167,7 @@ namespace BlogUI.Controllers
 
         // GET: Articles/Edit/5
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Owner")]
         public async Task<IActionResult> Edit(string slug)
         {
             if (string.IsNullOrEmpty(slug))

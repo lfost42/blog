@@ -63,7 +63,7 @@ namespace BlogUI.Controllers
 
         // GET: Series/Create
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles ="Owner")]
         public IActionResult Create()
         {
             ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id");
@@ -108,7 +108,7 @@ namespace BlogUI.Controllers
 
         // GET: Series/Edit/5
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Owner")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)

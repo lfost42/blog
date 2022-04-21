@@ -44,6 +44,9 @@
         </div>
     </article>
     <div>
-        <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-slug="@Model.Slug">Edit</a> |
+        @if (User.IsInRole("Owner"))
+        {
+        <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-slug="@Model.Slug">Edit</a>
+        }
         <a asp-action="Index">Back to List</a>
     </div>

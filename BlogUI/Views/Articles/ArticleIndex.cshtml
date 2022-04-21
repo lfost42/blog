@@ -14,9 +14,13 @@
 
 <h3>Article Index</h3>
 
+@if (User.IsInRole("Owner"))
+{
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+}
+
 <table class="table">
     <tbody>
         @foreach (var item in Model)
@@ -37,9 +41,12 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-slug="@item.Slug">Edit</a> |
-                    <a asp-action="Details" asp-route-slug="@item.Slug">Details</a> |
-                    <a asp-action="Delete" asp-route-slug="@item.Slug">Delete</a>
+                    @if (User.IsInRole("Owner"))
+                    {
+                        <a asp-action="Edit" asp-route-slug="@item.Slug">Edit</a>
+                        <a asp-action="Delete" asp-route-slug="@item.Slug">Delete</a>
+                    }
+                    <a asp-action="Details" asp-route-slug="@item.Slug">Details</a>
                 </td>
             </tr>
         }

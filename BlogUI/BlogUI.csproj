@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="appsettings.json" />
+    <Content Remove="appsettings %28copy%29.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json" />
+    <None Include="example.json" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,9 +8,13 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (User.IsInRole("Owner"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -61,10 +65,12 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-slug="@item.Slug">Edit</a> |
-                    @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
-                    <a asp-action="Details" asp-route-slug="@item.Slug">Details</a> |
-                    <a asp-action="Delete" asp-route-slug="@item.Slug">Delete</a>
+                    @if (User.IsInRole("Owner"))
+                    {
+                        <a asp-action="Edit" asp-route-slug="@item.Slug">Edit</a>
+                        <a asp-action="Delete" asp-route-slug="@item.Slug">Delete</a>
+                    }
+                    <a asp-action="Details" asp-route-slug="@item.Slug">Details</a>
                 </td>
             </tr>
         }
