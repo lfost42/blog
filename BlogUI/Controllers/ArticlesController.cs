@@ -57,7 +57,9 @@ namespace BlogUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Articles.Include(a => a.SeriesModel).Include(a => a.Image);
+            var blogContext = _context.Articles.Include(a => a.SeriesModel)
+                .Include(a => a.Image)
+                .Include(a => a.SeriesModel);
             return View(await blogContext.ToListAsync());
         }
 
@@ -72,6 +74,8 @@ namespace BlogUI.Controllers
             var pageSize = 5;
 
             var articleModels = await _context.Articles.Where(p => p.Tags.Any(t => t.Tag.ToLower() == tag) && p.Status == Status.Published)
+                .Include(a => a.SeriesModel)
+                .Include(a => a.Image)
                 .OrderByDescending(p => p.Created)
                 .ToPagedListAsync(pageNumber, pageSize);
 
