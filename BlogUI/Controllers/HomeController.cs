@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -26,6 +26,22 @@ namespace BlogUI.Controllers
             _logger = logger;
             _emailSender = emailSender;
             _context = context;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SeriesIndex(int? page)
+        {
+            var pageNumber = page ?? 1;
+            var pageSize = 4;
+
+            var series = _context.Series.Where(
+                s => s.Articles.Any(a => a.Status == Status.Published))
+                .Include(s => s.Creator)
+                .Include(s => s.Image)
+                .OrderByDescending(s => s.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
+
+            return View(await series);
         }
 
         [HttpGet]
