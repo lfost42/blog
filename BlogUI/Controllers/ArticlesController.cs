@@ -226,7 +226,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Summary,Body,Status")] ArticleModel articleModel, IFormFile newImage, List<string> tagValues)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,SeriesModelId,Title,Summary,Body,Status")] ArticleModel articleModel, IFormFile newImage, List<string> tagValues)
         {
             if (id != articleModel.Id)
             {
@@ -244,6 +244,7 @@ namespace BlogUI.Controllers
                                     .Include(a => a.SeriesModel)
                                     .FirstOrDefaultAsync(m => m.Id == id);
 
+                    newArticle.SeriesModelId = articleModel.SeriesModelId;
                     newArticle.Updated = DateTime.Now;
                     newArticle.Title = articleModel.Title;
                     newArticle.Summary = articleModel.Summary;

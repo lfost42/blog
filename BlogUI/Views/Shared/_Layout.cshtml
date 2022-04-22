@@ -33,11 +33,18 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SeriesIndex">Series</a>
                             </li>
+                            @if (User.IsInRole("Owner"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Series" asp-action="Index">Series</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="Index">Articles</a>
+                                </li>
+                             }
 
-                        </ul>
+                            </ul>
                         <ul class="navbar-nav flex-row justify-content-end">
                             <li class="nav-item">
                                 <partial name="_LoginPartial" />
@@ -58,6 +65,9 @@
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-row small">
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SeriesIndex">Series: </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">ONE</a>
                             </li>
                             <li class="nav-item">
@@ -73,7 +83,7 @@
                                 <div class="navbar-collapse collapse pt-2 pt-md-0" id="navbar2">
                                     <form asp-action="SearchIndex" asp-controller="Articles">
                                         <div class="input-group btn-group-sm">
-                                            <input type="text" name="SearchTerm" class="form-control" placeholder="Search Terms">
+                                            <input type="text" name="SearchTerm" class="form-control" placeholder="Search Articles">
                                             <button class="btn btn-outline-dark px-2 px-md-4" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                                         </div>
                                     </form>
