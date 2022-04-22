@@ -12,176 +12,179 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="row">
-    <div class="col d-flex content-align-center">
-        <h4>@Model.SeriesModel.Title - @Model.Title</h4>
+<section>
+    <div class="row container justify-content-center d-flex p-3">
+        <div class="col text-center">
+            @Model.SeriesModel.Title
+            <h1>@Model.Title</h1>
+            <h5>@Model.Summary</h5>
+            by @Model.Creator.FullName @Model.Created.ToShortDateString()
+        </div>
     </div>
-    <div class="col d-flex content-align-start">
-        Article Tags: 
-        @foreach (var tag in Model.Tags)
-        {
-            <form asp-action="TagIndex" asp-route-tag="@tag.Tag.ToLower()" method="post">
-                @Html.Hidden("id", Model.Id)
-                <button class="btn btn-xsm btn-outline-dark mx-1" type="submit">#@tag.Tag</button>
-            </form>
-        }
-    </div>
+</section>
+
+<hr />
+<br />
+<div class="row container image-fluid justify-content-center">
+    @if (Model.Image != null)
+    {
+        <img src="@imageService.DecodeImage(Model.Image.ImageData, Model.Image.ImageExtension)" />
+    }
 </div>
 
 <section>
-    <div class="row">
-
+    <div class="row container d-flex justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <p>
+                @Html.Raw(Model.Body)
+            </p>
+        </div>
     </div>
-    Created: @Model.Created.ToShortDateString() | Status: @Model.Status <br />
-    @Model.Summary <br />
 </section>
-    <hr />
 
-    <div class="row">
-        @if (Model.Image != null)
+<section>
+    <div class="row container d-flex justify-content-center p-3">
+        <button class="btn btn-sm btn-outline-dark d-flex">@Model.Comments.Count Comment(s)</button>
+        @if (@Model.Tags.Count() >= 1)
         {
-            <img height="300px" src="@imageService.DecodeImage(Model.Image.ImageData, Model.Image.ImageExtension)" />
+            @foreach (var tag in Model.Tags)
+            {
+                <form asp-action="TagIndex" asp-route-tag="@tag.Tag.ToLower()" method="post">
+                    @Html.Hidden("id", Model.Id)
+                    <button class="btn btn-sm btn-outline-dark mx-1" type="submit">#@tag.Tag</button>
+                </form>
+            }
         }
     </div>
-    <div class="col-lg-8 col-md-10">
-        <p>
-            @Html.Raw(Model.Body)
-        </p>
-        <button class="btn btn-sm btn-outline-dark d-flex">@Model.Comments.Count Comment(s)</button>
-    </div>
 
+    <div id="commentSection" class="row container d-flex justify-content-start p-3">
 
-    <section>
-        <div id="commentSection" class="row container d-flex justify-content-start p-3">
+        @foreach (var comment in Model.Comments)
+        {
 
-            @foreach (var comment in Model.Comments)
-            {
-
-                <div class="container d-flex align-content-center ps-5 pe-5 p-2 gy-3 border h-100">
-                    <div class="row w-100">
-                        <div class="col-3">
-                            <img class="ml-3 mt-3 image-thumbnail rounded-circle" width="75px" src="@imageService.DecodeImage(comment.Creator.ImageData, comment.Creator.ContentType)" />
-                        </div>
-                        <!--Render the editbutton-->
-                        <div class=" col col-12 col-lg-9 ">
-                            <div class="row  h-100">
-                                <div class="col-9 ">
-                                    <h4>@comment.Creator.FullName</h4>
-                                    <small>
-                                        <i>
-                                            @if (comment.Moderated is not null)
-                                            {
-                                                <span class="small">
-                                                    <span class="fw-bolder">
-                                                        Moderated
-                                                    </span>
-                                                    : @comment.Moderated?.ToString("MMM, dd, yyyy")
+            <div class="container d-flex align-content-center ps-5 pe-5 p-3 border h-100">
+                <div class="row w-100">
+                    <div class="col-2">
+                        <img class="ml-3 mt-3 image-thumbnail rounded-circle" width="75px" src="@imageService.DecodeImage(comment.Creator.ImageData, comment.Creator.ContentType)" />
+                    </div>
+                    <!--Render the editbutton-->
+                    <div class=" col col-12 col-lg-9 ">
+                        <div class="row  h-100">
+                            <div class="col-9 ">
+                                <h4>@comment.Creator.FullName</h4>
+                                <small>
+                                    <i>
+                                        @if (comment.Moderated is not null)
+                                        {
+                                            <span class="small">
+                                                <span class="fw-bolder">
+                                                    Moderated
                                                 </span>
-                                            }
-                                            else
-                                            {
-                                                <span class="small fst-italic">Posted : @comment.Created.ToShortDateString()</span>
-                                            }
-                                        </i>
-                                    </small>
+                                                : @comment.Moderated?.ToString("MMM, dd, yyyy")
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="small fst-italic">Posted : @comment.Created.ToShortDateString()</span>
+                                        }
+                                    </i>
+                                </small>
 
-                                    <small><i>Posted on @comment.Created.ToShortDateString()</i></small>
+                                <small><i>Posted on @comment.Created.ToShortDateString()</i></small>
 
-                                    @if (comment.Moderated is not null)
-                                    {
-                                        <div class="row">
-                                            <span class="text-danger fw-bolder">@comment.ModeratedComment</span>
-                                        </div>
-
-                                    }
-                                    else
-                                    {
-                                        <div class="row ml-1">
-                                            <span>@comment.Comment</span>
-                                        </div>
-
-                                    }
-
-
-
-                                </div>
-                                <div class="col col-12 col-lg-3 my-1">
+                                @if (comment.Moderated is not null)
+                                {
                                     <div class="row">
-                                        @if (comment.Moderated is null && comment.Deleted is null && comment.CreatorId == userManager.GetUserId(User))
-                                        {
-
-                                            <div class="col-12">
-                                                <button data-bs-toggle="modal" data-bs-target="#editModal_@comment.Id" class="btn btn-sm btn-outline-dark w-100">Edit</button>
-                                            </div>
-
-                                        }
-                                        <!--render the moderate and delete buttons-->
-
-                                        @if (User.IsInRole("Owner") && comment.Deleted is null)
-                                        {
-
-
-                                            <div class="col-12 my-1">
-                                                <button class="btn btn-sm btn-outline-dark w-100" data-bs-toggle="modal" data-bs-target="#modModal_@comment.Id">Moderate</button>
-                                            </div>
-                                            <div class="col-12">
-                                                <form asp-action="Delete" asp-controller="Comments">
-                                                    @Html.Hidden("Id", comment.Id)
-                                                    @Html.Hidden("ArticleSlug", comment.Article.Slug)
-                                                    <button class="btn btn-sm btn-outline-dark fw-bold w-100">Delete</button>
-                                                </form>
-                                            </div>
-
-
-                                        }
-
+                                        <span class="text-danger fw-bolder">@comment.ModeratedComment</span>
                                     </div>
 
-                                </div>
+                                }
+                                else
+                                {
+                                    <div class="row ml-1">
+                                        <span>@comment.Comment</span>
+                                    </div>
+
+                                }
+
+
+
                             </div>
+                            <div class="col col-12 col-lg-3 my-1">
+                                <div class="row">
+                                    @if (comment.Moderated is null && comment.Deleted is null && comment.CreatorId == userManager.GetUserId(User))
+                                    {
+
+                                        <div class="col-12">
+                                            <button data-bs-toggle="modal" data-bs-target="#editModal_@comment.Id" class="btn btn-sm btn-outline-dark w-100">Edit</button>
+                                        </div>
+
+                                    }
+                                    <!--render the moderate and delete buttons-->
+
+                                    @if (User.IsInRole("Owner") && comment.Deleted is null)
+                                    {
 
 
+                                        <div class="col-12 my-1">
+                                            <button class="btn btn-sm btn-outline-dark w-100" data-bs-toggle="modal" data-bs-target="#modModal_@comment.Id">Moderate</button>
+                                        </div>
+                                        <div class="col-12">
+                                            <form asp-action="Delete" asp-controller="Comments">
+                                                @Html.Hidden("Id", comment.Id)
+                                                @Html.Hidden("ArticleSlug", comment.Article.Slug)
+                                                <button class="btn btn-sm btn-outline-dark fw-bold w-100">Delete</button>
+                                            </form>
+                                        </div>
+
+
+                                    }
+
+                                </div>
+
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
-            }
-        </div>
-    </section>
-
-    <hr />
-
-    <div class="d-flex justify-content-center ms-md-5 me-md-5 mb-2 border">
-        @if (User.Identity.IsAuthenticated)
-        {
-            <form class="w-100 p-4" asp-action="Create" asp-controller="Comments" method="post">
-                @Html.Hidden("ArticleId", Model.Id)
-                @Html.Hidden("ArticleSlug", Model.Slug)
-
-                <div class="form-group p-2">
-                    <label class="h2 form-label fw-bold">Add Comment</label>
-                    <textarea name="Comment" class="form-control" rows="4"></textarea>
-
-                </div>
-
-                <div class="d-flex justify-content-center mt-2">
-                    <button type="submit" class="btn btn-outline-dark w-50 btn-sm">Submit</button>
-                </div>
-            </form>
-        }
-        else
-        {
-            <a class="btn btn-sm btn-dark w-25 m-3" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Articles/Details?slug=@Model.Slug">
-                Login to Add Comment
-            </a>
+            </div>
         }
     </div>
+</section>
 
-    <div>
-        @if (User.IsInRole("Owner"))
-        {
-            <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-slug="@Model.Slug">Edit</a><br />
-        }
-        <a asp-action="Index">Back to List</a>
-    </div>
+<hr />
 
+<div class="d-flex justify-content-center ms-md-5 me-md-5 mb-2 border">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form class="w-100 p-4" asp-action="Create" asp-controller="Comments" method="post">
+            @Html.Hidden("ArticleId", Model.Id)
+            @Html.Hidden("ArticleSlug", Model.Slug)
+
+            <div class="form-group p-2">
+                <label class="h2 form-label fw-bold">Add Comment</label>
+                <textarea name="Comment" class="form-control" rows="4"></textarea>
+
+            </div>
+
+            <div class="d-flex justify-content-center mt-2">
+                <button type="submit" class="btn btn-outline-dark w-50 btn-sm">Submit</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        <a class="btn btn-sm btn-dark w-25 m-3" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Articles/Details?slug=@Model.Slug">
+            Login to Add Comment
+        </a>
+    }
+</div>
+
+<div>
+    @if (User.IsInRole("Owner"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-slug="@Model.Slug">Edit</a><br />
+    }
+    <a asp-action="Index">Back to List</a>
 </div>

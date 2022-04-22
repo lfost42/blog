@@ -36,9 +36,6 @@ USER INTERFACE
 	- featured article with photo, series, title, and summary (links to article)
 	- 2nd-5th most recent articles below featured article at half size
 
-FUTURE UPDATES:
-- Hover series to display carousel of articles within that series
-
 - Series index
 	- featured article with photo series, title, and summary (links to article)
 	- 2nd-5th most recent articles below featured article at half size
@@ -50,8 +47,11 @@ FUTURE UPDATES:
 	- AuthorImage Author
 	- Article Image
 	- Article Body
-	- Show/Hide comments
 
+FUTURE UPDATES:
+- Article Modals
+- Show/Hide comments
+- Hover series to display carousel of articles within that series
 - Extend slug feature to Series pages
 - DEMO login (will not update database)
 - Guest comments with CAPTCHA (does not appear until owner approves it). 
