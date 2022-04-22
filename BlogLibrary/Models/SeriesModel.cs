@@ -11,12 +11,11 @@ namespace BlogLibrary.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Series"), Required, StringLength(50, ErrorMessage = "The {0} must be atleast {2} and at most {1} characters.", MinimumLength = 2)]
+        [Required, Display(Name = "Series"), StringLength(50, ErrorMessage = "The {0} must be atleast {2} and at most {1} characters.", MinimumLength = 2)]
         public string Title { get; set; }
 
-        [Required, StringLength(500, ErrorMessage = "The {0} must be atleast {2} and at most {1} characters.", MinimumLength = 2)]
+        [StringLength(500, ErrorMessage = "The {0} must be atleast {2} and at most {1} characters.", MinimumLength = 2)]
         public string Description { get; set; }
-
 
         [Required, DataType(DataType.Date)]
         public DateTime Created { get; set; }

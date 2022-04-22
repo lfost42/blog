@@ -16,8 +16,6 @@ namespace BlogLibrary.Databases
 {
     public class SeedService
     {
-        //DEMO PURPOSES ONLY
-
         private readonly BlogContext _dbContext;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<UserModel> _userManager;
@@ -40,6 +38,7 @@ namespace BlogLibrary.Databases
             await SeedUsersAsync();
         }
 
+
         private async Task SeedRolesAsync()
         {
             if (_dbContext.Roles.Any()) return;
@@ -48,6 +47,7 @@ namespace BlogLibrary.Databases
                 await _roleManager.CreateAsync(new IdentityRole(role));
             }
         }
+
 
         private async Task SeedUsersAsync()
         {
@@ -66,23 +66,19 @@ namespace BlogLibrary.Databases
                 ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
                 ContentType = Path.GetExtension(_config["DefaultUserImage"])
             };
-
+            if (_dbContext.Series.Any()) return;
             await _userManager.CreateAsync(ownerUser, ownerPassword);
             await _userManager.AddToRoleAsync(ownerUser, Role.Owner.ToString());
 
-            var adminUser = new UserModel()
+            var defaultSeries = new SeriesModel()
             {
-                Email = "admin@myblog.com",
-                UserName = "admin@myblog.com",
-                FirstName = "Mod",
-                LastName = "Admin",
-                EmailConfirmed = true,
-                ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
-                ContentType = Path.GetExtension(_config["DefaultUserImage"])
+                Title = "Unassigned",
+                Description = "A placeholder for articles not assigned to a series.",
+                Created = DateTime.Now,
+                Creator = await _userManager.FindByIdAsync(ownerUser.Id)
             };
-
-            await _userManager.CreateAsync(adminUser, defaultPassword);
-            await _userManager.AddToRoleAsync(adminUser, Role.Admin.ToString());
+            _dbContext.Add(defaultSeries);
+            await _dbContext.SaveChangesAsync();
 
             var visitorUser = new UserModel()
             {
@@ -94,7 +90,6 @@ namespace BlogLibrary.Databases
                 ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
                 ContentType = Path.GetExtension(_config["DefaultUserImage"])
             };
-
             await _userManager.CreateAsync(visitorUser, defaultPassword);
             await _userManager.AddToRoleAsync(visitorUser, Role.Visitor.ToString());
 

@@ -2,8 +2,10 @@
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
+@using BlogLibrary.Databases.Interfaces
+@inject IImageService imageService
 
-@model IPagedList<SeriesModel>
+@model IPagedList<ArticleModel>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -11,40 +13,70 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-            @foreach (var item in Model)
-            {
-                <div class="post-preview">
-                    <a asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="@item.Id">
-                        <h4 class="post-title">
-                            @item.Title: @item.Description
-                        </h4>
+
+        @foreach (var item in Model.Take(1))
+        {
+            <div class="col-lg-12 mx-auto mb-2">
+                <div class="card p-1 h-100">
+                    <a asp-controller="Articles" asp-action="Details" asp-route-slug="@item.Slug">
+
+                        @if (item.Image != null)
+                        {
+                            <img src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" class="card-img-top" />
+                        }
                     </a>
+                    <div class="card-body text-start h-100">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Summary</p>
+                    </div>
                 </div>
-                <hr />
-            }
+            </div>
+        }
+
+
+        @foreach (var item in Model.Skip(1))
+        {
+            <div class="col-lg-6 col-md-6 mx-auto mb-2 contents-justify-start">
+                <div class="card p-1 h-100">
+                    <a asp-controller="Articles" asp-action="Details" asp-route-slug="@item.Slug">
+
+                        @if (item.Image != null)
+                        {
+                            <img src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" class="card-img-top" />
+                        }
+                    </a>
+                    <div class="card-body text-start h-100">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Summary</p>
+                    </div>
+                </div>
+            </div>
+        }
 
             <!--pager-->
-            <div class="clearfix">
-                <a class="btn btn-primary float-right" href="#">Older Series &rarr;</a>
+            <!--<div class="clearfix">
+                    <a class="btn btn-primary float-right" href="#">Older Articles &rarr;</a>
+                </div>
+            </div>
+        </div>-->
+
+        @*<div class="row">
+            <div class="col h3">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
             </div>
         </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col h3">
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    </div>
-</div>
+        <div class="row">
+            <div class="col">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+            new PagedListRenderOptions
+            {
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" }
+            })
+            </div>
+        </div>*@
 
-<div class="row">
-    <div class="col">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
-    new PagedListRenderOptions
-    {
-        LiElementClasses = new string[] { "page-item" },
-        PageClasses = new string[] { "page-link" }
-    })
-    </div>
+
+        </div>
 </div>
