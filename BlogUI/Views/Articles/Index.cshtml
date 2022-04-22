@@ -27,9 +27,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -50,16 +48,18 @@
                 <td>
                     @if (item.Image != null)
                     {
-                        <img height="75px" src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" />
+                        <img class="img-fluid" width="250px" src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" />
                     }
                 </td>
                 <td>
-                    @if (User.IsInRole("Owner"))
-                    {
-                        <a asp-action="Edit" asp-route-slug="@item.Slug">Edit</a>
-                        <a asp-action="Delete" asp-route-slug="@item.Slug">Delete</a>
-                    }
-                    <a asp-action="Details" asp-route-slug="@item.Slug">Details</a>
+                    <div class="col-auto">
+                        @if (User.IsInRole("Owner"))
+                        {
+                            <a asp-action="Edit" asp-route-slug="@item.Slug">Edit</a>
+                            <a asp-action="Delete" asp-route-slug="@item.Slug">Delete</a>
+                        }
+                        <a asp-action="Details" asp-route-slug="@item.Slug">Details</a>
+                    </div>
                 </td>
             </tr>
         }

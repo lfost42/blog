@@ -59,10 +59,6 @@
 
 @if (Model.PageCount > 1)
 {
-    <div class="clearfix">
-        <a class="btn btn-primary float-right" href="#">Older Articles &rarr;</a>
-    </div>
-
     <div class="row">
         <div class="col h3">
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount

@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Image)
+                
             </th>
             <th></th>
         </tr>
@@ -43,7 +43,7 @@
                 <td>
                     @if (item.Image != null)
                     {
-                        <img class="img-fluid" width="100px" src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" />
+                        <img class="img-fluid" width="200px" src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" />
                     }
 
                 </td>

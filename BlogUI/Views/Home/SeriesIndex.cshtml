@@ -2,6 +2,8 @@
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
+@using BlogLibrary.Databases.Interfaces
+@inject IImageService imageService
 
 @model IPagedList<SeriesModel>
 
@@ -9,49 +11,61 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-            @foreach (var item in Model)
+
+        @foreach (var item in Model.Take(1))
+        {
+<div class="col-lg-12 mx-auto mb-2">
+    <div class="card p-4 h-100">
+        <a asp-controller="Articles" asp-action="Details" asp-route-id="@item.Id">
+
+            @if (item.Image != null)
             {
-<div class="post-preview">
-    <a asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="@item.Id">
-        <h3 class="post-title">
-            @item.Title
-        </h3>
-        <h4 class="post-description">
-            @item.Description
-        </h4>
-    </a>
-    <p class="post-meta">
-        Posted by
-        <a href="#">@item.Creator.FullName</a>
-        on @item.Created.ToShortDateString()
-    </p>
-</div>
-                <hr />            }
-
-
+<img src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" class="card-img-top" />}
+        </a>
+        <div class="card-body text-start h-100">
+            <h5 class="card-title">@item.Title</h5>
+            <p class="card-text">@item.Description</p>
         </div>
+    </div>
+</div>}
+
+
+        @foreach (var item in Model.Skip(1))
+        {
+<div class="col-lg-6 col-md-6 mx-auto mb-2 contents-justify-start">
+    <div class="card p-4 h-100">
+        <a asp-controller="Articles" asp-action="Details" asp-route-id="@item.Id">
+
+            @if (item.Image != null)
+            {
+<img src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" class="card-img-top" />}
+        </a>
+        <div class="card-body text-start h-100">
+            <h5 class="card-title">@item.Title</h5>
+            <p class="card-text">@item.Description</p>
+        </div>
+    </div>
+</div>}
     </div>
 </div>
 
 
 @if (Model.PageCount > 1)
 {
-    <hr />
-                    <div class="row">
-                        <div class="col h3">
-                            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-                        </div>
+<hr />
+                <div class="row">
+                    <div class="col h3">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
                     </div>
+                </div>
 
-                                    <div class="row">
-                                        <div class="col">
-                                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
-                                             new PagedListRenderOptions
-                                             {
-                                                 LiElementClasses = new string[] { "page-item" },
-                                                 PageClasses = new string[] { "page-link" }
-                                             })
-                                        </div>
+                                <div class="row">
+                                    <div class="col">
+                                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+                                              new PagedListRenderOptions
+                                              {
+                                                  LiElementClasses = new string[] { "page-item" },
+                                                  PageClasses = new string[] { "page-link" }
+                                              })
                                     </div>
-                                }
+                                </div>}

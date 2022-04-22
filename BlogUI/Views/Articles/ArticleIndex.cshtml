@@ -26,37 +26,51 @@
     </p>
 }
 
-<table class="table">
-    <tbody>
-        @foreach (var item in Model)
+<div class="container">
+    <div class="row">
+
+        @foreach (var item in Model.Take(1))
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title) <br />
-                    @Html.DisplayFor(modelItem => item.Summary)
-                </td>
-                <td>
-                    Created: @Html.DisplayFor(modelItem => item.Created)<br />
-                    Status: @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @if (item.Image != null)
-                    {
-                        <img height="70px" src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" />
-                    }
-                </td>
-                <td>
-                    @if (User.IsInRole("Owner"))
-                    {
-                        <a asp-action="Edit" asp-route-slug="@item.Slug">Edit</a>
-                        <a asp-action="Delete" asp-route-slug="@item.Slug">Delete</a>
-                    }
-                    <a asp-action="Details" asp-route-slug="@item.Slug">Details</a>
-                </td>
-            </tr>
+            <div class="col-lg-12 mx-auto mb-2">
+                <div class="card p-4 h-100">
+                    <a asp-controller="Articles" asp-action="Details" asp-route-slug="@item.Slug">
+
+                        @if (item.Image != null)
+                        {
+                            <img src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" class="card-img-top" />
+                        }
+                    </a>
+                    <div class="card-body text-start h-100">
+                        @item.SeriesModel.Title
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Summary</p>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+
+
+        @foreach (var item in Model.Skip(1))
+        {
+            <div class="col-lg-6 col-md-6 mx-auto mb-2 contents-justify-start">
+                <div class="card p-4 h-100">
+                    <a asp-controller="Articles" asp-action="Details" asp-route-slug="@item.Slug">
+
+                        @if (item.Image != null)
+                        {
+                            <img src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" class="card-img-top" />
+                        }
+                    </a>
+                    <div class="card-body text-start h-100">
+                        @item.SeriesModel.Title
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Summary</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
 @if (Model.PageCount > 1)
 {

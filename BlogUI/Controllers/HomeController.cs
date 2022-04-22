@@ -32,7 +32,7 @@ namespace BlogUI.Controllers
         public async Task<IActionResult> SeriesIndex(int? page)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 4;
+            var pageSize = 5;
 
             var series = _context.Series.Where(
                 s => s.Articles.Any(a => a.Status == Status.Published))
