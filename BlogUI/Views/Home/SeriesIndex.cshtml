@@ -5,54 +5,53 @@
 
 @model IPagedList<SeriesModel>
 
-@{
-    ViewData["Title"] = "Home Page";
-}
+@{ ViewData["Title"] = "Home Page"; }
 
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
             @foreach (var item in Model)
             {
-                <div class="post-preview">
-                    <a asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="@item.Id">
-                        <h3 class="post-title">
-                            @item.Title
-                        </h3>
-                        <h4 class="post-description">
-                            @item.Description
-                        </h4>
-                    </a>
-                    <p class="post-meta">
-                        Posted by
-                        <a href="#">@item.Creator</a>
-                        on @item.Created.ToShortDateString()
-                    </p>
-                </div>
-                <hr />
-            }
+<div class="post-preview">
+    <a asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="@item.Id">
+        <h3 class="post-title">
+            @item.Title
+        </h3>
+        <h4 class="post-description">
+            @item.Description
+        </h4>
+    </a>
+    <p class="post-meta">
+        Posted by
+        <a href="#">@item.Creator.FullName</a>
+        on @item.Created.ToShortDateString()
+    </p>
+</div>
+                <hr />            }
 
-            <!--pager-->
-            <div class="clearfix">
-                <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-            </div>
+
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col h3">
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    </div>
-</div>
 
-<div class="row">
-    <div class="col">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
-    new PagedListRenderOptions
-    {
-        LiElementClasses = new string[] { "page-item" },
-        PageClasses = new string[] { "page-link" }
-    })
-    </div>
-</div>
+@if (Model.PageCount > 1)
+{
+    <hr />
+                    <div class="row">
+                        <div class="col h3">
+                            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                        </div>
+                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+                                             new PagedListRenderOptions
+                                             {
+                                                 LiElementClasses = new string[] { "page-item" },
+                                                 PageClasses = new string[] { "page-link" }
+                                             })
+                                        </div>
+                                    </div>
+                                }

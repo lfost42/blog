@@ -52,6 +52,7 @@ FUTURE UPDATES:
 	- Article Body
 	- Show/Hide comments
 
+- Extend slug feature to Series pages
 - DEMO login (will not update database)
 - Guest comments with CAPTCHA (does not appear until owner approves it). 
 - IP blocking of accounts that abuse the guest comments section.
