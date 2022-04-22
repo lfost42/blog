@@ -90,6 +90,7 @@ namespace BlogUI.Controllers
 
             var articles = await _context.Articles
                 .Where(a => a.SeriesModelId == id && a.Status == Status.Published)
+                .Include(s => s.SeriesModel)
                 .Include(s => s.Creator)
                 .Include(s => s.Image)
                 .OrderByDescending(s => s.Created)

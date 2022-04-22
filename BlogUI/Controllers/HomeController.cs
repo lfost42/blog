@@ -51,6 +51,7 @@ namespace BlogUI.Controllers
             var pageSize = 5;
 
             var articles = _context.Articles.Where(a => a.Status == Status.Published)
+                .Include(s => s.SeriesModel)
                 .Include(s => s.Creator)
                 .Include(s => s.Image)
                 .OrderByDescending(s => s.Created)

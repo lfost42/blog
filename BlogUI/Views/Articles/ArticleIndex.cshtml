@@ -12,13 +12,18 @@
     ViewData["Title"] = "ArticleIndex";
 }
 
-<h3>Article Index</h3>
+@foreach (var item in Model.Take(1))
+{
+    <h3>@item.SeriesModel.Title</h3>
+}
+
+
 
 @if (User.IsInRole("Owner"))
 {
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
 }
 
 <table class="table">
