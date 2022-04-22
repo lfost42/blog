@@ -45,7 +45,11 @@ namespace BlogUI.Controllers
             var pageNumber = page ?? 1;
             var pageSize = 5;
 
-            var articles = _searchService.Search(searchTerm);
+            var articles = _searchService.Search(searchTerm)
+                .Include(a => a.Creator)
+                .Include(a => a.Image)
+                .Include(a => a.Tags);
+
             return View(await articles.ToPagedListAsync(pageNumber, pageSize));
         }
 
@@ -53,7 +57,7 @@ namespace BlogUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Articles.Include(a => a.SeriesModel).Include(a => a.Image); ;
+            var blogContext = _context.Articles.Include(a => a.SeriesModel).Include(a => a.Image);
             return View(await blogContext.ToListAsync());
         }
 

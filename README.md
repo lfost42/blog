@@ -30,45 +30,27 @@ COMPLETED FEATURES:
 
 USER INTERFACE
 - user can click tags to find other articles with that tag
+- Implement Series as a nav bar in shared _layout with searcher
 
 - Article cards for landing page
 	- featured article with photo, series, title, and summary (links to article)
-	- 2nd and 3rd most recent articles below featured article
-	- search bar
-	- footer
-
+	- 2nd-5th most recent articles below featured article at half size
 
 FUTURE UPDATES:
-- Implement Series as a nav bar in shared _layout
 - Hover series to display carousel of articles within that series
 
 - Series index
-
-	-- featured article with photo series, title, and summary (links to article)
-
-	-- 2nd and 3rd most recent article within that series
-
-	-- search bar
-
-	-- footer
+	- featured article with photo series, title, and summary (links to article)
+	- 2nd-5th most recent articles below featured article at half size
 
 - Article page
-
-	-- Series
-
-	-- Title
-
-	-- Summary
-
-	-- AuthorImage Author
-
-	-- Article Image
-
-	-- Article Body
-
-	-- Show/Hide comments
-
-	-- Footer
+	- Series
+	- Title
+	- Summary
+	- AuthorImage Author
+	- Article Image
+	- Article Body
+	- Show/Hide comments
 
 - DEMO login (will not update database)
 - Guest comments with CAPTCHA (does not appear until owner approves it). 
