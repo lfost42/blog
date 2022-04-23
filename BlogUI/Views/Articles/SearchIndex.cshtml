@@ -19,31 +19,28 @@
 <div class="row">
     @foreach (var item in Model)
     {
-        <div class="col-sm-12 col-md-6 col-lg-4 gy-4 ">
-            <div class="card p-2 h-100">
-                @if (item.Image != null)
-                {
-                    <img src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" class="card-img-top" />
-                }
-                <div class="card-body text-start h-100">
-                    <h5 class="card-title">@item.Title</h5>
-                    <p class="card-text">@item.Summary</p>
-                </div>
-
-                <div class="text-center">
-                    <a class="btn btn-dark btn-sm btn-block mb-2 w-100" asp-action="Details" asp-controller="Articles" asp-route-slug="@item.Slug">Read More</a>
-                </div>
-
+        
+    <div class="col-sm-12 col-md-6 col-lg-4 gy-2 mb-2 border-0">
+        <a class="card p-3 h-100" asp-action="Details" asp-controller="Articles" asp-route-slug="@item.Slug">
+            @if (item.Image != null)
+            {
+                <img class="w-100" src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" class="card-img-top" />
+            }
+            <div class="card-body text-start h-100">
+                <h5 class="card-title">@item.Title</h5>
+                <p class="card-text">@item.Summary</p>
             </div>
+        </a>
         </div>
-    }
-</div>
+
+        }
+    </div>
 
 <hr />
 @if (@Model.PageCount > 1)
 {
     <div class="row">
-        <div class="col h3">
+        <div class="col">
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
         </div>
     </div>

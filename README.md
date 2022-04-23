@@ -27,19 +27,14 @@ COMPLETED FEATURES:
 - Visitors may add comments after registering and logging in. 
 - Locate comments by guest
 - Add role-based views
-
-USER INTERFACE
 - user can click tags to find other articles with that tag
 - Implement Series as a nav bar in shared _layout with searcher
-
 - Article cards for landing page
 	- featured article with photo, series, title, and summary (links to article)
 	- 2nd-5th most recent articles below featured article at half size
-
 - Series index
 	- featured article with photo series, title, and summary (links to article)
 	- 2nd-5th most recent articles below featured article at half size
-
 - Article page
 	- Series
 	- Title
@@ -51,13 +46,11 @@ USER INTERFACE
 - create modals for editing comments
 
 FUTURE UPDATES:
-- Add front-end styling in HTML and CSS.
+- implement front-end styling in HTML and CSS. 
+- create modals for editing series titles/descriptions/pictures
+- Extend slug service to Series
 - Show/Hide comments
 - Hover series to display carousel of articles within that series
-- Extend slug feature to Series pages
-- DEMO login (will not update database)
-- Guest comments with CAPTCHA (does not appear until owner approves it). 
-- IP blocking of accounts that abuse the guest comments section.
 
 ## USER INTERFACE
 Dashboard shows series and recent articles. Side-menu to older articles. Search function. Login for writing articles or comments. 

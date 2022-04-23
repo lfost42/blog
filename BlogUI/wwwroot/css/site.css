@@ -1,21 +1,51 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+/* custom blog styling */
 a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
 }
 
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+a:link, a:visited, a:active, a:hover, a.card {
+    -moz-transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out, background-color 0.25s ease-in-out;
+    -webkit-transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out, background-color 0.25s ease-in-out;
+    -ms-transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out, background-color 0.25s ease-in-out;
+    transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out, background-color 0.25s ease-in-out;
+    color: #000000;
+    text-decoration: none;
 }
 
+.card {
+    border:none;
+}
+
+div a.card, div div.card {
+    box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.2);
+}
+
+    div a.card:hover, div div.card:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+.page-item:active .page-link:active {
+    background-color: black;
+    color: white;
+    border-color: gray;
+}
+
+.page-item:link, .page-link:link {
+    color: black;
+    background-color: white;
+    border-color: gray;
+}
+
+/* Provide sufficient contrast against white background */
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
