@@ -43,7 +43,7 @@ namespace BlogUI.Controllers
             ViewData["SearchTerm"] = searchTerm;
 
             var pageNumber = page ?? 1;
-            var pageSize = 5;
+            var pageSize = 6;
 
             var articles = _searchService.Search(searchTerm)
                 .Include(a => a.Creator)
