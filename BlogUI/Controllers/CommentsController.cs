@@ -65,7 +65,7 @@ namespace BlogUI.Controllers
         }
 
         // GET: Comments/Edit/5
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Owner")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,7 +88,7 @@ namespace BlogUI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Body")] CommentModel commentModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Comment")] CommentModel commentModel)
         {
             if (id != commentModel.Id)
             {
@@ -116,7 +116,7 @@ namespace BlogUI.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", "Posts", new { slug = newComment.Article.Slug }, "commentSection");
+                return RedirectToAction("Details", "Articles", new { slug = newComment.Article.Slug }, "commentSection");
             }
             ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", commentModel.CreatorId);
             ViewData["ArticleId"] = new SelectList(_context.Articles, "Id", "Title", commentModel.ArticleId);
@@ -125,7 +125,7 @@ namespace BlogUI.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> Moderate(int id, [Bind("Id,Body,ModeratedBody,ModerationType")] CommentModel commentModel)
+        public async Task<IActionResult> Moderate(int id, [Bind("Id,Comment,ModeratedComment")] CommentModel commentModel)
         {
             if (id != commentModel.Id)
             {
@@ -152,7 +152,7 @@ namespace BlogUI.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", "Posts", new { slug = newComment.Article.Slug }, "commentSection");
+                return RedirectToAction("Details", "Articles", new { slug = newComment.Article.Slug }, "commentSection");
             }
             return View(commentModel);
         }
@@ -187,7 +187,7 @@ namespace BlogUI.Controllers
             var comment = await _context.Comments.FindAsync(id);
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Posts", new { slug = articleSlug }, "commentSection");
+            return RedirectToAction("Details", "Articles", new { slug = articleSlug }, "commentSection");
         }
 
         private bool CommentExists(int id)

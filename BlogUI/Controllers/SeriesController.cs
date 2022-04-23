@@ -173,11 +173,11 @@ namespace BlogUI.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Series", new { id = seriesModel.Id });
             }
             ViewData["NewImage"] = new SelectList(_context.Images, "NewImage", "NewImage", seriesModel.Image.Photo);
             ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", seriesModel.CreatorId);
-            return View(seriesModel);
+            return RedirectToAction(nameof(Index)); 
         }
 
         // GET: Series/Delete/5

@@ -117,7 +117,7 @@ namespace BlogUI.Controllers
                 .Include(a => a.Image)
                 .Include(a => a.Tags)
                 .Include(a => a.SeriesModel)
-                .Include(a => a.Comments)
+                .Include(a => a.Comments).ThenInclude(c => c.Creator)
                 .FirstOrDefaultAsync(m => m.Slug == slug);
 
             if (articleModel == null)
@@ -300,8 +300,9 @@ namespace BlogUI.Controllers
                         throw;
                     }
                 }
-                var slug = _slugService.UrlRoute(articleModel.Title);
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction("Details", "Articles", new { slug = _slugService.UrlRoute(articleModel.Title) } );
+     
             }
 
             ViewData["CreatorId"] = new SelectList(_context.AppUsers, "Id", "Id", articleModel.CreatorId);

@@ -47,9 +47,11 @@ USER INTERFACE
 	- AuthorImage Author
 	- Article Image
 	- Article Body
+	- Article Modals for comments
+- create modals for editing comments
 
 FUTURE UPDATES:
-- Article Modals
+- Add front-end styling in HTML and CSS.
 - Show/Hide comments
 - Hover series to display carousel of articles within that series
 - Extend slug feature to Series pages
