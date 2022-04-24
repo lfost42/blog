@@ -93,7 +93,7 @@ html {
 }
 
 body {
-    background: #f4f4f4;
+    background: #fafafa;
 }
 
     body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -3455,8 +3455,8 @@ body.single #wrapper {
 
 /* Footer */
 
-#header > footer .icons li a {
-    color: #aaaaaa;
+ul.icons li a {
+    color: #dedede;
     text-decoration: none;
 }
 
