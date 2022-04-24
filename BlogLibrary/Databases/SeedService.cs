@@ -70,16 +70,6 @@ namespace BlogLibrary.Databases
             await _userManager.CreateAsync(ownerUser, ownerPassword);
             await _userManager.AddToRoleAsync(ownerUser, Role.Owner.ToString());
 
-            var defaultSeries = new SeriesModel()
-            {
-                Title = "Unassigned",
-                Description = "A placeholder for articles not assigned to a series.",
-                Created = DateTime.Now,
-                Creator = await _userManager.FindByIdAsync(ownerUser.Id)
-            };
-            _dbContext.Add(defaultSeries);
-            await _dbContext.SaveChangesAsync();
-
             var visitorUser = new UserModel()
             {
                 Email = "visitor@myblog.com",
