@@ -56,8 +56,8 @@ namespace BlogLibrary.Databases
 
             var ownerUser = new UserModel()
             {
-                Email = "owner@myblog.com",
-                UserName = "owner@myblog.com",
+                Email = "lyndabrf@gmail.com",
+                UserName = "lyndabrf@gmail.com",
                 FirstName = "Lynda",
                 LastName = "Foster",
                 EmailConfirmed = true,
@@ -68,20 +68,6 @@ namespace BlogLibrary.Databases
             if (_dbContext.Series.Any()) return;
             await _userManager.CreateAsync(ownerUser, "ABC!123");
             await _userManager.AddToRoleAsync(ownerUser, Role.Owner.ToString());
-
-            var visitorUser = new UserModel()
-            {
-                Email = "visitor@myblog.com",
-                UserName = "visitor@myblog.com",
-                FirstName = "Guest",
-                LastName = "User",
-                EmailConfirmed = true,
-                ImageData = await _imageService.EncodeImageAsync(_config["defaultUser.png"]),
-                ContentType = Path.GetExtension(_config["defaultUser.png"])
-            };
-            await _userManager.CreateAsync(visitorUser, "ABC!123");
-            await _userManager.AddToRoleAsync(visitorUser, Role.Visitor.ToString());
-
         }
 
     }
