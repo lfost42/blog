@@ -35,7 +35,7 @@ namespace BlogLibrary.Databases
         {
             await _dbContext.Database.MigrateAsync();
             await SeedRolesAsync();
-            //await SeedUsersAsync();
+            await SeedUsersAsync();
         }
 
         private async Task SeedRolesAsync()
@@ -47,41 +47,40 @@ namespace BlogLibrary.Databases
             }
         }
 
-        //removing becuase Heroku doesn't seem to like it
-        //private async Task SeedUsersAsync()
-        //{
-        //    if (_dbContext.AppUsers.Any()) return;
+        private async Task SeedUsersAsync()
+        {
+            if (_dbContext.AppUsers.Any()) return;
 
-        //    string defaultPassword = _config["DefaultPassword"];
-        //    string ownerPassword = _config["OwnerPassword"];
+            string defaultPassword = _config["DefaultPassword"];
+            string ownerPassword = _config["OwnerPassword"];
 
-        //    var ownerUser = new UserModel()
-        //    {
-        //        Email = "owner@myblog.com",
-        //        UserName = "owner@myblog.com",
-        //        FirstName = "Lynda",
-        //        LastName = "Foster",
-        //        EmailConfirmed = true,
-        //        ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
-        //        ContentType = Path.GetExtension(_config["DefaultUserImage"])
-        //    };
+            var ownerUser = new UserModel()
+            {
+                Email = "owner@myblog.com",
+                UserName = "owner@myblog.com",
+                FirstName = "Lynda",
+                LastName = "Foster",
+                EmailConfirmed = true,
+                ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
+                ContentType = Path.GetExtension(_config["DefaultUserImage"])
+            };
 
-        //    if (_dbContext.Series.Any()) return;
-        //    await _userManager.CreateAsync(ownerUser, ownerPassword);
-        //    await _userManager.AddToRoleAsync(ownerUser, Role.Owner.ToString());
+            if (_dbContext.Series.Any()) return;
+            await _userManager.CreateAsync(ownerUser, ownerPassword);
+            await _userManager.AddToRoleAsync(ownerUser, Role.Owner.ToString());
 
-        //    var visitorUser = new UserModel()
-        //    {
-        //        Email = "visitor@myblog.com",
-        //        UserName = "visitor@myblog.com",
-        //        FirstName = "Guest",
-        //        LastName = "User",
-        //        EmailConfirmed = true,
-        //        ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
-        //        ContentType = Path.GetExtension(_config["DefaultUserImage"])
-        //    };
-        //    await _userManager.CreateAsync(visitorUser, defaultPassword);
-        //    await _userManager.AddToRoleAsync(visitorUser, Role.Visitor.ToString());
+            var visitorUser = new UserModel()
+            {
+                Email = "visitor@myblog.com",
+                UserName = "visitor@myblog.com",
+                FirstName = "Guest",
+                LastName = "User",
+                EmailConfirmed = true,
+                ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
+                ContentType = Path.GetExtension(_config["DefaultUserImage"])
+            };
+            await _userManager.CreateAsync(visitorUser, defaultPassword);
+            await _userManager.AddToRoleAsync(visitorUser, Role.Visitor.ToString());
 
         }
 

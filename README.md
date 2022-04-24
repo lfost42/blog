@@ -1,6 +1,8 @@
 # Project
 A personal blog built with ASP.NET Core MVC with Class Library. Uses Entity Framework Core and deployed with a PostgreSQL database. 
 
+http://lfost42-blog.herokuapp.com/
+
 Summary Info
 
 ![My App](./app.png)

@@ -243,11 +243,11 @@
                         <button type="submit" class="button" asp-action="Edit" asp-route-id="@Model.Id" asp-route-slug="@Model.Slug">Edit</button>
                     </div>
                 }
-                <div class="col-auto mb-1">
-                    <button type="submit" class="button" asp-action="Index">Back to List</button>
-                </div>
+            <div class="col-auto mb-1">
+                @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "button" })
             </div>
-</section>
+            </div>
 
+    </section>
     </article>
 </div>
