@@ -44,9 +44,9 @@ COMPLETED FEATURES:
 	- Article Body
 	- Article Modals for comments
 - create modals for editing comments
+- implement front-end styling in HTML and CSS. 
 
 FUTURE UPDATES:
-- implement front-end styling in HTML and CSS. 
 - create modals for editing series titles/descriptions/pictures
 - Extend slug service to Series
 - Show/Hide comments

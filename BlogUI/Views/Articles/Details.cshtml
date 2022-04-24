@@ -57,7 +57,7 @@
             </div>
 
 
-            <div id="commentSection" class="row container d-flex justify-content-center w-100">
+            <div id="commentSection" class="row container d-flex pb-2 justify-content-center w-100">
                 @foreach (var comment in Model.Comments)
                 {
                     <div class="container d-flex align-content-center ps-5 pe-5 p-2 h-100 gy-2 border">
@@ -230,7 +230,7 @@
                 }
                 else
                 {
-                    <a class="btn btn-sm btn-dark w-25 m-3" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Articles/Details?slug=@Model.Slug">
+                    <a class="button mb-2" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Articles/Details?slug=@Model.Slug">
                         Login to Add Comment
                     </a>
                 }
@@ -238,11 +238,11 @@
             <div class="row">
                 @if (User.IsInRole("Owner"))
                 {
-                    <div class="col-auto">
+                    <div class="col-auto mb-1">
                         <button type="submit" class="button" asp-action="Edit" asp-route-id="@Model.Id" asp-route-slug="@Model.Slug">Edit</button>
                     </div>
                 }
-                <div class="col-auto">
+                <div class="col-auto mb-1">
                     <button type="submit" class="button" asp-action="Index">Back to List</button>
                 </div>
             </div>

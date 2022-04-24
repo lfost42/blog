@@ -1860,7 +1860,7 @@ button,
     font-family: "Raleway", Helvetica, sans-serif;
     font-size: 0.6em;
     font-weight: 800;
-    height: 4.8125em;
+/*    height: 4.8125em;*/
     letter-spacing: 0.25em;
     line-height: 4.8125em;
     padding: 0 2.5em;
@@ -2500,6 +2500,15 @@ ul.actions {
 
 /* Icons */
 
+
+/* Icons */
+
+.icon {
+    text-decoration: none;
+    border-bottom: none;
+    position: relative;
+}
+
 ul.icons {
     cursor: default;
     list-style: none;
@@ -2515,13 +2524,9 @@ ul.icons {
             padding-right: 0;
         }
 
-        ul.icons li > * {
-            border: 0;
+        ul.icons li .icon:before {
+            font-size: 1.25em;
         }
-
-            ul.icons li > * .label {
-                display: none;
-            }
 
 /* Posts */
 
@@ -3382,7 +3387,6 @@ body.single #wrapper {
 }
 
     #intro .logo:before {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100' preserveAspectRatio='none' zoomAndPan='disable'%3E%3Cpolygon points='0,0 100,0 100,25 50,0 0,25' style='fill:%23f4f4f4' /%3E%3Cpolygon points='0,100 100,100 100,75 50,100 0,75' style='fill:%23f4f4f4' /%3E%3C/svg%3E");
         background-position: top left;
         background-repeat: no-repeat;
         background-size: 100% 100%;
@@ -3452,8 +3456,9 @@ body.single #wrapper {
 
 /* Footer */
 
-#footer .icons {
+#header > footer .icons li a {
     color: #aaaaaa;
+    text-decoration: none;
 }
 
 #footer .copyright {
@@ -3469,99 +3474,181 @@ body.single #footer {
     text-align: center;
 }
 
-/* Menu */
 
+/* Menu */
+ul.menu li {
+    border-left: solid 2px;
+    display: inline-block;
+    list-style: none;
+    margin-left: 1em;
+    padding-left: 1em;
+}
+
+    ul.menu li a {
+        text-decoration: none;
+    }
+
+    ul.menu li:first-child {
+        border-left: 0;
+        margin-left: 0;
+        padding-left: 0;
+    }
+
+ul.menu li {
+    border-left-color: rgba(144, 144, 144, 0.25);
+}
+
+#header > a[href="#menu"] {
+    text-decoration: none;
+    margin-right: auto;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    padding-left: 0.5em;
+}
+
+    #header > a[href="#menu"]:before {
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+        text-transform: none;
+        font-weight: 900;
+    }
+
+    #header > a[href="#menu"]:before {
+        content: '\f0c9';
+        line-height: inherit;
+        margin: 0 0.5em 0 0;
+    }
+
+
+/* Menu */
 #menu {
-    -moz-transform: translateX(25em);
-    -webkit-transform: translateX(25em);
-    -ms-transform: translateX(25em);
-    transform: translateX(25em);
-    -moz-transition: -moz-transform 0.5s ease, visibility 0.5s;
-    -webkit-transition: -webkit-transform 0.5s ease, visibility 0.5s;
-    -ms-transition: -ms-transform 0.5s ease, visibility 0.5s;
-    transition: transform 0.5s ease, visibility 0.5s;
+    -moz-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -moz-transition: -moz-transform 0.5s ease, box-shadow 0.5s ease, visibility 0.5s;
+    -webkit-transition: -webkit-transform 0.5s ease, box-shadow 0.5s ease, visibility 0.5s;
+    -ms-transition: -ms-transform 0.5s ease, box-shadow 0.5s ease, visibility 0.5s;
+    transition: transform 0.5s ease, box-shadow 0.5s ease, visibility 0.5s;
     -webkit-overflow-scrolling: touch;
-    background: #ffffff;
-    border-left: solid 1px rgba(160, 160, 160, 0.3);
+    background: #fff;
     box-shadow: none;
     height: 100%;
+    left: 0;
     max-width: 80%;
     overflow-y: auto;
+    padding: 3em 2em;
     position: fixed;
-    right: 0;
     top: 0;
     visibility: hidden;
-    width: 25em;
+    width: 20em;
     z-index: 10002;
 }
 
-    #menu > * {
-        border-top: solid 1px rgba(160, 160, 160, 0.3);
+    #menu > ul {
+        margin: 0 0 1.2em 0;
     }
 
-        #menu > * > :last-child {
-            margin-bottom: 0;
+        #menu > ul.links {
+            list-style: none;
+            padding: 0;
         }
 
-    #menu > :first-child {
-        border-top: 0;
-    }
-
-    #menu .links {
-        list-style: none;
-        padding: 0;
-    }
-
-        #menu .links > li {
-            border: 0;
-            border-top: dotted 1px rgba(251, 255, 255, 255);
-        }
-
-            #menu .links > li a {
-                display: block;
-                border-bottom: 0;
+            #menu > ul.links > li {
+                font-weight: 400;
+                letter-spacing: 0.15em;
+                padding: 0;
+                text-transform: uppercase;
             }
 
-                #menu .links > li a h3 {
-                    -moz-transition: color 0.2s ease;
-                    -webkit-transition: color 0.2s ease;
-                    -ms-transition: color 0.2s ease;
-                    transition: color 0.2s ease;
-                    font-size: 0.7em;
-                }
-
-                #menu .links > li a p {
-                    font-family: "Raleway", Helvetica, sans-serif;
-                    font-size: 0.6em;
-                    font-weight: 400;
-                    letter-spacing: 0.25em;
-                    margin-bottom: 0;
+                #menu > ul.links > li > a:not(.button) {
+                    border: 0;
+                    border-top: solid 1px rgba(144, 144, 144, 0.25);
+                    color: inherit;
+                    display: block;
+                    line-height: 3.5em;
                     text-decoration: none;
-                    text-transform: uppercase;
+                    font-size: 0.9em;
                 }
 
-                #menu .links > li a:hover h3 {
-                    color: #2ebaae;
+                #menu > ul.links > li > .button {
+                    display: block;
+                    margin: 0.5em 0 0 0;
                 }
 
-            #menu .links > li:first-child {
-                border-top: 0;
-                margin-top: 0;
-                padding-top: 0;
-            }
+                #menu > ul.links > li:first-child > a:not(.button) {
+                    border-top: 0 !important;
+                }
 
-body.is-menu-visible #menu {
+    #menu .close {
+        text-decoration: none;
+        -moz-transition: color 0.2s ease-in-out;
+        -webkit-transition: color 0.2s ease-in-out;
+        -ms-transition: color 0.2s ease-in-out;
+        transition: color 0.2s ease-in-out;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        border: 0;
+        color: #999;
+        cursor: pointer;
+        display: block;
+        height: 3.25em;
+        line-height: 3.25em;
+        padding-right: 1.25em;
+        position: absolute;
+        right: 0;
+        text-align: right;
+        top: 0;
+        vertical-align: middle;
+        width: 7em;
+    }
+
+        #menu .close:before {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+            text-transform: none !important;
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+
+        #menu .close:before {
+            content: '\f00d';
+            font-size: 1.25em;
+        }
+
+        #menu .close:hover {
+            color: #484459;
+        }
+
+@media screen and (max-width: 736px) {
+
+    #menu .close {
+        height: 4em;
+        line-height: 4em;
+    }
+}
+
+#menu.visible {
     -moz-transform: translateX(0);
     -webkit-transform: translateX(0);
     -ms-transform: translateX(0);
     transform: translateX(0);
+    box-shadow: 0 0 4em 0 rgba(0, 0, 0, 0.1);
     visibility: visible;
 }
 
 @media screen and (max-width: 736px) {
 
-    #menu > * {
-        padding: 1.5em;
+    #menu {
+        padding: 2.5em 1.75em;
     }
 }
 
@@ -3583,14 +3670,16 @@ div a.card, div div.card {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
-.page-item:active .page-link:active {
+li .page-item:active a .page-link:active {
     background-color: black;
     color: white;
     border-color: gray;
+    text-decoration: none;
 }
 
-.page-item:link, .page-link:link {
+li .page-item:link, a .page-link:link {
     color: black;
     background-color: white;
     border-color: gray;
+    text-decoration: none;
 }
