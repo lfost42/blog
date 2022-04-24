@@ -3465,6 +3465,12 @@ ul.icons li a:hover {
     text-decoration: none;
 }
 
+a.nav-link:hover {
+    background-color: #f5fcfc;
+    border-bottom: dotted 1px #2ebaae;
+    text-decoration: none;
+}
+
 #footer .copyright {
     color: #aaaaaa;
     font-family: "Raleway", Helvetica, sans-serif;

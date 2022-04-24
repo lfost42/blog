@@ -38,23 +38,24 @@
         @Html.Raw(Model.Body)
 
         <section>
-            <div class="row container mr-2">
-                <div class="col-auto">
+            <div class="row mr-1 mt-4">
+                <div class="col-auto mb-1">
                     <button data-toggle="modal" data-target="#commentsModal" class="button">@Model.Comments.Count Comment(s)</button>
                 </div>
-                <div class="col-auto mr-1">
-                    @if (@Model.Tags.Count() >= 1)
+
+                @if (@Model.Tags.Count() >= 1)
+                {
+                    @foreach (var tag in Model.Tags)
                     {
-                        @foreach (var tag in Model.Tags)
-                        {
-                            <form asp-action="TagIndex" asp-route-tag="@tag.Tag.ToLower()" method="post">
-                                @Html.Hidden("id", Model.Id)
-                                <button class="button" type="submit">#@tag.Tag</button>
-                            </form>
-                        }
-                    }
-                </div>
-            </div>
+                    <div class="col-auto mb-1">
+                        <form asp-action="TagIndex" asp-route-tag="@tag.Tag.ToLower()" method="post">
+                            @Html.Hidden("id", Model.Id)
+                            <button class="button" type="submit">#@tag.Tag</button>
+                        </form>
+                    </div>
+                     }
+                 }         
+             </div>
 
 
             <div id="commentSection" class="row container d-flex pb-2 justify-content-center w-100">
