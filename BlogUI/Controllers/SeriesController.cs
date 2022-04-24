@@ -197,7 +197,6 @@ namespace BlogUI.Controllers
             {
                 return NotFound();
             }
-
             return View(seriesModel);
         }
 
