@@ -38,7 +38,6 @@ namespace BlogLibrary.Databases
             await SeedUsersAsync();
         }
 
-
         private async Task SeedRolesAsync()
         {
             if (_dbContext.Roles.Any()) return;
@@ -47,7 +46,6 @@ namespace BlogLibrary.Databases
                 await _roleManager.CreateAsync(new IdentityRole(role));
             }
         }
-
 
         private async Task SeedUsersAsync()
         {
@@ -66,6 +64,7 @@ namespace BlogLibrary.Databases
                 ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
                 ContentType = Path.GetExtension(_config["DefaultUserImage"])
             };
+
             if (_dbContext.Series.Any()) return;
             await _userManager.CreateAsync(ownerUser, ownerPassword);
             await _userManager.AddToRoleAsync(ownerUser, Role.Owner.ToString());
@@ -86,4 +85,5 @@ namespace BlogLibrary.Databases
         }
 
     }
+
 }
