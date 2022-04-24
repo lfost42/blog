@@ -3581,7 +3581,7 @@ ul.menu li {
                 }
 
                 #menu > ul.links > li:first-child > a:not(.button) {
-                    border-top: 0 !important;
+                    border-top: 0;
                 }
 
     #menu .close {
@@ -3614,7 +3614,7 @@ ul.menu li {
             font-variant: normal;
             text-rendering: auto;
             line-height: 1;
-            text-transform: none !important;
+            text-transform: none;
             font-family: 'Font Awesome 5 Free';
             font-weight: 900;
         }
