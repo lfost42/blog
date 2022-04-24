@@ -66,7 +66,7 @@ namespace BlogLibrary.Databases
             };
 
             if (_dbContext.Series.Any()) return;
-            await _userManager.CreateAsync(ownerUser, ownerPassword);
+            await _userManager.CreateAsync(ownerUser, "ABC!123");
             await _userManager.AddToRoleAsync(ownerUser, Role.Owner.ToString());
 
             var visitorUser = new UserModel()
@@ -79,7 +79,7 @@ namespace BlogLibrary.Databases
                 ImageData = await _imageService.EncodeImageAsync(_config["defaultUser.png"]),
                 ContentType = Path.GetExtension(_config["defaultUser.png"])
             };
-            await _userManager.CreateAsync(visitorUser, defaultPassword);
+            await _userManager.CreateAsync(visitorUser, "ABC!123");
             await _userManager.AddToRoleAsync(visitorUser, Role.Visitor.ToString());
 
         }
