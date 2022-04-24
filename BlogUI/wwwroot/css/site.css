@@ -3471,6 +3471,10 @@ a.nav-link:hover {
     text-decoration: none;
 }
 
+a.nav-link owner{
+    background-color: #fff3f5;
+}
+
 #footer .copyright {
     color: #aaaaaa;
     font-family: "Raleway", Helvetica, sans-serif;
