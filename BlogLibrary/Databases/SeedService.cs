@@ -47,6 +47,7 @@ namespace BlogLibrary.Databases
             }
         }
 
+        //removing becuase Heroku doesn't seem to like it
         //private async Task SeedUsersAsync()
         //{
         //    if (_dbContext.AppUsers.Any()) return;
