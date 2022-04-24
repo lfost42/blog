@@ -61,8 +61,8 @@ namespace BlogLibrary.Databases
                 FirstName = "Lynda",
                 LastName = "Foster",
                 EmailConfirmed = true,
-                ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
-                ContentType = Path.GetExtension(_config["DefaultUserImage"])
+                ImageData = await _imageService.EncodeImageAsync("https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg"),
+                ContentType = Path.GetExtension(_config["https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg"])
             };
 
             if (_dbContext.Series.Any()) return;
@@ -76,8 +76,8 @@ namespace BlogLibrary.Databases
                 FirstName = "Guest",
                 LastName = "User",
                 EmailConfirmed = true,
-                ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
-                ContentType = Path.GetExtension(_config["DefaultUserImage"])
+                ImageData = await _imageService.EncodeImageAsync(_config["https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg"]),
+                ContentType = Path.GetExtension(_config["https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg"])
             };
             await _userManager.CreateAsync(visitorUser, defaultPassword);
             await _userManager.AddToRoleAsync(visitorUser, Role.Visitor.ToString());
