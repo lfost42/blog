@@ -51,6 +51,7 @@ FUTURE UPDATES:
 - Extend slug service to Series
 - Show/Hide comments
 - Hover series to display carousel of articles within that series
+- Add a method to reply to comments. 
 
 ## USER INTERFACE
 Dashboard shows series and recent articles. Side-menu to older articles. Search function. Login for writing articles or comments. 
