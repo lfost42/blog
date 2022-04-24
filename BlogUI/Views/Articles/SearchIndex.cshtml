@@ -24,7 +24,7 @@
         <a class="card p-3 h-100" asp-action="Details" asp-controller="Articles" asp-route-slug="@item.Slug">
             @if (item.Image != null)
             {
-                <img class="w-100" src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" class="card-img-top" />
+                <img class="w-100 card-img-top" src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" />
             }
             <div class="card-body text-start h-100">
                 <h5 class="card-title">@item.Title</h5>

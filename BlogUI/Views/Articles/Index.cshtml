@@ -11,7 +11,7 @@
 @if (User.IsInRole("Owner"))
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create" class="owner">Create New</a>
     </p>
 }
 
@@ -55,10 +55,10 @@
                     <div class="col-auto">
                         @if (User.IsInRole("Owner"))
                         {
-                            <a asp-action="Edit" asp-route-slug="@item.Slug">Edit</a>
-                            <a asp-action="Delete" asp-route-slug="@item.Slug">Delete</a>
+                            <a asp-action="Edit" asp-route-slug="@item.Slug" class="owner">Edit</a>
+                            <a asp-action="Delete" asp-route-slug="@item.Slug" class="owner">Delete</a>
                         }
-                        <a asp-action="Details" asp-route-slug="@item.Slug">Details</a>
+                        <a asp-action="Details" asp-route-slug="@item.Slug" class="owner">Details</a>
                     </div>
                 </td>
             </tr>

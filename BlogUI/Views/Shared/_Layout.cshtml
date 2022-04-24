@@ -21,63 +21,62 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom">
+        <nav class="navbar navbar-expand-sm navbar-light bg-white">
             <div class="container">
-
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MyBlog</a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-row">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="https://lfost42-portfolio.netlify.app/">About Me</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
-                        </li>
-                        @if (User.IsInRole("Owner"))
-                        {
+                <div class="row w-100">
+                    <div class="col-auto">
+                        <ul class="navbar-nav flex-row">
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MyBlog</a>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Series" asp-action="Index">Series</a>
+                                <a class="nav-link" href="https://lfost42-portfolio.netlify.app/">AboutMe</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="Index">Articles</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                             </li>
-                        }
+                            @if (User.IsInRole("Owner"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link owner" asp-area="" asp-controller="Series" asp-action="Index">Series</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link owner" asp-area="" asp-controller="Articles" asp-action="Index">Articles</a>
+                                </li>
+                            }
 
-                    </ul>
-                    <ul class="navbar-nav flex-row justify-content-end">
-                        <li class="nav-item">
-                            <partial name="_LoginPartial" />
-                        </li>
-                    </ul>
+                        </ul>
+                    </div>
+
+                    <div class="col d-flex justify-content-xs-start justify-content-sm-start justify-content-md-start justify-content-lg-end">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <partial name="_LoginPartial" />
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
 
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white box-shadow">
+
+        <nav class="navbar navbar-light navbar-expand-sm mb-2 border-top border-bottom">
             <div class="container">
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="scroll_div d-sm-inline-flex justify-content-start">
                     <ul class="navbar-nav flex-row small author">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SeriesIndex">Series</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="SeriesIndex">Series</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="2">DATA</a>
+                            <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="2">DATA</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="3">LAYOUTS</a>
+                            <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="3">LAYOUTS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="5">PROJECTS</a>
+                            <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="5">PROJECTS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="6">TOOLS</a>
+                            <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="6">TOOLS</a>
                         </li>
                         <hr />
                     </ul>
@@ -104,29 +103,35 @@
 
     <!-- Footer -->
     <section id="footer">
-        <div class="container">
-            <ul class="copyright icons ">
-                <li>
-                    Copyright &copy;2022 | Lynda Foster<br />
-                </li>
-                <li><a href="https://github.com/lfost42">
-                    <i class="icon brands fab fa-github fs-4"></i></a></li>
-                <li>
-                    <a href="https://www.reddit.com/user/lynda_">
-                        <i class="icon brands fab fa-twitter fs-4"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.twitter.com/user/lfost42">
-                        <i class="icon brands fab fa-reddit-alien fs-4"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/lynda-foster/">
-                        <i class="icon brands fab fa-linkedin fs-4"></i>
-                    </a>
-                </li>
-            </ul>
+        <div class="row">
+            <div class="col-auto">
+                <ul class="copyright">
+                    <li>
+                        Copyright &copy;2022 | Lynda Foster<br />
+                    </li>
+                </ul>
+            </div>
+            <div class="col-auto justify-content-center">
+                <ul class="icons">
+                    <li><a href="https://github.com/lfost42">
+                        <i class="icon brands fab fa-github fs-4"></i></a></li>
+                    <li>
+                        <a href="https://www.reddit.com/user/lynda_">
+                            <i class="icon brands fab fa-twitter fs-4"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.twitter.com/user/lfost42">
+                            <i class="icon brands fab fa-reddit-alien fs-4"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/lynda-foster/">
+                            <i class="icon brands fab fa-linkedin fs-4"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </section>
 

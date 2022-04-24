@@ -1,7 +1,7 @@
 # Project
-A personal blog built with ASP.NET Core MVC with Class Library. Uses Entity Framework Core and deployed with a PostgreSQL database. 
+A blog built with ASP.NET Core MVC with Class Library. Uses Entity Framework Core and deployed with a PostgreSQL database. Implements role and identity-based access, custom routing, front-end layouts, and accessing CRUD functions through modals. 
 
-http://lfost42-blog.herokuapp.com/
+My code-centric blog articles and tutorials - http://lfost42-blog.herokuapp.com/
 
 Summary Info
 
@@ -47,10 +47,14 @@ COMPLETED FEATURES:
 	- Article Modals for comments
 - create modals for editing comments
 - implement front-end styling in HTML and CSS. 
+- reroute series pages to link to an index of articles within that series instead of a series detail page
 
 FUTURE UPDATES:
-- create modals for editing series titles/descriptions/pictures
+- configure social previews
+- add sharing links options
+- create demo role and account that can leave anonymous comments and not modify them. 
 - Extend slug service to Series
+- create modals for editing series titles/descriptions/pictures
 - Show/Hide comments
 - Hover series to display carousel of articles within that series
 - Add a method to reply to comments. 
@@ -61,7 +65,6 @@ Dashboard shows series and recent articles. Side-menu to older articles. Search 
 ## LOGIC DESIGN
 Identity Access, owner creates posts
 Role Based Security, authenticated visitors may leave comments
-
 
 ## DATA DESIGN
 - Blog Series

@@ -239,11 +239,11 @@
             <div class="row">
                 @if (User.IsInRole("Owner"))
                 {
-                    <div class="col-auto mb-1">
-                        <button type="submit" class="button" asp-action="Edit" asp-route-id="@Model.Id" asp-route-slug="@Model.Slug">Edit</button>
-                    </div>
+                <div class="col-auto">
+                    <a class="button owner" asp-controller="Articles" asp-action="Edit" asp-route-slug="@Model.Slug">Edit</a>
+                </div>
                 }
-            <div class="col-auto mb-1">
+            <div class="col-auto mb-1 owner">
                 @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "button" })
             </div>
             </div>

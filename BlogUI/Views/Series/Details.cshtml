@@ -22,7 +22,7 @@
 <div>
     @if (User.IsInRole("Owner"))
     {
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="owner">Edit</a>
     }
     <a asp-action="Index">Back to List</a>
 </div>
