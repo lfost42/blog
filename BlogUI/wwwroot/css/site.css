@@ -2497,8 +2497,6 @@ ul.actions {
                 }
 }
 
-/* Icons */
-
 
 /* Icons */
 
@@ -3465,19 +3463,42 @@ ul.icons li a:hover {
     text-decoration: none;
 }
 
-#footer .copyright {
-    color: #aaaaaa;
-    font-family: "Raleway", Helvetica, sans-serif;
-    font-size: 0.5em;
-    font-weight: 400;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-}
+
+
+    #footer .copyright {
+        color: #aaaaaa;
+        font-family: "Raleway", Helvetica, sans-serif;
+        font-size: 0.5em;
+        font-weight: 400;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+    }
 
 body.single #footer {
     text-align: center;
 }
 
+
+/*shre icons*/
+ul.icons li a:hover {
+    color: #2ebaae;
+    text-decoration: none;
+}
+
+ul.share li a:link {
+    color: #2ebaae;
+    text-decoration: none;
+}
+
+ul.share li a:hover {
+    color: #b8fcf7;
+    text-decoration: none;
+}
+
+ul.share li a:active {
+    color: #2ebaae;
+    text-decoration: none;
+}
 
 /* Menu */
 ul.menu li {
@@ -3693,7 +3714,6 @@ div a.card, div div.card {
     margin-left: -1px;
 }
 
-
 .page-item.active .page-link {
     z-index: 3;
     color: black;
@@ -3710,20 +3730,6 @@ div a.card, div div.card {
 
 .page-link {
     padding: 0.375rem 0.75rem;
-}
-
-/*nav scroll_div*/
-
-div.scroll_div {
-    width: 650px;
-    Overflow-x: auto;
-    overflow-y: visible;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.scroll_div::-webkit-scrollbar {
-    display: none;
 }
 
 /* Navigation Styles */

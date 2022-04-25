@@ -39,6 +39,38 @@
         @Html.Raw(Model.Body)
 
 
+        @{ string linkedin = $"https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Flfost42-blog.herokuapp.com%2F/Articles/Details/{Model.Slug}%2F";}
+
+
+        <div class="col-auto justify-content-center">
+            <ul class="share icons mt-3">
+                Share this article on:</br>
+                <li>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=@Url.Action("Detail", "Articles", new { slug = @Model.Slug }, "https")">
+                        <i class="icon brands fab fa-facebook fs-4"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/intent/tweet?url=@Url.Action("Detail", "Articles", new { slug = @Model.Slug }, "https")">
+                        <i class="icon brands fab fa-twitter fs-4"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="@linkedin">
+                        <i class="icon brands fab fa-linkedin fs-4"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://reddit.com/submit?url=@Url.Action("Detail", "Articles", new { slug = @Model.Slug }, "https")">
+                        <i class="icon brands fab fa-reddit-alien fs-4"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+        
+
         <section>
             <div class="row mr-1 mt-4">
                 <div class="col-auto mb-1">
