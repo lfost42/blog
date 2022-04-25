@@ -1,6 +1,10 @@
 ﻿@using BlogLibrary.Databases
 @model ContactSettings
 
+@{
+    ViewData["Title"] = "Contact Me!";
+}
+
 <div class="container mt-3 mb-3">
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-8 ">
@@ -42,8 +46,7 @@
 </div>
 
 @section Scripts{
-    <script>
-        $('#Message').summernote({
+    <script>$('#Message').summernote({
             placeholder: 'Message',
             tabsize: 2,
             height: 120,
@@ -56,6 +59,5 @@
                 ['insert', ['link', 'picture', 'video']],
                 ['view', ['fullscreen', 'codeview', 'help']]
             ]
-        });
-    </script>
+        });</script>
 }
