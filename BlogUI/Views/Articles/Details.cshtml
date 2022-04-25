@@ -20,7 +20,9 @@
                 <p>@Model.Summary</p>
             </div>
             <div class="meta">
-                <time class="published">@Model.Created.ToShortDateString()</time>
+                <time class="published">
+                    @Model.SeriesModel.Title: @Model.Created.ToShortDateString()
+                </time>
                 <div class="author">
                     <span class="name">@Model.Creator.FullName</span>
                     <img src="@imageService.DecodeImage(Model.Creator.ImageData, Model.Creator.ContentType)" alt="author image" />
@@ -34,7 +36,6 @@
                 <img src="@imageService.DecodeImage(Model.Image.ImageData, Model.Image.ImageExtension)" width="100%" />
             }
         </span>
-        <div class="author h2">SERIES: @Model.SeriesModel.Title</div>
         @Html.Raw(Model.Body)
 
 
