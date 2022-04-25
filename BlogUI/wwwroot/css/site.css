@@ -3747,3 +3747,10 @@ a.nav-link:hover {
     border-bottom: dotted 1px #2ebaae;
     text-decoration: none;
 }
+
+ul.navbar-nav li.nav-item a.topic {
+    padding: 3px;
+    border: 0.5px solid gray;
+    margin: 0;
+    text-decoration: none;
+}

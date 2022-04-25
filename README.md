@@ -51,13 +51,13 @@ COMPLETED FEATURES:
 
 FUTURE UPDATES:
 - configure social previews
-- add sharing links options
-- create demo role and account that can leave anonymous comments and not modify them. 
-- Extend slug service to Series
-- create modals for editing series titles/descriptions/pictures
 - Show/Hide comments
+- add sharing links options
+- Extend slug service to Series
+- create demo role and account that can leave anonymous comments and not modify them. 
+- create modals for editing series titles/descriptions/pictures
 - Hover series to display carousel of articles within that series
-- Add a method to reply to comments. 
+- Add a method to reply to comments
 
 ## USER INTERFACE
 Dashboard shows series and recent articles. Side-menu to older articles. Search function. Login for writing articles or comments. 
