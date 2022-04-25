@@ -48,15 +48,16 @@ COMPLETED FEATURES:
 - create modals for editing comments
 - implement front-end styling in HTML and CSS. 
 - reroute series pages to link to an index of articles within that series instead of a series detail page
+- add sharing links options to Facebook, twitter, linkedin, and reddit
+- configure social previews
 
 FUTURE UPDATES:
-- configure social previews
 - Show/Hide comments
-- add sharing links options
 - Extend slug service to Series
-- create demo role and account that can leave anonymous comments and not modify them. 
 - create modals for editing series titles/descriptions/pictures
+- create demo role and account that can leave anonymous comments and not modify them. 
 - Hover series to display carousel of articles within that series
+- Implement VH scaling
 - Add a method to reply to comments
 
 ## USER INTERFACE

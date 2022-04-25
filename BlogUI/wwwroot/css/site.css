@@ -2509,7 +2509,7 @@ ul.actions {
 ul.icons {
     cursor: default;
     list-style: none;
-    padding-left: 0;
+    padding-left: 1em;
 }
 
     ul.icons li {
@@ -3473,11 +3473,6 @@ ul.icons li a:hover {
         letter-spacing: 0.25em;
         text-transform: uppercase;
     }
-
-body.single #footer {
-    text-align: center;
-}
-
 
 /*shre icons*/
 ul.icons li a:hover {
