@@ -3741,6 +3741,12 @@ ul.navbar-nav li.nav-item a.owner {
     margin: 0;
     text-decoration: none;
 }
+p a.owner {
+    padding: 3px;
+    border: 1px solid red;
+    margin: 0;
+    text-decoration: none;
+}
 
 a.nav-link:hover {
     background-color: #f5fcfc;

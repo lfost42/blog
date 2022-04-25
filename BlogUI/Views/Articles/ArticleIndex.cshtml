@@ -14,9 +14,8 @@
 
 @foreach (var item in Model.Take(1))
 {
-    <h3>@item.SeriesModel.Title</h3>
+    <h3>@item.SeriesModel.Title Articles</h3> 
 }
-
 
 
 @if (User.IsInRole("Owner"))

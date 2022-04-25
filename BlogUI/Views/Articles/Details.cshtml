@@ -37,217 +37,220 @@
         <div class="header title">@Model.SeriesModel.Title</div>
         @Html.Raw(Model.Body)
 
-        <section>
-            <div class="row mr-1 mt-4">
-                <div class="col-auto mb-1">
-                    <button data-toggle="modal" data-target="#commentsModal" class="button">@Model.Comments.Count Comment(s)</button>
+        @*@{string test = "https://www.linkedin.com/shareArticle?mini=true&url="}
+         <asp-controller="Articles" asp-action=“Details asp-route-id="@Model.Slug">*@
+
+            <section>
+                <div class="row mr-1 mt-4">
+                    <div class="col-auto mb-1">
+                        <button data-toggle="modal" data-target="#commentsModal" class="button">@Model.Comments.Count Comment(s)</button>
+                    </div>
+
+                    @if (@Model.Tags.Count() >= 1)
+                    {
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <div class="col-auto mb-1">
+                                <form asp-action="TagIndex" asp-route-tag="@tag.Tag.ToLower()" method="post">
+                                    @Html.Hidden("id", Model.Id)
+                                    <button class="button" type="submit">#@tag.Tag</button>
+                                </form>
+                            </div>
+                        }
+                    }
                 </div>
 
-                @if (@Model.Tags.Count() >= 1)
-                {
-                    @foreach (var tag in Model.Tags)
+
+                <div id="commentSection" class="row container d-flex pb-2 justify-content-center w-100">
+                    @foreach (var comment in Model.Comments)
                     {
-                    <div class="col-auto mb-1">
-                        <form asp-action="TagIndex" asp-route-tag="@tag.Tag.ToLower()" method="post">
-                            @Html.Hidden("id", Model.Id)
-                            <button class="button" type="submit">#@tag.Tag</button>
-                        </form>
-                    </div>
-                     }
-                 }         
-             </div>
+                        <div class="container d-flex align-content-center ps-5 pe-5 p-2 h-100 gy-2 border">
+                            <div class="row w-100">
+                                <div class="col-2">
+                                    <img class="ml-3 mt-3 image-thumbnail rounded-circle" width="75px" src="@imageService.DecodeImage(comment.Creator.ImageData, comment.Creator.ContentType)" />
+                                </div>
+
+                                <!--edit button-->
+                                <div class="col col-12 col-lg-10 ">
+                                    <div class="row  h-100">
+                                        <div class="col col-12 col-lg-10">
+                                            @comment.Creator.FullName
+                                            <small>
+
+                                                @if (comment.Moderated is not null)
+                                                {
+                                                    <span class="small"><i>Moderated: @comment.Moderated</i></span>
+                                                }
+
+                                                else
+                                                {
+                                                    <i>Posted on @comment.Created.ToShortDateString()</i>
+                                                }
+
+                                            </small>
 
 
-            <div id="commentSection" class="row container d-flex pb-2 justify-content-center w-100">
-                @foreach (var comment in Model.Comments)
-                {
-                    <div class="container d-flex align-content-center ps-5 pe-5 p-2 h-100 gy-2 border">
-                        <div class="row w-100">
-                            <div class="col-2">
-                                <img class="ml-3 mt-3 image-thumbnail rounded-circle" width="75px" src="@imageService.DecodeImage(comment.Creator.ImageData, comment.Creator.ContentType)" />
-                            </div>
 
-                            <!--edit button-->
-                            <div class="col col-12 col-lg-10 ">
-                                <div class="row  h-100">
-                                    <div class="col col-12 col-lg-10">
-                                        @comment.Creator.FullName
-                                        <small>
 
                                             @if (comment.Moderated is not null)
                                             {
-                                                <span class="small"><i>Moderated: @comment.Moderated</i></span>
+                                                <div class="row ml-1">
+                                                    <span class="text-danger fw-bolder">@comment.ModeratedComment</span>
+                                                </div>
                                             }
 
                                             else
                                             {
-                                                <i>Posted on @comment.Created.ToShortDateString()</i>
+                                                <div class="row ml-1">
+                                                    <span>@comment.Comment</span>
+                                                </div>
                                             }
+                                        </div>
 
-                                        </small>
+                                        <!--moderate edit delete buttons-->
+                                        <div class="col col-12 col-lg-3 my-1">
+                                            <div class="row">
+                                                @if (comment.Moderated is null && comment.Deleted is null && comment.CreatorId == userManager.GetUserId(User))
+                                                {
+                                                    <div class="col-auto mb-1">
+                                                        <a data-toggle="modal" data-target="#editModal_@comment.Id" class="button">Edit</a>
+                                                    </div>
+                                                }
 
-
-
-
-                                        @if (comment.Moderated is not null)
-                                        {
-                                            <div class="row ml-1">
-                                                <span class="text-danger fw-bolder">@comment.ModeratedComment</span>
+                                                @if (User.IsInRole(Role.Owner.ToString()) && comment.Deleted is null)
+                                                {
+                                                    <div class="col-auto mb-1">
+                                                        <button class="button" data-toggle="modal" data-target="#modModal_@comment.Id">Moderate</button>
+                                                    </div>
+                                                    <div class="col-auto mb-1">
+                                                        <form asp-action="Delete" asp-controller="Comments">
+                                                            @Html.Hidden("Id", comment.Id)
+                                                            @Html.Hidden("PostSlug", comment.Article.Slug)
+                                                            <button class="button">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                }
                                             </div>
-                                        }
-
-                                        else
-                                        {
-                                            <div class="row ml-1">
-                                                <span>@comment.Comment</span>
-                                            </div>
-                                        }
-                                    </div>
-
-                                    <!--moderate edit delete buttons-->
-                                    <div class="col col-12 col-lg-3 my-1">
-                                        <div class="row">
-                                            @if (comment.Moderated is null && comment.Deleted is null && comment.CreatorId == userManager.GetUserId(User))
-                                            {
-                                                <div class="col-auto mb-1">
-                                                    <a data-toggle="modal" data-target="#editModal_@comment.Id" class="button">Edit</a>
-                                                </div>
-                                            }
-
-                                            @if (User.IsInRole(Role.Owner.ToString()) && comment.Deleted is null)
-                                            {
-                                                <div class="col-auto mb-1">
-                                                    <button class="button" data-toggle="modal" data-target="#modModal_@comment.Id">Moderate</button>
-                                                </div>
-                                                <div class="col-auto mb-1">
-                                                    <form asp-action="Delete" asp-controller="Comments">
-                                                        @Html.Hidden("Id", comment.Id)
-                                                        @Html.Hidden("PostSlug", comment.Article.Slug)
-                                                        <button class="button">Delete</button>
-                                                    </form>
-                                                </div>
-                                            }
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!--moderate button-->
-                    <div class="modal" id="modModal_@comment.Id">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
+                        <!--moderate button-->
+                        <div class="modal" id="modModal_@comment.Id">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Moderating Comment</h4>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Moderating Comment</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <form asp-action="Moderate" asp-controller="Comments">
+                                            @Html.Hidden("Id", comment.Id)
+                                            @Html.Hidden("Comment", comment.Comment)
+                                            <div class="form-group">
+                                                <label class="form-label">Original Comment</label>
+                                                <textarea disabled class="form-control rounded-2" style="resize:none">@comment.Comment</textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">Moderated Comment</label>
+                                                <textarea required name="ModeratedComment" class="form-control rounded-2">@comment.ModeratedComment</textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row mt-1">
+                                                    <div class="col">
+                                                        <button class="button mt-1" type="submit">Submit</button>
+                                                    </div>
+                                                    <div class="col">
+                                                        <button class="button mt-1" type="button" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <div class="modal-body">
-                                    <form asp-action="Moderate" asp-controller="Comments">
-                                        @Html.Hidden("Id", comment.Id)
-                                        @Html.Hidden("Comment", comment.Comment)
-                                        <div class="form-group">
-                                            <label class="form-label">Original Comment</label>
-                                            <textarea disabled class="form-control rounded-2" style="resize:none">@comment.Comment</textarea>
-                                        </div>
+                        <!-- editModal -->
+                        <!--Modal Header-->
+                        <div class="modal" id="editModal_@comment.Id">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Editing Comment</h4>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="form-label">Moderated Comment</label>
-                                            <textarea required name="ModeratedComment" class="form-control rounded-2">@comment.ModeratedComment</textarea>
-                                        </div>
+                                    <!--Modal Body-->
+                                    <div class="modal-body">
+                                        <form asp-action="Edit" asp-controller="Comments">
+                                            @Html.Hidden("Id", comment.Id)
 
-                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <textarea name="Comment" class="form-control rounded-2" required>@comment.Comment</textarea>
+                                            </div>
                                             <div class="row mt-1">
-                                                <div class="col">
+                                                <div class="col-auto">
                                                     <button class="button mt-1" type="submit">Submit</button>
                                                 </div>
-                                                <div class="col">
-                                                    <button class="button mt-1" type="button" data-dismiss="modal">Close</button>
+                                                <div class="col-auto">
+                                                    <button type="button" class="button mt-1" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
 
-                    <!-- editModal -->
-                    <!--Modal Header-->
-                    <div class="modal" id="editModal_@comment.Id">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Editing Comment</h4>
-                                </div>
-
-                                <!--Modal Body-->
-                                <div class="modal-body">
-                                    <form asp-action="Edit" asp-controller="Comments">
-                                        @Html.Hidden("Id", comment.Id)
-
-                                        <div class="form-group">
-                                            <textarea name="Comment" class="form-control rounded-2" required>@comment.Comment</textarea>
-                                        </div>
-                                        <div class="row mt-1">
-                                            <div class="col-auto">
-                                                <button class="button mt-1" type="submit">Submit</button>
-                                            </div>
-                                            <div class="col-auto">
-                                                <button type="button" class="button mt-1" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                }
-
-            </div>
-        </section>
-
-
-        <section>
-            <div class="d-flex w-100">
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <form class="w-100 p-4" asp-action="Create" asp-controller="Comments" method="post">
-                        @Html.Hidden("ArticleId", Model.Id)
-                        @Html.Hidden("ArticleSlug", Model.Slug)
-
-                        <div class="form-group p-2">
-                            <label class="form-label">Add Comment</label>
-                            <textarea name="Comment" class="form-control" rows="4"></textarea>
-
-                        </div>
-
-                        <div class="d-flex justify-content-center mt-2">
-                            <button type="submit" class="button">Submit</button>
-                        </div>
-                    </form>
-                }
-                else
-                {
-                    <a class="button mb-2" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Articles/Details?slug=@Model.Slug">
-                        Login to Add Comment
-                    </a>
-                }
-            </div>
-            <div class="row">
-                @if (User.IsInRole("Owner"))
-                {
-                <div class="col-auto">
-                    <a class="button owner" asp-controller="Articles" asp-action="Edit" asp-route-slug="@Model.Slug">Edit</a>
                 </div>
-                }
-            <div class="col-auto mb-1 owner">
-                @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "button" })
-            </div>
-            </div>
+            </section>
 
-    </section>
+
+            <section>
+                <div class="d-flex w-100">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form class="w-100 p-4" asp-action="Create" asp-controller="Comments" method="post">
+                            @Html.Hidden("ArticleId", Model.Id)
+                            @Html.Hidden("ArticleSlug", Model.Slug)
+
+                            <div class="form-group p-2">
+                                <label class="form-label">Add Comment</label>
+                                <textarea name="Comment" class="form-control" rows="4"></textarea>
+
+                            </div>
+
+                            <div class="d-flex justify-content-center mt-2">
+                                <button type="submit" class="button">Submit</button>
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <a class="button mb-2" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Articles/Details?slug=@Model.Slug">
+                            Login to Add Comment
+                        </a>
+                    }
+                </div>
+                <div class="row">
+                    @if (User.IsInRole("Owner"))
+                    {
+                        <div class="col-auto">
+                            <a class="button owner" asp-controller="Articles" asp-action="Edit" asp-route-slug="@Model.Slug">Edit</a>
+                        </div>
+                    }
+                    <div class="col-auto mb-1 owner">
+                        @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "button" })
+                    </div>
+                </div>
+
+            </section>
     </article>
 </div>
