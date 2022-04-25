@@ -3735,13 +3735,7 @@ nav.navbar {
     /*    margin-bottom: 0;*/
 }
 
-ul.navbar-nav li.nav-item a.owner {
-    padding: 3px;
-    border: 1px solid red;
-    margin: 0;
-    text-decoration: none;
-}
-p a.owner {
+ul.navbar-nav li.nav-item a.owner, p a.owner {
     padding: 3px;
     border: 1px solid red;
     margin: 0;
