@@ -275,7 +275,7 @@
             <div class="row">
                 @if (User.IsInRole("Owner"))
                 {
-                    <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-slug="@Model.Slug">Edit</a><br />
+                    <a class="owner" asp-action="Edit" asp-route-id="@Model.Id" asp-route-slug="@Model.Slug">Edit</a><br />
                 }
             </div>
 

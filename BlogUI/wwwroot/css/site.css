@@ -3474,13 +3474,9 @@ ul.icons li a:hover {
         text-transform: uppercase;
     }
 
-/*shre icons*/
-ul.icons li a:hover {
-    color: #2ebaae;
-    text-decoration: none;
-}
+/*share icons*/
 
-ul.share li a:link {
+ul.share li a {
     color: #2ebaae;
     text-decoration: none;
 }
@@ -3666,7 +3662,6 @@ ul.menu li {
 }
 
 @media screen and (max-width: 736px) {
-
     #menu {
         padding: 2.5em 1.75em;
     }
@@ -3728,14 +3723,6 @@ div a.card, div div.card {
 }
 
 /* Navigation Styles */
-#header nav.navbar div.container div.row {
-/*    margin-bottom: 0px;*/
-}
-
-nav.navbar {
-    /*    margin-bottom: 0;*/
-}
-
 ul.navbar-nav li.nav-item a.owner, p a.owner {
     padding: 3px;
     border: 1px solid red;
@@ -3756,6 +3743,6 @@ ul.navbar-nav li.nav-item a.topic {
     text-decoration: none;
 }
 
-#commentSection {
+div.comment {
     display: none;
 }
