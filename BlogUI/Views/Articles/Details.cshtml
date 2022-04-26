@@ -42,41 +42,41 @@
         @{ string linkedin = $"https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Flfost42-blog.herokuapp.com%2FArticles/Details/{Model.Slug}%2F";}
         @{ string links = $"https://lfost42-blog.herokuapp.com/Articles/Details/{Model.Slug}";}
 
-    <div class="col-auto justify-content-center mt-3 border-black-1px">
-        <ul class="icons">
-            Share this article on:
-        </ul>
-        <ul class="share icons">
-            <li>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=@links">
-                    <i class="icon brands fab fa-facebook fs-4"></i>
-                </a>
-            </li>
-            <li>
-                <a href="https://twitter.com/intent/tweet?url=@links">
-                    <i class="icon brands fab fa-twitter fs-4"></i>
-                </a>
-            </li>
-            <li>
-                <a href="@linkedin">
-                    <i class="icon brands fab fa-linkedin fs-4"></i>
-                </a>
-            </li>
-            <li>
-                <a href="https://reddit.com/submit?url=@links">
-                    <i class="icon brands fab fa-reddit-alien fs-4"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
+        <div class="col-auto justify-content-center mt-3 border-black-1px">
+            <ul class="icons">
+                Share this article on:
+            </ul>
+            <ul class="share icons">
+                <li>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=@links">
+                        <i class="icon brands fab fa-facebook fs-4"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/intent/tweet?url=@links">
+                        <i class="icon brands fab fa-twitter fs-4"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="@linkedin">
+                        <i class="icon brands fab fa-linkedin fs-4"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://reddit.com/submit?url=@links">
+                        <i class="icon brands fab fa-reddit-alien fs-4"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
 
-        
+
 
         <section>
             <div class="row mr-1 mt-4">
                 <div class="col-auto mb-1">
-                    <button data-toggle="modal" data-target="#commentsModal" class="button">@Model.Comments.Count Comment(s)</button>
+                    <button class="button btnToggle"">@Model.Comments.Count Comment(s)</button>
                 </div>
 
                 @if (@Model.Tags.Count() >= 1)
@@ -94,7 +94,7 @@
             </div>
 
 
-            <div id="commentSection" class="row container d-flex pb-2 justify-content-center w-100">
+            <div id="commentSection" class="comment row container pb-2 justify-content-center w-100">
                 @foreach (var comment in Model.Comments)
                 {
                     <div class="container d-flex align-content-center ps-5 pe-5 p-2 h-100 gy-2 border">
@@ -287,3 +287,13 @@
         </section>
     </article>
 </div>
+
+@section Scripts {
+    <script>
+        jQuery.noConflict();
+        $('.btnToggle').click(function () {
+            $('.comment').toggle("slow");
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+}

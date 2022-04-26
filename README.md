@@ -50,15 +50,16 @@ COMPLETED FEATURES:
 - reroute series pages to link to an index of articles within that series instead of a series detail page
 - add sharing links options to Facebook, twitter, linkedin, and reddit
 - configure social previews
+- Hide comments by default, show using comments button
 
 FUTURE UPDATES:
-- Show/Hide comments
 - Extend slug service to Series
 - create modals for editing series titles/descriptions/pictures
+- Implement VH scaling
 - create demo role and account that can leave anonymous comments and not modify them. 
 - Hover series to display carousel of articles within that series
-- Implement VH scaling
 - Add a method to reply to comments
+- Add a like button
 
 ## USER INTERFACE
 Dashboard shows series and recent articles. Side-menu to older articles. Search function. Login for writing articles or comments. 

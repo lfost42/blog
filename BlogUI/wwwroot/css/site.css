@@ -3755,3 +3755,7 @@ ul.navbar-nav li.nav-item a.topic {
     margin: 0;
     text-decoration: none;
 }
+
+#commentSection {
+    display: none;
+}
