@@ -3474,9 +3474,13 @@ ul.icons li a:hover {
         text-transform: uppercase;
     }
 
-/*share icons*/
+/*shre icons*/
+ul.icons li a:hover {
+    color: #2ebaae;
+    text-decoration: none;
+}
 
-ul.share li a {
+ul.share li a:link {
     color: #2ebaae;
     text-decoration: none;
 }
@@ -3662,6 +3666,7 @@ ul.menu li {
 }
 
 @media screen and (max-width: 736px) {
+
     #menu {
         padding: 2.5em 1.75em;
     }
