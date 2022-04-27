@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -276,17 +276,19 @@ namespace BlogUI.Controllers
                         }
                     }
 
-                    newArticle.Tags = articleModel.Tags;
-                    foreach (var tag in tagValues)
+                    if(articleModel.Tags != null)
                     {
-                        _context.Add(new TagModel()
+                        foreach (var tag in tagValues)
                         {
-                            ArticleModelId = articleModel.Id,
-                            CreatorId = articleModel.CreatorId,
-                            Tag = tag
-                        });
+                            _context.Tags.RemoveRange(newArticle.Tags);
+                            _context.Add(new TagModel()
+                            {
+                                ArticleModelId = articleModel.Id,
+                                CreatorId = articleModel.CreatorId,
+                                Tag = tag
+                            });
+                        }
                     }
-
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
