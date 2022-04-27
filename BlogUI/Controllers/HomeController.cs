@@ -29,22 +29,6 @@ namespace BlogUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SeriesIndex(int? page)
-        {
-            var pageNumber = page ?? 1;
-            var pageSize = 5;
-
-            var series = _context.Series.Where(
-                s => s.Articles.Any(a => a.Status == Status.Published))
-                .Include(s => s.Creator)
-                .Include(s => s.Image)
-                .OrderByDescending(s => s.Created)
-                .ToPagedListAsync(pageNumber, pageSize);
-
-            return View(await series);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> Index(int? page)
         {
             var pageNumber = page ?? 1;
@@ -58,6 +42,22 @@ namespace BlogUI.Controllers
                 .ToPagedListAsync(pageNumber, pageSize);
 
             return View(await articles);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SeriesIndex(int? page)
+        {
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+
+            var series = _context.Series.Where(
+                s => s.Articles.Any(a => a.Status == Status.Published))
+                .Include(s => s.Creator)
+                .Include(s => s.Image)
+                .OrderByDescending(s => s.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
+
+            return View(await series);
         }
 
         [HttpGet]
