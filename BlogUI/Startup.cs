@@ -36,7 +36,7 @@ namespace BlogUI
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddIdentity<UserModel, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddIdentity<UserModel, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<BlogContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
