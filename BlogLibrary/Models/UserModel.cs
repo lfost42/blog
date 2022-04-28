@@ -24,13 +24,6 @@ namespace BlogLibrary.Models
         public byte[] ImageData { get; set; }
         public string ContentType { get; set; }
 
-        [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
-        public string GitHubUrl { get; set; }
-        [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
-        public string PortfolioUrl { get; set; }
-        [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
-        public string TwitterUrl { get; set; }
-
         public virtual ICollection<ArticleModel> Articles { get; set; } = new HashSet<ArticleModel>();
         public virtual ICollection<CommentModel> Comments { get; set; } = new HashSet<CommentModel>();
     }
