@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,6 +18,7 @@ using BlogLibrary.Databases.Interfaces;
 using BlogLibrary.Databases;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using BlogLibrary.Models.Enum;
 
 namespace BlogUI.Areas.Identity.Pages.Account
 {
@@ -31,7 +32,6 @@ namespace BlogUI.Areas.Identity.Pages.Account
         private readonly IImageService _imageService;
         private readonly IConfiguration _config;
 
-
         public RegisterModel(
             UserManager<UserModel> userManager,
             SignInManager<UserModel> signInManager,
@@ -39,7 +39,6 @@ namespace BlogUI.Areas.Identity.Pages.Account
             IBlogEmailService emailSender,
             IImageService imageService, 
             IConfiguration config)
-
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -79,8 +78,8 @@ namespace BlogUI.Areas.Identity.Pages.Account
             [RegularExpression("(?=.*\\d)(?=.*[!@#$%^&*]+)" +
                 "(?![.\n])(?=.*[A-Z])(?=.*[a-z]).{6,}$", ErrorMessage =
                 "Passwords must be at least 6 characters and contain at " +
-                "least 3 of the following: upper case (A-Z), lower case " +
-                "(a-z), number (0-9) and special character (e.g. !@#$%^&*)")]
+                "least 1 of each of the following: upper case (A-Z), lower" +
+                " case (a-z), number (0-9) and special character (e.g. !@#$%^&*)")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
@@ -107,15 +106,16 @@ namespace BlogUI.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new UserModel
+                UserModel user = new()
                 {
                     Email = Input.Email,
                     UserName = Input.Email,
                     ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
                     ContentType = Path.GetExtension(_config["DefaultUserImage"])
                 };
-                
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
