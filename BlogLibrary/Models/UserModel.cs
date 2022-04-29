@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,6 +23,9 @@ namespace BlogLibrary.Models
         public string FullName => $"{FirstName} {LastName}";
 
         public byte[] ImageData { get; set; }
+        [DataType(DataType.Upload)]
+        [NotMapped]
+        public IFormFile ImageIform { get; set; }
         public string ContentType { get; set; }
 
         public virtual ICollection<ArticleModel> Articles { get; set; } = new HashSet<ArticleModel>();

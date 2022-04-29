@@ -33,6 +33,13 @@
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label>Select Avatar (can upload/change after registration)</label>
+                <div class="custom-file">
+                    <input type="file" asp-for="Input.ImageData" class="form-control-file mb-2" accept=".jpg,.jpeg,.png,.ico,.gif,.svg" />
+                    <span asp-validation-for="Input.ContentType" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
                 <label asp-for="Input.ConfirmPassword"></label>
                 <input asp-for="Input.ConfirmPassword" class="form-control mb-2" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>

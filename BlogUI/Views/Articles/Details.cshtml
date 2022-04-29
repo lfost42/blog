@@ -36,16 +36,16 @@
                 <img src="@imageService.DecodeImage(Model.Image.ImageData, Model.Image.ImageExtension)" width="100%" />
             }
         </span>
-        @Html.Raw(Model.Body)
+        <div class="mb-3">
+            @Html.Raw(Model.Body)
+        </div>
 
 
         @{ string linkedin = $"https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Flfost42-blog.herokuapp.com%2FArticles/Details/{Model.Slug}%2F";}
         @{ string links = $"https://lfost42-blog.herokuapp.com/Articles/Details/{Model.Slug}";}
 
-        <div class="col-auto justify-content-center mt-3 border-black-1px">
-            <ul class="icons">
-                Share this article on:
-            </ul>
+        <div class="col-sm-12 col-md-5 col-lg-5 pt-3 ml-3">
+            <h5 class="card-title">Share this article on:</h5>
             <ul class="share icons">
                 <li>
                     <a href="https://www.facebook.com/sharer/sharer.php?u=@links">
@@ -69,9 +69,6 @@
                 </li>
             </ul>
         </div>
-
-
-
 
         <section>
             <div class="row mr-1 mt-4">

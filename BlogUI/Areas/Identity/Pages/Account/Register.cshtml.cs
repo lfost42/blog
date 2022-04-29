@@ -19,6 +19,8 @@ using BlogLibrary.Databases;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using BlogLibrary.Models.Enum;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlogUI.Areas.Identity.Pages.Account
 {
@@ -88,9 +90,11 @@ namespace BlogUI.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Display(Name = "Avatar")]
-            public int? ImageId { get; set; }
-
-            public virtual ImageModel Image { get; set; }
+            [DataType(DataType.Upload)]
+            [NotMapped]
+            public IFormFile ImageIform { get; set; }
+            public byte[] ImageData { get; set; }
+            public string ContentType { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -110,8 +114,10 @@ namespace BlogUI.Areas.Identity.Pages.Account
                 {
                     Email = Input.Email,
                     UserName = Input.Email,
-                    ImageData = await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
-                    ContentType = Path.GetExtension(_config["DefaultUserImage"])
+                    ImageData = await _imageService.EncodeImageAsync(Input.ImageIform) ??
+                        await _imageService.EncodeImageAsync(_config["DefaultUserImage"]),
+                    ContentType = _imageService.ContentType(Input.ImageIform) ??
+                        Path.GetExtension(_config["DefaultUserImage"])
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
