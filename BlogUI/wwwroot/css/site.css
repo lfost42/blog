@@ -1860,7 +1860,6 @@ button,
     font-family: "Raleway", Helvetica, sans-serif;
     font-size: 0.6em;
     font-weight: 800;
-/*    height: 4.8125em;*/
     letter-spacing: 0.25em;
     line-height: 4.8125em;
     padding: 0 2.5em;
@@ -3728,13 +3727,6 @@ div a.card, div div.card {
 }
 
 /* Navigation Styles */
-ul.navbar-nav li.nav-item a.owner, p a.owner {
-    padding: 3px;
-    border: 1px solid red;
-    margin: 0;
-    text-decoration: none;
-}
-
 a.nav-link:hover {
     background-color: #f5fcfc;
     border-bottom: dotted 1px #2ebaae;
@@ -3750,4 +3742,11 @@ ul.navbar-nav li.nav-item a.topic {
 
 div.comment {
     display: none;
+}
+
+ul.navbar-nav li.nav-item a.owner, p a.owner, div a.owner, div.row a.owner, section.section div.row a.owner {
+    padding: 3px;
+    border: 1px solid red;
+    margin: 0;
+    text-decoration: none;
 }

@@ -72,16 +72,15 @@ namespace BlogUI.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} " +
-				"characters long.", MinimumLength = 6)]
+            [StringLength(50, ErrorMessage = "The {0} must be at least " +
+                "{1} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
-            [RegularExpression("^((?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])|(?=.*?[A-Z])(?=.*?[a-z])" +
-				"(?=.*?[^a-zA-Z0-9])|(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])|(?=.*?[a-z])" +
-				"(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])).{6,}$", ErrorMessage = "Passwords must be at " +
-				"least 6 characters and contain at least 3 of the following: upper case (A-Z), " +
-				"lower case (a-z), number (0-9) and special character (e.g. !@#$%^&*)")]
-
+            [RegularExpression("(?=.*\\d)(?=.*[!@#$%^&*]+)" +
+                "(?![.\n])(?=.*[A-Z])(?=.*[a-z]).{6,}$", ErrorMessage =
+                "Passwords must be at least 6 characters and contain at " +
+                "least 3 of the following: upper case (A-Z), lower case " +
+                "(a-z), number (0-9) and special character (e.g. !@#$%^&*)")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]

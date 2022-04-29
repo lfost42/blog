@@ -51,16 +51,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                             </li>
-                            @if (User.IsInRole("Owner"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link owner" asp-area="" asp-controller="Series" asp-action="Index">Series</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link owner" asp-area="" asp-controller="Articles" asp-action="Index">Articles</a>
-                                </li>
-                            }
-
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Identity/Account/Manage"><i class="icon brands fa fa-duotone fa-user fa-lg"></i></a>
+                            </li>
                         </ul>
                     </div>
 
@@ -69,96 +62,113 @@
             </div>
         </nav>
 
-            <nav class="navbar navbar-light bg-white border-top border-bottom">
-                <div class="container">
-                    <div class="navbar-expand-sm">
+        <nav class="navbar navbar-light bg-white border-top border-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="navbar-expand">
+                            <ul class="navbar-nav flex-row small author">
+                                <li class="nav-item">
+                                    <a class="nav-link topic" asp-area="" asp-controller="Home" asp-action="SeriesIndex">Series</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="1">DATA</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="2">LAYOUTS</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="3">PROJECTS</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="4">TOOLS</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col">
                         <ul class="navbar-nav flex-row small author">
                             <li class="nav-item">
-                                <a class="nav-link topic" asp-area="" asp-controller="Home" asp-action="SeriesIndex">Series</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="1">DATA</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="2">LAYOUTS</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="3">PROJECTS</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="4">TOOLS</a>
-                            </li>
-                            <hr />
-                        </ul>
+                                @if (User.IsInRole("Owner"))
+                                {
+                                <li class="nav-item">
+                                    <a class="nav-link owner" asp-area="" asp-controller="Series" asp-action="Index">Series</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link owner" asp-area="" asp-controller="Articles" asp-action="Index">Articles</a>
+                                </li>
+                            }
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </nav>
+        </header>
+        <div class="container pb-5">
+            <main role="main" class="pb-3 pt-3">
+                @RenderBody()
+            </main>
+        </div>
 
-    </header>
-    <div class="container pb-5">
-        <main role="main" class="pb-3 pt-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <div class="container">
-        <form asp-action="SearchIndex" asp-controller="Articles">
-            <div class="input-group btn-group-sm">
-                <input type="text" name="SearchTerm" class="form-control" placeholder="Search Articles">
-                <button class="btn btn-outline-dark px-2 px-md-4" type="submit"><i class="fa fa-search"></i></button>
-            </div>
-        </form>
-    </div>
-
-    <!-- Footer -->
-    <div class="container">
-        <section id="footer">
-            <div class="">
-                <div class="col-12">
-                    <ul class="copyright">
-                        Copyright &copy;2022 | Lynda Foster
-                    </ul>
+        <div class="container">
+            <form asp-action="SearchIndex" asp-controller="Articles">
+                <div class="input-group btn-group-sm">
+                    <input type="text" name="SearchTerm" class="form-control" placeholder="Search Articles">
+                    <button class="btn btn-outline-dark px-2 px-md-4" type="submit"><i class="fa fa-search"></i></button>
                 </div>
-                <div class="col-12">
-                    <ul class="icons">
-                        <li>
-                            <a href="https://github.com/lfost42">
-                                <i class="icon brands fab fa-github fs-4"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.twitter.com/lfost42">
-                                <i class="icon brands fab fa-twitter fs-4"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.reddit.com/user/lynda_">
-                                <i class="icon brands fab fa-reddit-alien fs-4"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.linkedin.com/in/lynda-foster/">
-                                <i class="icon brands fab fa-linkedin fs-4"></i>
-                            </a>
-                        </li>
-                    </ul>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="container">
+            <section id="footer">
+                <div class="">
+                    <div class="col-12">
+                        <ul class="copyright">
+                            Copyright &copy;2022 | Lynda Foster
+                        </ul>
+                    </div>
+                    <div class="col-12">
+                        <ul class="icons">
+                            <li>
+                                <a href="https://github.com/lfost42">
+                                    <i class="icon brands fab fa-github fs-4"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.twitter.com/lfost42">
+                                    <i class="icon brands fab fa-twitter fs-4"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.reddit.com/user/lynda_">
+                                    <i class="icon brands fab fa-reddit-alien fs-4"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/in/lynda-foster/">
+                                    <i class="icon brands fab fa-linkedin fs-4"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </section>
-    </div>
+            </section>
+        </div>
 
-    <!-- Bootstrap core JS-->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <!-- Bootstrap core JS-->
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <!--summernote cdn-->
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+        <!--summernote cdn-->
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-    <!--sweetalert cdn-->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!--sweetalert cdn-->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
 </html>
