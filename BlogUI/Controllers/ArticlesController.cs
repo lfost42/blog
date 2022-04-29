@@ -272,15 +272,15 @@ namespace BlogUI.Controllers
                         }
                         else
                         {
-                            newArticle.Slug = newSlug + "_1";
+                            newArticle.Slug = newSlug + "_i";
                         }
                     }
 
                     if(articleModel.Tags != null)
                     {
+                        _context.Tags.RemoveRange(newArticle.Tags);
                         foreach (var tag in tagValues)
                         {
-                            _context.Tags.RemoveRange(newArticle.Tags);
                             _context.Add(new TagModel()
                             {
                                 ArticleModelId = articleModel.Id,
@@ -293,7 +293,7 @@ namespace BlogUI.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ArticleModelExists(articleModel.Id))
+                    if (!ArticleModelExists(articleModel.Slug))
                     {
                         return NotFound();
                     }
@@ -315,9 +315,9 @@ namespace BlogUI.Controllers
 
         // GET: Articles/Delete/5
         [HttpGet]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string slug)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(slug))
             {
                 return NotFound();
             }
@@ -326,7 +326,7 @@ namespace BlogUI.Controllers
                 .Include(a => a.SeriesModel)
                 .Include(a => a.Image)
                 .Include(a => a.Tags)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Slug == slug);
             if (articleModel == null)
             {
                 return NotFound();
@@ -338,17 +338,17 @@ namespace BlogUI.Controllers
         // POST: Articles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string slug)
         {
-            var articleModel = await _context.Articles.FindAsync(id);
+            var articleModel = await _context.Articles.FindAsync(slug);
             _context.Articles.Remove(articleModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ArticleModelExists(int id)
+        private bool ArticleModelExists(string slug)
         {
-            return _context.Articles.Any(e => e.Id == id);
+            return _context.Articles.Any(e => e.Slug == slug);
         }
     }
 }
