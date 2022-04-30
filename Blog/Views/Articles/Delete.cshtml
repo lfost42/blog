@@ -1,0 +1,73 @@
+﻿@using Blog.Data.Databases.Interfaces
+@using Microsoft.AspNetCore.Identity
+
+@using Blog.Data.Models.Enum
+@using Blog.Data.Models
+@model ArticleModel
+
+@inject UserManager<UserModel> userManager
+@inject IImageService imageService
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+
+
+<div id="wrapper">
+    <article class="post">
+        <header>
+            <div class="title">
+                <h1>@Model.Title</h1><br />
+                <p>@Model.Summary</p>
+            </div>
+            <div class="meta">
+                <time class="published">
+                    @Model.SeriesModel.Title: @Model.Created.ToShortDateString()
+                </time>
+            </div>
+        </header>
+
+        <span class="image featured">
+            @if (Model.Image != null)
+            {
+                <img src="@imageService.DecodeImage(Model.Image.ImageData, Model.Image.ImageExtension)" width="100%" />
+            }
+        </span>
+        @Html.Raw(Model.Body)
+
+
+        @{ string linkedin = $"https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Flfost42-blog.herokuapp.com%2FArticles/Details/{Model.Slug}%2F";}
+        @{ string links = $"https://lfost42-blog.herokuapp.com/Articles/Details/{Model.Slug}";}
+
+        <section>
+            <div class="row mr-1 mt-4">
+                <div class="col-auto mb-1">
+                    <button class="button btnToggle">@Model.Comments.Count Comment(s)</button>
+                </div>
+
+                @if (@Model.Tags.Count() >= 1)
+                {
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <div class="col-auto mb-1">
+                            <form asp-action="TagIndex" asp-route-tag="@tag.Tag.ToLower()" method="post">
+                                @Html.Hidden("id", Model.Id)
+                                <button class="button" type="submit">#@tag.Tag</button>
+                            </form>
+                        </div>
+                    }
+                }
+            </div>
+        </section>
+    </article>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Delete" class="btn btn-danger" /> |
+    <a asp-action="Index">Back to List</a>
+</form>

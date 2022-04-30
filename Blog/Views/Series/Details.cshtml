@@ -1,0 +1,28 @@
+﻿@using Blog.Data.Databases.Interfaces
+@inject IImageService imageService
+@model Blog.Data.Models.SeriesModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@Html.DisplayFor(model => model.Title)</h1>
+
+<div>
+    <h4>@Html.DisplayFor(model => model.Description)</h4>
+    <hr />
+    @Html.DisplayFor(model => model.Created) | @Html.DisplayFor(model => model.Updated)
+    <div class="row">
+        @if (Model.Image != null)
+        {
+            <img width="500px" src="@imageService.DecodeImage(Model.Image.ImageData, Model.Image.ImageExtension)" />
+        }
+    </div>
+</div>
+<div>
+    @if (User.IsInRole("Owner"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="owner">Edit</a>
+    }
+    <a asp-action="Index">Back to List</a>
+</div>

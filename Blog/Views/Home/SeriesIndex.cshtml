@@ -1,0 +1,67 @@
+﻿@using Blog.Data.Models
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@using Blog.Data.Databases.Interfaces
+@inject IImageService imageService
+
+@model IPagedList<SeriesModel>
+
+@{ ViewData["Title"] = "Home"; }
+@{ ViewData["Image"] = "https://www.lfost42-blog/herokuapp.com/app.png"; }
+<div class="container">
+    <div class="row">
+
+        @foreach (var item in Model.Take(1))
+        {
+<div class="col-lg-12 mx-auto mb-2">
+    <div class="card p-4 h-100">
+        <a asp-controller="Articles" asp-action="ArticleIndex" asp-route-id="@item.Id">
+
+            @if (item.Image != null)
+            {
+<img src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" class="card-img-top" />}
+        </a>
+        <div class="card-body text-start h-100">
+            <h5 class="card-title">@item.Title</h5>
+            <p class="card-text">@item.Description</p>
+        </div>
+    </div>
+</div>}
+
+
+        @foreach (var item in Model.Skip(1))
+        {
+<div class="col-lg-6 col-md-6 mx-auto mb-2 contents-justify-start">
+    <div class="card p-4 h-100">
+        <a asp-controller="Series" asp-action="Details" asp-route-id="@item.Id">
+
+            @if (item.Image != null)
+            {
+<img src="@imageService.DecodeImage(item.Image.ImageData, item.Image.ImageExtension)" class="card-img-top" />}
+        </a>
+        <div class="card-body text-start h-100">
+            <h5 class="card-title">@item.Title</h5>
+            <p class="card-text">@item.Description</p>
+        </div>
+    </div>
+</div>}
+    </div>
+</div>
+
+
+@if (Model.PageCount > 1)
+{
+<hr />
+<div class="row">
+    <div class="col">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+                     new PagedListRenderOptions
+                     {
+                         LiElementClasses = new string[] { "page-item" },
+                         PageClasses = new string[] { "page-link" }
+                     })
+    </div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+</div>
+}
