@@ -53,13 +53,14 @@ COMPLETED FEATURES:
 - Hide comments by default, show using comments button
 
 FUTURE UPDATES:
+- Add most used tags, number of times used, and link to tag index page (to home)
 - Extend slug service to Series
 - create modals for editing series titles/descriptions/pictures
-- Implement VH scaling
-- create demo role and account that can leave anonymous comments and not modify them. 
-- Hover series to display carousel of articles within that series
 - Add a method to reply to comments
 - Add a like button
+- Implement VH scaling for media views
+- create demo role and account that can leave anonymous comments and not modify them. 
+- Hover series to display carousel of articles within that series
 
 ## USER INTERFACE
 Dashboard shows series and recent articles. Side-menu to older articles. Search function. Login for writing articles or comments. 

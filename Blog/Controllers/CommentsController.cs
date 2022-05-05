@@ -9,6 +9,8 @@ using Blog.Data.Data;
 using Blog.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Blog.Data.Databases.Interfaces;
 
 namespace BlogUI.Controllers
 {
@@ -16,6 +18,8 @@ namespace BlogUI.Controllers
     {
         private readonly BlogContext _context;
         private readonly UserManager<UserModel> _userManager;
+        private readonly IConfiguration _config;
+        private readonly IBlogEmailService _emailSender;
 
         public CommentsController(BlogContext context, UserManager<UserModel> userManager)
         {
