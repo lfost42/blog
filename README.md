@@ -1,4 +1,4 @@
-# MyBlog
+# .NET Blog
 A knowledge base for .NET(C#) coding and web development articles. Uses Entity Framework Core and deployed with a PostgreSQL database.  Implements role and identity-based access, custom routing, front-end layouts, and password validation using regular expression.
 
 My code-centric blog articles and tutorials - http://lfost42-blog.herokuapp.com/
