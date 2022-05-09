@@ -1,8 +1,8 @@
-﻿@using Blog.Data.Databases.Interfaces
+@using BlogLibrary.Databases.Interfaces
 @using Microsoft.AspNetCore.Identity
 
-@using Blog.Data.Models.Enum
-@using Blog.Data.Models
+@using BlogLibrary.Models.Enum
+@using BlogLibrary.Models
 @model ArticleModel
 
 @inject UserManager<UserModel> userManager
@@ -85,7 +85,7 @@
                 {
                 @foreach (var tag in Model.Tags)
                     {
-                <div class="col-auto mb-1">
+                <div class="col-auto">
                     <form asp-action="TagIndex" asp-route-tag="@tag.Tag.ToLower()" method="post">
                         @Html.Hidden("id", Model.Id)
                         <button class="button" type="submit">#@tag.Tag</button>
@@ -269,7 +269,7 @@
                 }
                 else
                 {
-                <a class="button mb-2" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Articles/Details?slug=@Model.Slug">
+                <a class="button mb-2 mt-1" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Articles/Details?slug=@Model.Slug">
                     Login to Add Comment
                 </a>
                 }

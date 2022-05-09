@@ -1,8 +1,8 @@
-﻿@using Blog.Data.Models
+﻿@using BlogLibrary.Models
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
-@using Blog.Data.Databases.Interfaces
+@using BlogLibrary.Databases.Interfaces
 @inject IImageService imageService
 
 @model IPagedList<ArticleModel>
@@ -11,6 +11,15 @@
     ViewData["Title"] = "Home";
     ViewData["Image"] = "https://www.lfost42-blog/herokuapp.com/app.png";
 }
+
+<meta property="og:image" content="https://lfost42-blog.herokuapp.com/images/app.png" />
+<meta property="og:image:alt" content="Blog Logo" />
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:site_name" content="by Lynda Foster" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta name="twitter:creator" content="&#64;lfost42" />
+<link href="~favicon.ico" rel="shortcut icon icon" type="image/x-icon" />
 
 <div class="container">
     <div class="row">
