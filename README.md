@@ -1,5 +1,7 @@
 # .NET Blog
-A knowledge base for .NET(C#) coding and web development articles. Uses Entity Framework Core and deployed with a PostgreSQL database.  Implements role and identity-based access, custom routing, front-end layouts, and password validation using regular expression.
+A knowledge base for .NET(C#) coding and web development articles. Uses Entity Framework Core and deployed with a 
+
+greSQL database.  Implements role and identity-based access, custom routing, front-end layouts, and password validation using regular expression.
 
 My code-centric blog articles and tutorials - http://lfost42-blog.herokuapp.com/
 
@@ -8,7 +10,7 @@ Summary Info
 ![My App](./app.png)
 
 ## WALKTHROUGH
-A blog that allows the owner to post articles upon being authenticated via login. Users may leave comments after registering and being authenticated. Tags help filter posts by topic. 
+A blog that allows the owner to articles upon being authenticated via login. Users may leave comments after registering and being authenticated. Tags help filter articles by topic. 
 
 - Series
 - Articles
@@ -66,7 +68,7 @@ FUTURE UPDATES:
 Dashboard shows series and recent articles. Side-menu to older articles. Search function. Login for writing articles or comments. 
 
 ## LOGIC DESIGN
-Identity Access, owner creates posts
+Identity Access, owner creates articles
 Role Based Security, authenticated visitors may leave comments
 
 ## DATA DESIGN
@@ -123,6 +125,5 @@ Role Based Security, authenticated visitors may leave comments
 
 --Tag--
 - Tag
-- fk_post
-
+- fk_article
 
