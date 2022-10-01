@@ -18,8 +18,6 @@ namespace BlogUI.Controllers
     {
         private readonly BlogContext _context;
         private readonly UserManager<UserModel> _userManager;
-        private readonly IConfiguration _config;
-        private readonly IBlogEmailService _emailSender;
 
         public CommentsController(BlogContext context, UserManager<UserModel> userManager)
         {
@@ -31,13 +29,16 @@ namespace BlogUI.Controllers
         [Authorize(Roles = "Owner")]
         public async Task<IActionResult> OriginalIndex()
         {
-            var originalComments = await _context.Comments.ToListAsync();
+            var originalComments = await _context.Comments
+                .ToListAsync();
             return View("Index", originalComments);
         }
         [Authorize(Roles = "Owner")]
         public async Task<IActionResult> ModeratedIndex()
         {
-            var moderatedComments = await _context.Comments.Where(c => c.Moderated != null).ToListAsync();
+            var moderatedComments = await _context.Comments
+                .Where(c => c.Moderated != null)
+                .ToListAsync();
             return View("Index", moderatedComments);
         }
 
