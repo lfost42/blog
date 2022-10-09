@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="col mt-1">
-                    <select class="h-75" name="TagValues" id="TagList" multiple></select>
+                    <select class="button h-75" name="TagValues" id="TagList" multiple></select>
                 </div>
             </div>
             </div>
@@ -93,13 +93,14 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
+
         let tagValues = "@ViewData["TagValues"]";
 
 
         $('#Body').summernote({
-            placeholder: 'Message',
+            placeholder: 'enter body here',
             tabsize: 2,
-            height: 200,
+            height: 300,
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'underline', 'clear']],

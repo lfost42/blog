@@ -33,40 +33,34 @@
                 <span asp-validation-for="Body" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <div class="row">
-                    <div class="col">
-                        <label class="control-label">Manage Tags</label>
-                    </div>
-                </div>
 
-                <div class="form-group p-3">
-                    <div class="row mt-2 bg-light shadow-sm p-3 rounded-3 border row-cols-1 row-cols-md-2 gy-2">
-                        <div class="col">
-                            <div class="row">
-                                <div class="col">
-                                    <label class="control-label">Manage Tags</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col ">
-                                    <input type="text" class="form-control rounded-2" id="TagEntry" />
-                                </div>
-                            </div>
-                            <div class="row mt-2 ">
-                                <div class="col d-flex align-items-center justify-content-center">
-                                    <button onclick="AddTag()" name="Add" type="button" class="button mt-1">Add</button>
-                                </div>
-                                <div class="col d-flex align-items-center justify-content-center">
-                                    <button onclick="DeleteTag()" name="Delete" type="button" class="button mt-1">Delete</button>
-                                </div>
+            <div class="form-group p-3">
+                <div class="row mt-2 bg-light shadow-sm p-3 rounded-3 border row-cols-1 row-cols-md-2 gy-2">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <label class="control-label">Manage Tags</label>
                             </div>
                         </div>
-                        <div class="col mt-1">
-                            <select class="h-75" name="TagValues" id="TagList" multiple></select>
+                        <div class="row">
+                            <div class="col ">
+                                <input type="text" class="form-control rounded-2" id="TagEntry" />
+                            </div>
+                        </div>
+                        <div class="row mt-2 ">
+                            <div class="col d-flex align-items-center justify-content-center">
+                                <button onclick="AddTag()" name="Add" type="button" class="button mt-1">Add</button>
+                            </div>
+                            <div class="col d-flex align-items-center justify-content-center">
+                                <button onclick="DeleteTag()" name="Delete" type="button" class="button mt-1">Delete</button>
+                            </div>
                         </div>
                     </div>
+                    <div class="col mt-1">
+                        <select class="button h-75" name="TagValues" id="TagList" multiple></select>
+                    </div>
                 </div>
+            </div>
 
 
             <div class="form-group">
@@ -97,9 +91,9 @@
         let tagValues = "@ViewData["TagValues"]";
 
         $('#Body').summernote({
-            placeholder: 'Message',
+            placeholder: 'enter body here',
             tabsize: 2,
-            height: 200,
+            height: 300,
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'underline', 'clear']],
