@@ -1,0 +1,25 @@
+﻿{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Port=5432;Database=BlogDb;User ID=postgres;Password=YourPassword" //get this from postgres
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+
+  "EmailSettings": {
+    "Mail": "[youremail]",
+    "DisplayName": "[displayname]",
+    "Password": "[app password from your server]",
+    "Host": "smtp.gmail.com",
+    "Port": 587
+  },
+  "DefaultUserImage": "defaultUser.png",
+  "DefaultImage": "default.png",
+  "DefaultPassword": "[a_demo_password]",
+  "OwnerPassword": "[your_personal_password]"
+}
